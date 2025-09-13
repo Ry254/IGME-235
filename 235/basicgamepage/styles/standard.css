@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&display=swap');
+
+body {
+    background-color:#000010;
+    font-family: "Arial", sans-serif;
+}
+
+main{
+    background-color: #fff1ec;
+}
+
+h1 {
+    color: #ff6030;
+    font-family: "Press Start 2P", sans-serif;
+    font-size: 30px;
+    border-bottom: 1px solid #3060ff;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: "Silkscreen", sans-serif;
+    color: #4080ff;
+    margin-left: 15px;
+}
+
+p, ul, blockquote {
+    margin-left: 30px;
+    color:#ff6030;
+}
+
+blockquote {
+    background-color: #eeded9;
+    padding: 1rem;
+}

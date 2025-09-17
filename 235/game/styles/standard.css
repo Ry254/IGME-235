@@ -1,20 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&display=swap');
 
 body {
-    background-color:aliceblue;
+    background: #00100b;
     font-family: "Arial", sans-serif;
+    color: #00100b;
 }
 
-h1 {
-    color: red;
+main, header, footer {
+    position: relative;
+    background-color: #ede6f2;
+    border: 20px solid #e7d072;
+    margin: 0 auto;
+    width: 80vw;
+    padding: 1em;
+}
+
+h1, h1 img, h1 object {
+    max-width: 70vw;
+    color: #C33149;
     font-family: "Press Start 2P", sans-serif;
-    font-size: 30px;
-    border-bottom: 1px solid blue;
+    font-size: 100px;
+    text-align: center;
+    margin: auto;
 }
 
-h2, h3, h4, h5, h6 {
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: "Silkscreen", sans-serif;
-    color: blue;
+    color: #C33149;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 p {
@@ -22,11 +40,36 @@ p {
 }
 
 blockquote {
-    background-color: lightgray;
+    background-color: #e7d072;
     padding: 1rem;
 }
 
-img.right {
+.right {
     float: right;
-    margin: 0 12px;
+    margin: 3px;
+    max-width: 30vw;
+}
+
+a{
+    word-wrap: break-word;
+}
+
+a:link,
+a:visited,
+a:focus,
+a:hover,
+a:active {
+    color: #33b676;
+}
+
+#sources img{
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+}
+
+#bigimg{
+    display: block;
+    max-width: 100%;
+    margin: auto;
 }

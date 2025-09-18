@@ -1,6 +1,7 @@
 body {
     background-color: #faebd7;
     width: 80vw;
+    max-width: 1700px;
     margin: 0 auto;
 }
 
@@ -10,9 +11,39 @@ body>* {
     margin: 10px 0;
 }
 
+h1{
+    text-align: center;
+}
+
 h2 {
     margin-bottom: 0;
     text-align: center;
+}
+
+section{
+    clear:both;
+    margin: 15px;
+}
+
+section#bio{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+section#bio>*{
+    flex: 0 1 auto;
+    margin: 10px;
+}
+
+section#bio>img{
+    width: 250px;
+    max-width: 100%;
+}
+
+section#bio>p{
+    max-width: 75ch;
 }
 
 section#projects>p{
@@ -23,27 +54,27 @@ section#projects>p{
 section#projects>div{
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 div.project_cell{
-    flex: 0 0 350px;
+    flex: 0 1 350px;
     border: 2px black solid;
     border-radius: 10px;
     padding: 1em;
-    margin:2px;
+    margin: 3px;
     position: relative;
 }
 
 div.project_image{
     width: 80%;
-    aspect-ratio: 16/9;
     margin: 0 auto;
-    background-color: grey;
+    background-color: rgb(139, 139, 139);
     text-align: center;
 }
 
 div.project_image>img{
+    display: block;
     width: 100%;
     aspect-ratio: 16/9;
     object-fit: contain;

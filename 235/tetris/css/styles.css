@@ -1,0 +1,68 @@
+/* Do everything in this file */
+main,
+header,
+footer {
+    width: 90vw;
+    margin: auto;
+}
+
+footer {
+    clear: both;
+    /*position: fixed;
+    top: 0;
+    z-index: -1;*/
+}
+
+h2 {
+    border-bottom: 1px red solid;
+    clear: right;
+}
+
+figure {
+    /*float: right;*/
+    margin: auto;
+    max-width: 650px;
+}
+
+figure img {
+    width: 100%;
+}
+
+span.name {
+    display: block;
+    margin: 1ex;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+section#tetlist {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+div.tet {
+    /*float: left;
+    width: 30vw;*/
+    border: 1px solid black;
+    flex: 0 1 450px;
+    text-align: center;
+    align-content: center;
+}
+
+div.aliases {
+    text-align: left;
+    margin: 1em;
+}
+
+div.tet img {
+    width: 60%
+}
+
+div.tet.long img {
+    width: 80%
+}
+
+div.tet.square img {
+    width: 40%
+}

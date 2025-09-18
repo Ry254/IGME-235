@@ -1,37 +1,80 @@
-main{
-    width: 75vw;
-    margin: auto;
-    padding: 10px;
-    border: 2px solid black;
-    background-color: antiquewhite;
+body {
+    background-color: #faebd7;
+    width: 80vw;
+    margin: 0 auto;
 }
 
-h2{
+body>* {
+    background-color: #f0d4b0;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+h2 {
+    margin-bottom: 0;
     text-align: center;
 }
 
-.flex {
+section#projects>p{
+    text-align: center;
+    margin-top: 0;
+}
+
+section#projects>div{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+div.project_cell{
+    flex: 0 0 350px;
+    border: 2px black solid;
+    border-radius: 10px;
+    padding: 1em;
+    margin:2px;
+    position: relative;
+}
+
+div.project_image{
+    width: 80%;
+    aspect-ratio: 16/9;
+    margin: 0 auto;
+    background-color: grey;
+    text-align: center;
+}
+
+div.project_image>img{
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: contain;
+}
+
+div.project_description{
+    margin-bottom: 1lh;
+}
+
+div.project_description>*{
+    margin: 1ex auto;
+}
+
+a.project_link{
+    width: fit-content;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+}
+
+footer{
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
 }
 
-.flex>* {
-    display: block;
-    margin: 10px;
-    flex: 0 0 500px;
-    border: 2px solid black;
+footer>p {
+    flex: 0 0 content;
+    margin: 1ex 1em;
 }
 
-.flex li{
-    list-style: none;
-    text-align: center;
-    font-size: 30px;
-    margin: 5px;
-}
-
-.flex img{
-    margin: 5px;
-    width: 16vw;
-    height: 9vw;
+footer a {
+    word-wrap: break-word;
 }

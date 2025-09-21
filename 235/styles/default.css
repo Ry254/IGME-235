@@ -2,21 +2,24 @@ body {
     background-color: #faebd7;
     width: 80vw;
     max-width: 1700px;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 body>* {
     background-color: #f0d4b0;
-    padding: 10px;
-    margin: 10px 0;
+    border: 10px solid #d4af7f;
+    padding: 5px;
+    margin: 10px;
 }
 
 h1{
     text-align: center;
+    width: fit-content;
+    margin: auto
 }
 
 h2 {
-    margin-bottom: 0;
+    margin: 0;
     text-align: center;
 }
 
@@ -40,10 +43,13 @@ section#bio>*{
 section#bio>img{
     width: 250px;
     max-width: 100%;
+    border: 3px black solid;
 }
 
-section#bio>p{
+section#bio>div>p{
     max-width: 75ch;
+    font-size: 20px;
+    margin-top: 10px;
 }
 
 section#projects>p{
@@ -59,7 +65,7 @@ section#projects>div{
 
 div.project_cell{
     flex: 0 1 350px;
-    border: 2px black solid;
+    border: 3px #d4af7f solid;
     border-radius: 10px;
     padding: 1em;
     margin: 3px;
@@ -69,8 +75,9 @@ div.project_cell{
 div.project_image{
     width: 80%;
     margin: 0 auto;
-    background-color: rgb(139, 139, 139);
+    background-color: black;
     text-align: center;
+    border: 3px solid black;
 }
 
 div.project_image>img{
@@ -108,4 +115,15 @@ footer>p {
 
 footer a {
     word-wrap: break-word;
+}
+
+a:link,
+a:visited{
+    color: rgb(209, 99, 209);
+}
+
+a:focus,
+a:hover,
+a:active {
+    color: purple;
 }

@@ -66,9 +66,9 @@ div#wrapper {
         grid-template-rows: 1fr 10fr 1fr;
         grid-template-columns: 20% auto 20%;
         grid-template-areas: 
-            "sidenav header  header"
+            "header  header  header"
             "sidenav article sidebar"
-            "sidenav article footer";
+            "footer  footer  footer";
     }
 }
 

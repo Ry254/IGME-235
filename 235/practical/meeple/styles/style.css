@@ -1,0 +1,88 @@
+/* Link states */
+a:link{
+    color: blue;
+    text-decoration: none;
+}
+
+a:visited{
+    color: rgb(103, 103, 211);
+}
+
+a:hover{
+    color: rgb(0, 0, 124);
+    text-decoration: underline;
+}
+
+a:focus{
+    outline: 2px solid #ffa500;
+}
+
+a:active{
+    color: red;
+} 
+/* and four more */
+
+
+/* Header styling */
+header {
+    background-color: burlywood;
+    border: 2px solid gray;
+    padding: 20px;
+    text-align: center;
+    color: black;
+    font-size: 1.5rem;
+}
+
+/* Footer styling */
+footer {
+    background-color: rgb(55, 55, 55);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Main content */
+main {
+    padding: 20px;
+}
+
+#mainImage{
+    display: block;
+    width: 500px;
+}
+
+#welcome{
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+/* Game list styling using flexbox or grid */
+.game-list {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    flex: 0 0 auto;
+    justify-content: center;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.game {
+    background-color: rgb(236, 236, 236);
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px;
+    width: 200px;
+    height: 125px;
+}
+
+.game h3 {
+    text-align: center;
+    font-size: 1.4rem;
+    color: chocolate;
+}
+
+.game p{
+    text-align: center;
+}

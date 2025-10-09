@@ -1,3 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Smooch+Sans:wght@100..900&display=swap');
+
+body{
+    font-family: "Oswald", sans-serif;
+    color: rgb(0, 0, 0);
+    font-weight: 300;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: "Smooch Sans", sans-serif;
+}
+
 #portfolio {
     display: flex;
     flex-direction: column;
@@ -7,27 +20,35 @@
     align-items: center;
 }
 
+.project{
+    width: 25ch;
+}
+
 #portfolio h2{
     color: #fe4a66;
     text-align: center;
 }
 
 #portfolio h3{
+    text-align: center;
+}
+
+#portfolio h4{
     color: #f94957;
     text-align: center;
-    font-size: 30px;
-    padding: 10px;
+    text-transform: uppercase;
+    font-size: 50px;
+    padding-bottom: 10px;
+    padding-top: 20px;
     margin: 0;
-    line-height: .8;
-    font-weight: bolder;
+    line-height: .7;
+    font-weight: 800;
+    background: url(../media/star.svg) no-repeat center;
 }
 
-#portfolio h3::first-line{
-    font-size: 125px;
-}
-
-#portfolio p.subtitle{
-    text-align: center;
+#portfolio h4::first-line{
+    font-size: 175px;
+    font-weight: 900;
 }
 
 #project_list {

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materialize Carosel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+
+<body>
+    <div class="carousel">
+        <a class="carousel-item" href="#"><img src="../images/hw1.png"></a>
+        <a class="carousel-item" href="#"><img src="../images/hw2.png"></a>
+        <a class="carousel-item" href="#"><img src="../images/hw3.png"></a>
+        <a class="carousel-item" href="#"><img src="../images/lab1.png"></a>
+        <a class="carousel-item" href="#"><img src="../images/lab2.png"></a>
+    </div>
+    <script>
+        var elems = document.querySelectorAll('.carousel');
+        var instances = M.Carousel.init(elems);                
+    </script>
+</body>
+
+</html>

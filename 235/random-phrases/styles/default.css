@@ -24,7 +24,7 @@ h1 {
 
 /*A background image (it should appear behind something else)*/
 div#wrapper {
-    background-image: url(/media/eightBall.svg);
+    background-image: url(../media/eightBall.svg);
     background-size: 99%;
     background-repeat: no-repeat;
     height: 600px;

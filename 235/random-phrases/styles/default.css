@@ -1,0 +1,86 @@
+/*The page will use an embedded font (something from Google fonts would suffice)*/
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Workbench&display=swap');
+
+/*The page content must be legible and nicely styled, with good choices made for colors, margins and fonts*/
+body {
+    font-family: "Bitcount Grid Single", monospace;
+    font-weight: 400;
+    font-size: 16px;
+    color: white;
+    background-color: rgb(20, 21, 37);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+h1 {
+    font-family: "Workbench", monospace;
+    font-size: 45px;
+}
+
+/*A background image (it should appear behind something else)*/
+div#wrapper {
+    background-image: url(/media/eightBall.svg);
+    background-size: 99%;
+    background-repeat: no-repeat;
+    height: 600px;
+    aspect-ratio: 1;
+    position: relative;
+}
+
+div#wrapper * {
+    text-align: center;
+    width: max-content;
+}
+
+header {
+    position: absolute;
+    top: 22.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+p#phrase {
+    position: absolute;
+    top: 47.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*Additionally, create a nicely styled <button> and put it on the screen.
+Feel free to search the web for appropriate button CSS styles.*/
+button#generate {
+    position: absolute;
+    top: 77.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Bitcount Grid Single", monospace;
+    font-weight: 400;
+    font-size: 20px;
+    color: white;
+    background-color: #2e3192;
+    padding: 10px 20px;
+    border-radius: 50%;
+    border: none;
+}
+
+/*Add CSS button rules for :hover and :active so that the button has a nice "over" and "down" look.*/
+button#generate:hover {
+    border: 2px solid #6669bb;
+}
+
+button#generate:active {
+    border: 2px solid #aa66bb;
+    background-color: #7a2f8d;
+}
+
+footer {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

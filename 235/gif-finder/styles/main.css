@@ -17,9 +17,32 @@ header h1 {
 
 #status {
     font-style: italic;
-    height: 32px;
 }
 
+#content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px 10px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+}
+
+.result img {
+    width: 100%;
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .4);
+}
+
+.result span {
+    order: -1;
+    text-align: center;
+}
+
+/*
 .result {
     position: relative;
     height: 175px;
@@ -36,7 +59,6 @@ header h1 {
     left: 5px;
     bottom: 5px;
     display: block;
-
 }
 
 .result span {
@@ -47,7 +69,7 @@ header h1 {
 
 .result audio {
     width: 130px;
-}
+}*/
 
 button {
     display: inline-block;
@@ -85,7 +107,44 @@ button:focus {
     outline: 0;
 }
 
+#widgetWrapper {
+    background-color: rgb(224, 224, 224);
+    max-width: 400px;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-template-rows: auto;
+    gap: 5px;
+    grid-template-areas:
+        "title value"
+        "title value"
+        "button button";
+    padding: 10px;
+    margin: 15px auto;
+    border: 3px solid gray;
+    border-radius: 15px;
+}
+
+#widgetWrapper>p {
+    grid-area: "title";
+    margin: 0;
+    text-align: end;
+}
+
 .widgets {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    grid-area: "value";
+}
+
+#widgetWrapper>button {
+    grid-area: button;
+    justify-self: center;
+    width: 200px;
+    margin: 10px;
+}
+
+h2 {
+    text-align: center;
+}
+
+#status {
+    text-align: center;
 }

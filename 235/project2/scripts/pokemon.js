@@ -107,8 +107,8 @@ let catchMon = (formIndex) => {
     setImage(formIndex, document.querySelector("#caughtImage"), isshiny);
     let formName = forms[formIndex].name.replaceAll("-", " ");
     forms[formIndex].caught = true;
-    forms[formIndex].shinyCaught = isshiny;
-    console.log(forms);
+    forms[formIndex].shinyCaught = forms[formIndex].shinyCaught ? true : isshiny;
+    console.log(forms[formIndex]);
     document.querySelector("#caughtText").innerHTML = "You caught a " + (isshiny?"SHINY ":"") + formName.toUpperCase() + "!";
 }
 
@@ -142,12 +142,19 @@ window.addEventListener("load", (e) => {
     caughtImage = document.querySelector("#caughtImage");
 });
 
-/*Pokedex Screen*/
-
+/*
+    Pokedex Screen
+*/
 let pokedexLoad = (e) => {
+    document.querySelector("#pokedexList").innerHTML = "";
     for(let i = 0; i < forms.length; i++){
         let newImg = document.createElement("img");
-        setImage(i, newImg);
+        newImg.dataset.index = i;
+        newImg.id = forms[i].name;
+        if(!forms[i].caught){
+            newImg.classList.add("notCaught");
+        }
+        setImage(i, newImg, forms[i].shinyCaught);
         document.querySelector("#pokedexList").appendChild(newImg);
     }
 }

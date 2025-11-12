@@ -9,7 +9,7 @@ let getForms = (url) => {
         let formsJSON = e.target.responseText;
         formsJSON = JSON.parse(formsJSON).results;
         forms = formsJSON;
-        for(let i = 0; i < forms.length; i++){
+        for (let i = 0; i < forms.length; i++) {
             removeFormsWithNoImage(i);
         }
     };
@@ -22,10 +22,10 @@ let removeFormsWithNoImage = (formIndex) => {
     xhr.onload = e => {
         let spriteJSON = e.target.responseText;
         spriteJSON = JSON.parse(spriteJSON).sprites;
-        if(!spriteJSON.front_default){
+        if (!spriteJSON.front_default) {
             forms[formIndex] = null;
         }
-        if(formIndex + 1 == forms.length){
+        if (formIndex + 1 == forms.length) {
             onFormsReceved();
         }
     };
@@ -42,7 +42,7 @@ getForms("https://pokeapi.co/api/v2/pokemon-form/?limit=10000");
 */
 let onFormsReceved = () => {
     forms = forms.filter(form => form);
-    for(let form of forms){
+    for (let form of forms) {
         form.caught = false;
         form.shinyCaught = false;
         Object.seal(form);
@@ -59,7 +59,7 @@ let catchInput;
 let catchTyped = (e) => {
     let input = catchInput.value;
     input = input.trim().toLowerCase();
-    input = input.replace(/[.'%]/,"").split(/[- ]/);
+    input = input.replace(/[.'%]/, "").split(/[- ]/);
     for (let i = 0; i < input.length; i++) {
         switch (input[i]) {
             case "gigantamax":
@@ -77,22 +77,28 @@ let catchTyped = (e) => {
             case "paldean":
                 input[i] = "paldea";
                 break;
+            case "!":
+                input[i] = "exclamation";
+                break;
+            case "?":
+                input[i] = "question";
+                break;
         }
     }
-    
+
     let formIndex = undefined;
-    for(let i = 0; i < forms.length; i++){
+    for (let i = 0; i < forms.length; i++) {
         let formTerms = forms[i].name.split("-");
         let containsInputs = input.map(word => formTerms.indexOf(word) != -1);
-        if(containsInputs.indexOf(false) == -1 && input.indexOf(formTerms[0]) != -1){
+        if (containsInputs.indexOf(false) == -1 && input.indexOf(formTerms[0]) != -1) {
             formIndex = i;
             break;
         }
     }
-    if(formIndex){
+    if (formIndex) {
         catchMon(formIndex);
     }
-    else{
+    else {
         document.querySelector("#caughtText").innerHTML = "Not a valid pokemon/form.";
     }
 }
@@ -109,7 +115,7 @@ let catchMon = (formIndex) => {
     forms[formIndex].caught = true;
     forms[formIndex].shinyCaught = forms[formIndex].shinyCaught ? true : isshiny;
     console.log(forms[formIndex]);
-    document.querySelector("#caughtText").innerHTML = "You caught a " + (isshiny?"SHINY ":"") + formName.toUpperCase() + "!";
+    document.querySelector("#caughtText").innerHTML = "You caught a " + (isshiny ? "SHINY " : "") + formName.toUpperCase() + "!";
 }
 
 let setImage = (formIndex, imageElement, isshiny = false) => {
@@ -119,10 +125,10 @@ let setImage = (formIndex, imageElement, isshiny = false) => {
         spriteJSON = JSON.parse(spriteJSON).sprites;
 
         let spriteName = "front";
-        if(isshiny){
+        if (isshiny && spriteJSON.front_shiny) {
             spriteName += "_shiny";
         }
-        else{
+        else {
             spriteName += "_default";
         }
 
@@ -147,11 +153,11 @@ window.addEventListener("load", (e) => {
 */
 let pokedexLoad = (e) => {
     document.querySelector("#pokedexList").innerHTML = "";
-    for(let i = 0; i < forms.length; i++){
+    for (let i = 0; i < forms.length; i++) {
         let newImg = document.createElement("img");
         newImg.dataset.index = i;
         newImg.id = forms[i].name;
-        if(!forms[i].caught){
+        if (!forms[i].caught) {
             newImg.classList.add("notCaught");
         }
         setImage(i, newImg, forms[i].shinyCaught);

@@ -1,6 +1,10 @@
 /*
     Body
 */
+html {
+    background-color: black;
+}
+
 body {
     margin: 0;
 }
@@ -24,7 +28,7 @@ body {
     margin: 0;
 }
 
-a.navLink{
+a.navLink {
     flex-grow: 1;
     height: 100%;
     display: block;
@@ -35,6 +39,10 @@ a.navLink{
     overflow-y: hidden;
     display: grid;
     grid-template-rows: repeat(3, 100%);
+}
+
+main>section {
+    overflow-y: auto;
 }
 
 #siteWrapper>footer {
@@ -53,12 +61,31 @@ a.navLink{
 */
 #pokedex {
     background-color: #9fc5e8;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto 350px 1fr;
+    grid-template-areas:
+        "head   head"
+        "data   list"
+        "filter list";
+    gap: 20px;
+    padding: 10px;
+}
+
+#pokedex>h1{
+    grid-area: head;
+    margin: 0;
+    text-align: center;
 }
 
 #pokedexList {
+    grid-area: list;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, 100px);
     gap: 40px 10px;
+    overflow: hidden auto;
+    align-content: start;
+    justify-content: center;
 }
 
 #pokedexList>img {
@@ -67,6 +94,14 @@ a.navLink{
 
 img.notCaught {
     filter: contrast(0%);
+}
+
+#pokedexData{
+    grid-area: data;
+}
+
+#pokedexFilters{
+    grid-area: filter;
 }
 
 /*

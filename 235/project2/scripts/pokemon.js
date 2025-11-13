@@ -17,6 +17,7 @@ let getForms = (url) => {
     xhr.open("GET", url);
     xhr.send();
 }
+let formsCheckedForValidity = 0;
 let removeFormsWithNoImage = (formIndex) => {
     let xhr = new XMLHttpRequest();
     xhr.onload = e => {
@@ -25,7 +26,9 @@ let removeFormsWithNoImage = (formIndex) => {
         if (!spriteJSON.front_default) {
             forms[formIndex] = null;
         }
-        if (formIndex + 1 == forms.length) {
+
+        formsCheckedForValidity++;
+        if (formsCheckedForValidity >= forms.length) {
             onFormsReceved();
         }
     };
@@ -35,6 +38,7 @@ let removeFormsWithNoImage = (formIndex) => {
 }
 
 let forms = {};
+let formsLoaded = false;
 getForms("https://pokeapi.co/api/v2/pokemon-form/?limit=10000");
 
 /*
@@ -47,17 +51,18 @@ let onFormsReceved = () => {
         form.shinyCaught = false;
         Object.seal(form);
     }
+    formsLoaded = true;
+    if (document.body) {
+        document.body.style.display = "block";
+    }
+    pokedexLoad();
 }
 
 /*
     Catch Screen
 */
-let caughtText;
-let caughtImage;
-
-let catchInput;
 let catchTyped = (e) => {
-    let input = catchInput.value;
+    let input = document.querySelector("#catchInput").value;
     input = input.trim().toLowerCase();
     input = input.replace(/[.'%]/, "").split(/[- ]/);
     for (let i = 0; i < input.length; i++) {
@@ -110,15 +115,14 @@ let catchRandom = (e) => {
 
 let catchMon = (formIndex) => {
     let isshiny = Math.random() < .05;
-    setImage(formIndex, document.querySelector("#caughtImage"), isshiny);
+    setImage(forms, formIndex, document.querySelector("#caughtImage"), isshiny);
     let formName = forms[formIndex].name.replaceAll("-", " ");
     forms[formIndex].caught = true;
     forms[formIndex].shinyCaught = forms[formIndex].shinyCaught ? true : isshiny;
-    console.log(forms[formIndex]);
     document.querySelector("#caughtText").innerHTML = "You caught a " + (isshiny ? "SHINY " : "") + formName.toUpperCase() + "!";
 }
 
-let setImage = (formIndex, imageElement, isshiny = false) => {
+let setImage = (formList, formIndex, imageElement, isshiny = false) => {
     let xhr = new XMLHttpRequest();
     xhr.onload = e => {
         let spriteJSON = e.target.responseText;
@@ -135,40 +139,73 @@ let setImage = (formIndex, imageElement, isshiny = false) => {
         imageElement.src = spriteJSON[spriteName];
     };
     xhr.onerror = error;
-    xhr.open("GET", forms[formIndex].url);
+    xhr.open("GET", formList[formIndex].url);
     xhr.send();
 }
-
-window.addEventListener("load", (e) => {
-    catchInput = document.querySelector("#catchInput");
-    document.querySelector("#catchButton").onclick = catchTyped;
-    document.querySelector("#catchRandomButton").onclick = catchRandom;
-
-    caughtText = document.querySelector("#caughtText");
-    caughtImage = document.querySelector("#caughtImage");
-});
 
 /*
     Pokedex Screen
 */
 let pokedexLoad = (e) => {
+    let filteredForms = forms;
+
+    let type1 = getByType(document.querySelector("#type1").value);
+    if(type1){
+        filteredForms = filteredForms.filter(form => type1.indexOf(form.name) != -1);
+    }
+
+    let type2 = getByType(document.querySelector("#type2").value);
+    if(type2){
+        filteredForms = filteredForms.filter(form => type2.indexOf(form.name) != -1);
+    }
+
     document.querySelector("#pokedexList").innerHTML = "";
-    for (let i = 0; i < forms.length; i++) {
+    for (let i = 0; i < filteredForms.length; i++) {
         let newImg = document.createElement("img");
-        newImg.dataset.index = i;
-        newImg.id = forms[i].name;
-        if (!forms[i].caught) {
+        newImg.id = filteredForms[i].name;
+        if (!filteredForms[i].caught) {
             newImg.classList.add("notCaught");
         }
-        setImage(i, newImg, forms[i].shinyCaught);
+        setImage(filteredForms, i, newImg, filteredForms[i].shinyCaught);
         document.querySelector("#pokedexList").appendChild(newImg);
     }
 }
 
-window.addEventListener("load", (e) => {
+let getByType = (type) => {
+    if(type == "any"){
+        return null;
+    }
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://pokeapi.co/api/v2/type/" + type, false);
+    xhr.send();
+    let pkmnJSON = xhr.responseText;
+    pkmnJSON = JSON.parse(pkmnJSON).pokemon;
+    let pkmn = pkmnJSON.map(item => item.pokemon.name);
+    return pkmn;
+}
+
+/*
+    Favorites Screen
+*/
+
+/*
+    Settings
+*/
+
+/*
+    OnLoad
+*/
+window.onload = e => {
+    if (!formsLoaded) {
+        document.body.style.display = "none";
+    }
+
+    document.querySelector("#catchButton").onclick = catchTyped;
+    document.querySelector("#catchRandomButton").onclick = catchRandom;
+
     document.querySelector("#pokedexLoadButton").onclick = pokedexLoad;
-});
+    document.querySelector("a[href='#pokedex']").onclick = pokedexLoad;
 
-/*Favorites Screen*/
-
-/*Settings*/
+    document.querySelector("#catch").scrollIntoView();
+}

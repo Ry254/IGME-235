@@ -13,18 +13,19 @@
     <div id="siteWrapper">
         <main>
             <section id="catch">
-                <h1>Type a Pokemon Form's name to catch it</h1>
-                <div>
-                    <input type="text" placeholder="Type here" id="catchInput" value="">
-                    <button type="button" id="catchRandomButton">Random Pokemon</button>
-                    <button type="button" id="catchButton">Catch!</button>
+                <div id="catchWindow">
+                    <h1>Type a Pokemon Form's name to catch it</h1>
+                    <div>
+                        <input type="text" placeholder="Type here" id="catchInput" value="">
+                        <button type="button" id="catchRandomButton">Random Pokemon</button>
+                        <button type="button" id="catchButton">Catch!</button>
+                    </div>
+                    <img src="" alt="" id="caughtImage">
+                    <p id="caughtText"></p>
                 </div>
-                <img src="" alt="" id="caughtImage">
-                <p id="caughtText"></p>
             </section>
             <section id="pokedex">
                 <h1>Pokedex</h1>
-                <button type="button" id="pokedexLoadButton">Load Pokedex</button>
                 <div id="pokedexList">
 
                 </div>
@@ -32,7 +33,53 @@
 
                 </div>
                 <div id="pokedexFilters">
-                    
+                    <p>Type 1</p>
+                    <select class="filter" id="type1">
+                        <option value="any" selected>any</option>
+                        <option value="normal">normal</option>
+                        <option value="fighting">fighting</option>
+                        <option value="flying">flying</option>
+                        <option value="poison">poison</option>
+                        <option value="ground">ground</option>
+                        <option value="rock">rock</option>
+                        <option value="bug">bug</option>
+                        <option value="ghost">ghost</option>
+                        <option value="steel">steel</option>
+                        <option value="fire">fire</option>
+                        <option value="water">water</option>
+                        <option value="grass">grass</option>
+                        <option value="electric">electric</option>
+                        <option value="psychic">psychic</option>
+                        <option value="ice">ice</option>
+                        <option value="dragon">dragon</option>
+                        <option value="dark">dark</option>
+                        <option value="fairy">fairy</option>
+                    </select>
+
+                    <p>Type 2</p>
+                    <select class="filter" id="type2">
+                        <option value="any" selected>any</option>
+                        <option value="normal">normal</option>
+                        <option value="fighting">fighting</option>
+                        <option value="flying">flying</option>
+                        <option value="poison">poison</option>
+                        <option value="ground">ground</option>
+                        <option value="rock">rock</option>
+                        <option value="bug">bug</option>
+                        <option value="ghost">ghost</option>
+                        <option value="steel">steel</option>
+                        <option value="fire">fire</option>
+                        <option value="water">water</option>
+                        <option value="grass">grass</option>
+                        <option value="electric">electric</option>
+                        <option value="psychic">psychic</option>
+                        <option value="ice">ice</option>
+                        <option value="dragon">dragon</option>
+                        <option value="dark">dark</option>
+                        <option value="fairy">fairy</option>
+                    </select>
+
+                    <button type="button" id="pokedexLoadButton">Search by filters</button>
                 </div>
             </section>
             <section id="favorite">
@@ -48,7 +95,7 @@
             <a href="#favorite" class="navLink">Favorite</a>
         </nav>
         <footer>
-            footer
+            Created by Ryan Samoyedny using <a href="https://pokeapi.co/">PokeAPI</a>
         </footer>
     </div>
 </body>

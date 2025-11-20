@@ -26,6 +26,12 @@ let removeFormsWithNoImage = (formIndex) => {
         if (!spriteJSON.front_default) {
             forms[formIndex] = null;
         }
+        else {
+            forms[formIndex].defaultSprite = spriteJSON.front_default;
+            forms[formIndex].shinySprite = spriteJSON.front_shiny;
+            forms[formIndex].femaleSprite = spriteJSON.front_female;
+            forms[formIndex].femaleShinySprite = spriteJSON.front_shiny_female;
+        }
 
         formsCheckedForValidity++;
         if (formsCheckedForValidity >= forms.length) {
@@ -33,7 +39,7 @@ let removeFormsWithNoImage = (formIndex) => {
         }
     };
     xhr.onerror = error;
-    xhr.open("GET", forms[formIndex].url);
+    xhr.open("GET", forms[formIndex].url, false);
     xhr.send();
 }
 
@@ -91,7 +97,7 @@ let catchTyped = (e) => {
         }
     }
 
-    let formIndex = undefined;
+    let formIndex;
     for (let i = 0; i < forms.length; i++) {
         let formTerms = forms[i].name.split("-");
         let containsInputs = input.map(word => formTerms.indexOf(word) != -1);
@@ -100,7 +106,7 @@ let catchTyped = (e) => {
             break;
         }
     }
-    if (formIndex) {
+    if (formIndex != undefined) {
         catchMon(formIndex);
     }
     else {
@@ -123,24 +129,12 @@ let catchMon = (formIndex) => {
 }
 
 let setImage = (formList, formIndex, imageElement, isshiny = false) => {
-    let xhr = new XMLHttpRequest();
-    xhr.onload = e => {
-        let spriteJSON = e.target.responseText;
-        spriteJSON = JSON.parse(spriteJSON).sprites;
-
-        let spriteName = "front";
-        if (isshiny && spriteJSON.front_shiny) {
-            spriteName += "_shiny";
-        }
-        else {
-            spriteName += "_default";
-        }
-
-        imageElement.src = spriteJSON[spriteName];
-    };
-    xhr.onerror = error;
-    xhr.open("GET", formList[formIndex].url);
-    xhr.send();
+    if (isshiny && formList[formIndex].shinySprite) {
+        imageElement.src = formList[formIndex].shinySprite;
+    }
+    else {
+        imageElement.src = formList[formIndex].defaultSprite;
+    }
 }
 
 /*
@@ -150,12 +144,12 @@ let pokedexLoad = (e) => {
     let filteredForms = forms;
 
     let type1 = getByType(document.querySelector("#type1").value);
-    if(type1){
+    if (type1) {
         filteredForms = filteredForms.filter(form => type1.indexOf(form.name) != -1);
     }
 
     let type2 = getByType(document.querySelector("#type2").value);
-    if(type2){
+    if (type2) {
         filteredForms = filteredForms.filter(form => type2.indexOf(form.name) != -1);
     }
 
@@ -172,7 +166,7 @@ let pokedexLoad = (e) => {
 }
 
 let getByType = (type) => {
-    if(type == "any"){
+    if (type == "any") {
         return null;
     }
 

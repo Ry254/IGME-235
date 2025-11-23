@@ -12,9 +12,11 @@ body {
 }
 
 #siteWrapper {
+    max-width: 1500px;
     display: grid;
+    margin: auto;
     height: 100vh;
-    grid-template-rows: 50px 1fr 30px;
+    grid-template-rows: 30px 1fr 20px;
     grid-template-areas:
         "nav"
         "main"
@@ -29,7 +31,7 @@ body {
 }
 
 h1{
-    font-size: 25px;
+    font-size: 20px;
 }
 
 button[id$=SceneButton] {
@@ -67,10 +69,28 @@ main>section {
 
 #siteWrapper>footer {
     grid-area: footer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 footer>p {
     margin: 0;
+    color: rgb(160, 160, 160);
+    font-size: 8px;
+}
+
+a,
+a:visited{
+    color: red;
+}
+
+a:hover,a:focus{
+    color: blue;
+}
+
+a:active{
+    color: yellow;
 }
 
 img {
@@ -86,6 +106,9 @@ button, select {
 */
 #catch {
     background-color: #ea9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #catchWindow {
@@ -99,7 +122,7 @@ button, select {
     align-items: center;
     max-width: 80%;
     width: 800px;
-    margin: 60px auto;
+    margin: 20px;
     gap: 20px;
 }
 
@@ -131,7 +154,7 @@ button, select {
 }
 
 #caughtImage {
-    width: 400px;
+    width: 300px;
     max-width: 80%;
     aspect-ratio: 1;
     background-color: white;
@@ -150,19 +173,19 @@ button, select {
 #pokedex {
     background-color: #9fc5e8;
     display: grid;
-    grid-template-columns: 300px 1fr;
-    grid-template-rows: auto 350px 1fr;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: auto 300px 1fr;
     grid-template-areas:
         "head   head"
         "data   list"
         "filter list";
     gap: 20px;
-    padding: 10px;
+    padding: 5px 5%;
 }
 
 #pokedex>h1 {
     grid-area: head;
-    margin: 0;
+    margin-bottom: 0;
     text-align: center;
 }
 
@@ -170,14 +193,35 @@ button, select {
     grid-area: list;
     display: grid;
     grid-template-columns: repeat(auto-fit, 100px);
-    gap: 40px 10px;
+    gap: 15px;
     overflow: hidden auto;
+    scrollbar-width: none;
     align-content: start;
     justify-content: center;
+    background-color: #cfe2f3;
+    border: 4px solid #073763;
+    border-radius: 30px;
+    padding: 20px 15px;
 }
 
-#pokedexList>img {
+#pokedexList>* {
+    border: 4px solid #073763;
+    border-radius: 5px;
+    background-color: #9fc5e8;
+    width: fit-content;
+}
+
+#pokedexList>*:hover{
+    border: 4px solid #ffffff;
+}
+
+#pokedexList>*:active{
+    background-color: #cfe2f3;
+}
+
+#pokedexList img{
     display: block;
+    width: 100%;
 }
 
 img.notCaught {
@@ -186,10 +230,45 @@ img.notCaught {
 
 #pokedexData {
     grid-area: data;
+    background-color: #cfe2f3;
+    border: 4px solid #073763;
+    border-radius: 30px;
+    padding: 15px 30px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    position: relative;
+}
+
+#pokedexData>div {
+    display: block;
+    border: 4px solid #073763;
+    border-radius: 5px;
+    background-color: #9fc5e8;
+    width: fit-content;
+    align-self: center;
+}
+
+#pokedexData>div>img{
+    width: 200px;
+}
+
+#pokedexData > p {
+    font-size: 10px;
 }
 
 #pokedexFilters {
     grid-area: filter;
+    min-height: 150px;
+    height: 100%;
+    overflow: auto;
+}
+
+#pokedexData>img{
+    width: 30px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
 /*
@@ -197,6 +276,42 @@ img.notCaught {
 */
 #favorite {
     background-color: #ffe599;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "head"
+        "list";
+    gap: 20px;
+    padding: 10px 10%;
+}
+
+#favorite>h1 {
+    grid-area: head;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+#favoriteList {
+    grid-area: list;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 100px);
+    gap: 20px;
+    overflow: hidden auto;
+    scrollbar-width: none;
+    align-content: start;
+    justify-content: center;
+    background-color: #fff2cc;
+    border: 4px solid #7f6000;
+    border-radius: 30px;
+    padding: 20px 15px;
+}
+
+#favoriteList>* {
+    border: 4px solid #7f6000;
+    border-radius: 5px;
+    background-color: #ffe599;
+    width: fit-content;
 }
 
 /*

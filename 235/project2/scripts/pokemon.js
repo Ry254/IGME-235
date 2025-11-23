@@ -1,4 +1,6 @@
 "use strict";
+let defaultImage = document.createElement("img");
+defaultImage.src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";
 /*
     Setup list of forms
 */
@@ -50,7 +52,7 @@ getForms("https://pokeapi.co/api/v2/pokemon-form/?limit=10000");
 let setupFormsList = () => {
     // filter out forms with no default sprite
     forms = forms.filter(form => form.defaultSprite);
-    
+
     // add fields to each form object and seal
     for (let form of forms) {
         form.caught = false;
@@ -120,7 +122,7 @@ let catchTyped = (e) => {
     }
     else {
         document.getElementById("caughtText").innerHTML = "Not a valid pokemon/form.";
-        document.getElementById("caughtImage").src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";
+        document.getElementById("caughtImage").src = defaultImage.src;
     }
 }
 
@@ -160,6 +162,9 @@ let pokedexScene = (e) => {
 
 // load pokedex list
 let pokedexLoad = (e) => {
+    hoverEnabled = true;
+    pokedexImageUnhovered();
+
     let filteredForms = forms;
 
     let type1 = getByType(document.getElementById("type1").value);
@@ -174,13 +179,18 @@ let pokedexLoad = (e) => {
 
     document.getElementById("pokedexList").innerHTML = "";
     for (let i = 0; i < filteredForms.length; i++) {
+        let newDiv = document.createElement("div");
         let newImg = document.createElement("img");
-        newImg.id = filteredForms[i].name;
+        newDiv.dataset.name = filteredForms[i].name;
         if (!filteredForms[i].caught) {
             newImg.classList.add("notCaught");
         }
         setImage(filteredForms, i, newImg, filteredForms[i].shinyCaught);
-        document.getElementById("pokedexList").appendChild(newImg);
+        newDiv.onclick = pokedexImageClick;
+        newDiv.onmouseenter = pokedexImageHovered;
+        newDiv.onmouseleave = pokedexImageUnhovered;
+        newDiv.appendChild(newImg);
+        document.getElementById("pokedexList").appendChild(newDiv);
     }
 }
 
@@ -199,6 +209,55 @@ let getByType = (type) => {
     return pkmn;
 }
 
+// pokedex list hovers and click
+let hoverEnabled = true;
+let pokedexImageClick = (e) => {
+    if (hoverEnabled) {
+        hoverEnabled = false;
+        return;
+    }
+
+    let formClickedName = e.currentTarget.dataset.name;
+    let currentFormDisplayed = document.getElementById("pokedexData").dataset.name;
+
+    if(formClickedName == currentFormDisplayed){
+        hoverEnabled = true;
+    }
+    else{
+        setPokedexData(formClickedName);
+    }
+}
+
+let pokedexImageHovered = (e) => {
+    if (!hoverEnabled) {
+        return;
+    }
+    setPokedexData(e.currentTarget.dataset.name);
+}
+
+let setPokedexData = (formName) => {
+    let imgOfForm = document.querySelector(`[data-name=${formName}]>img`);
+    document.getElementById("pokedexData").dataset.name = formName;
+    document.querySelector("#pokedexData img").src = imgOfForm.src;
+    document.querySelector("#pokedexData img").classList = imgOfForm.classList;
+    if (imgOfForm.className.indexOf("notCaught") == -1) {
+        document.querySelector("#pokedexData>p").innerHTML = formName.replaceAll("-", " ").toUpperCase();
+    }
+    else {
+        document.querySelector("#pokedexData>p").innerHTML = "???";
+    }
+}
+
+let pokedexImageUnhovered = (e) => {
+    if (!hoverEnabled) {
+        return;
+    }
+    document.getElementById("pokedexData").dataset.name = "";
+    document.querySelector("#pokedexData img").src = defaultImage.src;
+    document.querySelector("#pokedexData img").classList = defaultImage.classList;
+    document.querySelector("#pokedexData>p").innerHTML = "???";
+}
+
 /*
     Favorites Screen
 */
@@ -212,7 +271,22 @@ let favoritesScene = () => {
 
 // load favorotes list
 let favoritesLoad = () => {
+    document.getElementById("favoriteList").innerHTML = "";
+    for (let i = 0; i < forms.length; i++) {
+        if (!forms[i].favorite) {
+            continue;
+        }
 
+        let newDiv = document.createElement("div");
+        let newImg = document.createElement("img");
+        newDiv.dataset.name = forms[i].name;
+        if (!forms[i].caught) {
+            newImg.classList.add("notCaught");
+        }
+        setImage(forms, i, newImg, forms[i].shinyCaught);
+        newDiv.appendChild(newImg);
+        document.getElementById("favoriteList").appendChild(newDiv);
+    }
 }
 
 /*
@@ -225,7 +299,7 @@ window.onload = e => {
     document.getElementById("catchButton").onclick = catchTyped;
     document.getElementById("catchRandomButton").onclick = catchRandom;
     // https://stackoverflow.com/questions/155188/trigger-a-button-click-with-javascript-on-the-enter-key-in-a-text-box
-    document.getElementById("catchInput").addEventListener("keydown", (e) => {if (e.key == "Enter") catchTyped();});
+    document.getElementById("catchInput").addEventListener("keydown", (e) => { if (e.key == "Enter") catchTyped(); });
 
     // pokedex setup
     pokedexDisplay = document.getElementById("pokedex").style.display;
@@ -242,7 +316,7 @@ window.onload = e => {
 }
 
 let DEBUG_setAllForms = (caught = true, shinyCaught = false, favorite = false) => {
-    for(let form of forms){
+    for (let form of forms) {
         form.caught = caught;
         form.shinyCaught = shinyCaught;
         form.favorite = favorite;

@@ -14,14 +14,14 @@
         <main>
             <section id="catch">
                 <div id="catchWindow">
-                    <h1>Type a Pokemon Form's name to catch it</h1>
+                    <h1>Type a Pokemon name to catch it!</h1>
                     <div>
                         <input type="text" placeholder="Type here" id="catchInput" value="">
-                        <button type="button" id="catchRandomButton">Random Pokemon</button>
                         <button type="button" id="catchButton">Catch!</button>
+                        <button type="button" id="catchRandomButton">Random Pokemon</button>
                     </div>
-                    <img src="" alt="" id="caughtImage">
-                    <p id="caughtText"></p>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="" id="caughtImage">
+                    <p id="caughtText"> </p>
                 </div>
             </section>
             <section id="pokedex">
@@ -90,12 +90,15 @@
             </section>
         </main>
         <nav>
-            <a href="#catch" class="navLink">Catch</a>
-            <a href="#pokedex" class="navLink">Pokedex</a>
-            <a href="#favorite" class="navLink">Favorite</a>
+            <button type="button" id="catchSceneButton">Catch</button>
+            <button type="button" id="pokedexSceneButton">Pokedex</button>
+            <button type="button" id="favoritesSceneButton">Favorites</button>
         </nav>
         <footer>
-            Created by Ryan Samoyedny using <a href="https://pokeapi.co/">PokeAPI</a>
+            <p>
+                Created by Ryan Samoyedny using <a href="https://pokeapi.co/">PokeAPI</a>. <a href="">Documentation of project</a>
+            </p>
+            
         </footer>
     </div>
 </body>

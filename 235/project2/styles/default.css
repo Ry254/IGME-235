@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 /*
     Body
 */
@@ -7,6 +8,7 @@ html {
 
 body {
     margin: 0;
+    font-family: "Press Start 2P", system-ui;
 }
 
 #siteWrapper {
@@ -24,14 +26,32 @@ body {
     list-style: none;
     display: flex;
     flex-direction: row;
-    padding: 0;
-    margin: 0;
 }
 
-a.navLink {
-    flex-grow: 1;
+h1{
+    font-size: 25px;
+}
+
+button[id$=SceneButton] {
+    flex: 1 1 0px;
     height: 100%;
     display: block;
+    border: none;
+}
+
+#catchSceneButton {
+    background-color: #ea9999;
+    color: #660000;
+}
+
+#pokedexSceneButton {
+    background-color: #9fc5e8;
+    color: #073763;
+}
+
+#favoritesSceneButton {
+    background-color: #ffe599;
+    color: #7f6000;
 }
 
 #siteWrapper>main {
@@ -49,11 +69,79 @@ main>section {
     grid-area: footer;
 }
 
+footer>p {
+    margin: 0;
+}
+
+img {
+    image-rendering: pixelated;
+}
+
+button, select {
+    font-family: "Press Start 2P", system-ui;
+}
+
 /*
     Catch
 */
 #catch {
     background-color: #ea9999;
+}
+
+#catchWindow {
+    background-color: #f4cccc;
+    border: 4px solid #660000;
+    border-radius: 30px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    max-width: 80%;
+    width: 800px;
+    margin: 60px auto;
+    gap: 20px;
+}
+
+#catchWindow>h1 {
+    margin: 0;
+    text-align: center;
+}
+
+#catchInput {
+    text-align: center;
+    border: 2px solid #660000;
+}
+
+#catchWindow button{
+    font-size: 10px;
+    height: 20px;
+    background-color: #660000;
+    border: 2px solid #660000;
+    border-radius: 5px;
+    color: white;
+}
+
+#catchWindow button:hover{
+    border: 2px solid white;
+}
+
+#catchWindow button:active{
+    background-color: #ea9999;
+}
+
+#caughtImage {
+    width: 400px;
+    max-width: 80%;
+    aspect-ratio: 1;
+    background-color: white;
+    border: 6px solid #660000;
+    border-radius: 1000px;
+}
+
+#caughtText {
+    margin: 0;
+    text-align: center;
 }
 
 /*
@@ -72,7 +160,7 @@ main>section {
     padding: 10px;
 }
 
-#pokedex>h1{
+#pokedex>h1 {
     grid-area: head;
     margin: 0;
     text-align: center;
@@ -96,11 +184,11 @@ img.notCaught {
     filter: contrast(0%);
 }
 
-#pokedexData{
+#pokedexData {
     grid-area: data;
 }
 
-#pokedexFilters{
+#pokedexFilters {
     grid-area: filter;
 }
 

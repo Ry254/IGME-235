@@ -10,65 +10,74 @@ let getForms = (url) => {
         formsJSON = JSON.parse(formsJSON).results;
         forms = formsJSON;
         for (let i = 0; i < forms.length; i++) {
-            removeFormsWithNoImage(i);
+            getImages(i);
         }
     };
     xhr.onerror = error;
     xhr.open("GET", url);
     xhr.send();
 }
-let formsCheckedForValidity = 0;
-let removeFormsWithNoImage = (formIndex) => {
+let formsCheckedForImages = 0;
+let getImages = (formIndex) => {
     let xhr = new XMLHttpRequest();
     xhr.onload = e => {
         let spriteJSON = e.target.responseText;
         spriteJSON = JSON.parse(spriteJSON).sprites;
-        if (!spriteJSON.front_default) {
-            forms[formIndex] = null;
-        }
-        else {
-            forms[formIndex].defaultSprite = spriteJSON.front_default;
-            forms[formIndex].shinySprite = spriteJSON.front_shiny;
-            forms[formIndex].femaleSprite = spriteJSON.front_female;
-            forms[formIndex].femaleShinySprite = spriteJSON.front_shiny_female;
-        }
 
-        formsCheckedForValidity++;
-        if (formsCheckedForValidity >= forms.length) {
-            onFormsReceved();
+        forms[formIndex].defaultSprite = spriteJSON.front_default;
+        forms[formIndex].shinySprite = spriteJSON.front_shiny;
+        forms[formIndex].femaleSprite = spriteJSON.front_female;
+        forms[formIndex].femaleShinySprite = spriteJSON.front_shiny_female;
+
+        formsCheckedForImages++;
+        if (formsCheckedForImages >= forms.length) {
+            setupFormsList();
         }
     };
     xhr.onerror = error;
-    xhr.open("GET", forms[formIndex].url, false);
+    xhr.open("GET", forms[formIndex].url);
     xhr.send();
 }
 
 let forms = {};
-let formsLoaded = false;
 getForms("https://pokeapi.co/api/v2/pokemon-form/?limit=10000");
 
 /*
     Read local storage
 */
-let onFormsReceved = () => {
-    forms = forms.filter(form => form);
+
+// sets up the list of forms for use in the sight
+let setupFormsList = () => {
+    // filter out forms with no default sprite
+    forms = forms.filter(form => form.defaultSprite);
+    
+    // add fields to each form object and seal
     for (let form of forms) {
         form.caught = false;
         form.shinyCaught = false;
+        form.favorite = false;
         Object.seal(form);
     }
-    formsLoaded = true;
-    if (document.body) {
-        document.body.style.display = "block";
-    }
-    pokedexLoad();
+
+    readStorage();
+}
+
+// 
+let readStorage = () => {
 }
 
 /*
     Catch Screen
 */
+// show catch scene
+let catchScene = () => {
+    document.getElementById("catch").style.display = catchDisplay;
+    document.getElementById("pokedex").style.display = "none";
+    document.getElementById("favorite").style.display = "none";
+}
+
 let catchTyped = (e) => {
-    let input = document.querySelector("#catchInput").value;
+    let input = document.getElementById("catchInput").value;
     input = input.trim().toLowerCase();
     input = input.replace(/[.'%]/, "").split(/[- ]/);
     for (let i = 0; i < input.length; i++) {
@@ -110,7 +119,8 @@ let catchTyped = (e) => {
         catchMon(formIndex);
     }
     else {
-        document.querySelector("#caughtText").innerHTML = "Not a valid pokemon/form.";
+        document.getElementById("caughtText").innerHTML = "Not a valid pokemon/form.";
+        document.getElementById("caughtImage").src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";
     }
 }
 
@@ -121,11 +131,11 @@ let catchRandom = (e) => {
 
 let catchMon = (formIndex) => {
     let isshiny = Math.random() < .05;
-    setImage(forms, formIndex, document.querySelector("#caughtImage"), isshiny);
+    setImage(forms, formIndex, document.getElementById("caughtImage"), isshiny);
     let formName = forms[formIndex].name.replaceAll("-", " ");
     forms[formIndex].caught = true;
     forms[formIndex].shinyCaught = forms[formIndex].shinyCaught ? true : isshiny;
-    document.querySelector("#caughtText").innerHTML = "You caught a " + (isshiny ? "SHINY " : "") + formName.toUpperCase() + "!";
+    document.getElementById("caughtText").innerHTML = "You caught " + (isshiny ? "SHINY " : "") + formName.toUpperCase() + "!";
 }
 
 let setImage = (formList, formIndex, imageElement, isshiny = false) => {
@@ -140,20 +150,29 @@ let setImage = (formList, formIndex, imageElement, isshiny = false) => {
 /*
     Pokedex Screen
 */
+// show pokedex scene
+let pokedexScene = (e) => {
+    document.getElementById("catch").style.display = "none";
+    document.getElementById("pokedex").style.display = pokedexDisplay;
+    document.getElementById("favorite").style.display = "none";
+    pokedexLoad();
+}
+
+// load pokedex list
 let pokedexLoad = (e) => {
     let filteredForms = forms;
 
-    let type1 = getByType(document.querySelector("#type1").value);
+    let type1 = getByType(document.getElementById("type1").value);
     if (type1) {
         filteredForms = filteredForms.filter(form => type1.indexOf(form.name) != -1);
     }
 
-    let type2 = getByType(document.querySelector("#type2").value);
+    let type2 = getByType(document.getElementById("type2").value);
     if (type2) {
         filteredForms = filteredForms.filter(form => type2.indexOf(form.name) != -1);
     }
 
-    document.querySelector("#pokedexList").innerHTML = "";
+    document.getElementById("pokedexList").innerHTML = "";
     for (let i = 0; i < filteredForms.length; i++) {
         let newImg = document.createElement("img");
         newImg.id = filteredForms[i].name;
@@ -161,10 +180,11 @@ let pokedexLoad = (e) => {
             newImg.classList.add("notCaught");
         }
         setImage(filteredForms, i, newImg, filteredForms[i].shinyCaught);
-        document.querySelector("#pokedexList").appendChild(newImg);
+        document.getElementById("pokedexList").appendChild(newImg);
     }
 }
 
+// returns list of all pokemon of a type
 let getByType = (type) => {
     if (type == "any") {
         return null;
@@ -182,24 +202,51 @@ let getByType = (type) => {
 /*
     Favorites Screen
 */
+// show favorites scene
+let favoritesScene = () => {
+    document.getElementById("catch").style.display = "none";
+    document.getElementById("pokedex").style.display = "none";
+    document.getElementById("favorite").style.display = favoritesDisplay;
+    favoritesLoad();
+}
 
-/*
-    Settings
-*/
+// load favorotes list
+let favoritesLoad = () => {
+
+}
 
 /*
     OnLoad
 */
+let catchDisplay, pokedexDisplay, favoritesDisplay;
 window.onload = e => {
-    if (!formsLoaded) {
-        document.body.style.display = "none";
+    // catch setup
+    catchDisplay = document.getElementById("catch").style.display;
+    document.getElementById("catchButton").onclick = catchTyped;
+    document.getElementById("catchRandomButton").onclick = catchRandom;
+    // https://stackoverflow.com/questions/155188/trigger-a-button-click-with-javascript-on-the-enter-key-in-a-text-box
+    document.getElementById("catchInput").addEventListener("keydown", (e) => {if (e.key == "Enter") catchTyped();});
+
+    // pokedex setup
+    pokedexDisplay = document.getElementById("pokedex").style.display;
+    document.getElementById("pokedexLoadButton").onclick = pokedexLoad;
+
+    // favorites setup
+    favoritesDisplay = document.getElementById("favorite").style.display;
+
+    // header buttons
+    document.getElementById("catchSceneButton").onclick = catchScene;
+    document.getElementById("pokedexSceneButton").onclick = pokedexScene;
+    document.getElementById("favoritesSceneButton").onclick = favoritesScene;
+    catchScene();
+}
+
+let DEBUG_setAllForms = (caught = true, shinyCaught = false, favorite = false) => {
+    for(let form of forms){
+        form.caught = caught;
+        form.shinyCaught = shinyCaught;
+        form.favorite = favorite;
     }
-
-    document.querySelector("#catchButton").onclick = catchTyped;
-    document.querySelector("#catchRandomButton").onclick = catchRandom;
-
-    document.querySelector("#pokedexLoadButton").onclick = pokedexLoad;
-    document.querySelector("a[href='#pokedex']").onclick = pokedexLoad;
-
-    document.querySelector("#catch").scrollIntoView();
+    pokedexLoad();
+    favoritesLoad();
 }

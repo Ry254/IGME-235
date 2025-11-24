@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 2 Documentation</title>
+    <style>
+        body{
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Documentation for Project 2</h1>
+    </header>
+    <main>
+        <h2>Process</h2>
+        <ul>
+            <li>
+                <h3><a href="Project 2 - Proposal.pdf">Proposal</a></h3>
+                <p>
+                    Used Google Slides to create a mockup and used PokeAPI to see how it works and is structured
+                </p>
+            </li>
+            <li>
+                <h3><a href="prototype/">Prototype</a></h3>
+                <p>
+                    Compleated the catching section as that is the core functionality. Pokedex was functional, with some
+                    of the filters created. Favorites was not done as catching and the Pokedex was more important for
+                    the prototype. Simple CSS was applied to give some idea of the final site.
+                </p>
+            </li>
+            <li>
+                <h3><a href="..//">Final</a></h3>
+                <p>
+                    More filters added for the pokedex alongside an image and name of the hovered over pokemon. Star
+                    added that when clicked will favorite the pokemon displayed above the star (pokemon must be caught).
+                    Favorites section shows every pokemon favorited. CSS applied to make the site look like the proposal
+                    mockup. Local storage saves the previously searched filters, caught pokemon, caught shiny pokemon,
+                    and favorited pokemon.
+                </p>
+                <p>
+                    One error was found durring the in-class critique, where the Crome would not have enough resources
+                    while getting the images for each pokemon. I tried multiple ways to solve this, but none would work.
+                    PokeAPI has no good way to get images to every form, since the url's for these images are not
+                    standarized. Image IDs were sometimes different to the form IDs, and in some cases the url had the
+                    form name after the ID of the default form instead. I also tried to get the images synchronously,
+                    but then the site wouldn't load on my slower internet at home (but would work at school). The error
+                    is still there, some functionality still works with the error. The school computers worked when
+                    using Firefox.
+                </p>
+            </li>
+        </ul>
+        <h2>Sources</h2>
+        <ul>
+            <li>
+                <a href="https://pokeapi.co/">https://pokeapi.co/</a> for pokemon data and all images I did not create
+            </li>
+            <li>
+                <a href="https://www.w3schools.com/">https://www.w3schools.com/</a> for most additional HTML, CSS, and
+                JS research
+            </li>
+            <li>
+                <a href="https://stackoverflow.com/questions/155188/">https://stackoverflow.com/questions/155188/</a> to
+                reasearch how to use enter for search
+            </li>
+        </ul>
+        <h2>Requirements Met</h2>
+        <ul>
+            <li>
+                <h3>Functionality</h3>
+                <ul>
+                    <li>
+                        <h4>API</h4>
+                        <p>
+                            Other than that error, the API data is collected and well displayed
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Local Storage</h4>
+                        <p>
+                            Filteres are stored along with pokemon caught, shiny pokemon caught, and favorited pokemon
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Controls</h4>
+                        <p>
+                            Type name to catch, caught only, shiny forms, type 1, type 2, egg group, color, shape (also
+                            catch, catch random, search, and reset filters as ways to search)
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Error-Free</h4>
+                        <p>
+                            Only the previously mentioned error that I attempted to fix. Core functionality is still
+                            there.
+                        </p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Technical Expectations</h3>
+                <ul>
+                    <li>
+                        <h4>Code</h4>
+                        <p>
+                            JS is fully commented and CSS has comments for each section of code. JS standards are followed
+                        </p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>HTML & CSS</h3>
+                <ul>
+                    <li>
+                        <h4>Semantic structure</h4>
+                        <p>
+                            main, nav, and footer are the main three, with further structure in. Each div is used to
+                            wrap simular elements for positioning and layout or to have the CSS contrast not apply to
+                            the box around the pokedex images.
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Valid HTML</h4>
+                        <p>
+                            No errors
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Valid CSS</h4>
+                        <p>
+                            No errors
+                        </p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Look and Feel</h3>
+                <ul>
+                    <li>
+                        <h4>Visual Design</h4>
+                        <p>
+                            Three sections with their own colors, based on the original three english Pokemon games.
+                            Nothing like the GIF Finder homework
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Interaction Design</h4>
+                        <p>
+                            Input are clear, told if the phrase they typed is not a valid form
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Responsive Design</h4>
+                        <p>
+                            Works well until about 400px wide and smaller heights add a scroll bar for the main section.
+                            Grid is used for the main layout (nav, main, footer in a column)
+                        </p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Other</h3>
+                <ul>
+                    <li>
+                        <h4>Checkpoints deliverables</h4>
+                        <p>
+                            Proposal submitted and prototype was demonstrated in class
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Documentation</h4>
+                        <p>
+                            All on this page, linked from the project
+                        </p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h2>Other</h2>
+        <ul>
+            <li>
+                This was a more in depth project than if I just did a search. It's a small game
+            </li>
+            <li>
+                debug_setAllForms() can be used in the console to set the caught, caughtShiny, and favorite attributes for
+                each pokemon form to true or false
+            </li>
+            <li>
+                debug_resetStorage() is another way to reset the storage for both keys used by the app
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <p>Ryan Samoyedny, 2025</p>
+    </footer>
+</body>
+
+</html>

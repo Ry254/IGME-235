@@ -156,7 +156,6 @@ button, select {
 #caughtImage {
     width: 300px;
     max-width: 80%;
-    aspect-ratio: 1;
     background-color: white;
     border: 6px solid #660000;
     border-radius: 1000px;
@@ -202,6 +201,8 @@ button, select {
     border: 4px solid #073763;
     border-radius: 30px;
     padding: 20px 15px;
+    margin: 0;
+    list-style: none;
 }
 
 #pokedexList>* {
@@ -352,6 +353,8 @@ img.notCaught {
     border: 4px solid #7f6000;
     border-radius: 30px;
     padding: 20px 15px;
+    margin: 0;
+    list-style: none;;
 }
 
 #favoriteList>* {
@@ -360,7 +363,3 @@ img.notCaught {
     background-color: #ffe599;
     width: fit-content;
 }
-
-/*
-    Responsive
-*/

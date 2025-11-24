@@ -64,8 +64,27 @@ let setupFormsList = () => {
     readStorage();
 }
 
-// 
+const storageKey = "rns2723pokedex";
 let readStorage = () => {
+    let storedData = localStorage.getItem(storageKey);
+    if(!storedData){
+        return;
+    }
+
+    storedData = JSON.parse(storedData);
+
+    for(let i = 0; i < forms.length; i++){
+        if(i >= storedData.length){break;}
+        forms[i].caught = storedData[i].caught;
+        forms[i].shinyCaught = storedData[i].shinyCaught;
+        forms[i].favorite = storedData[i].favorite;
+    }
+}
+
+let writeStorage = () => {
+    let storedData = forms.map(form => {return {caught:form.caught, shinyCaught:form.shinyCaught, favorite:form.favorite};});
+    storedData = JSON.stringify(storedData);
+    localStorage.setItem(storageKey, storedData);
 }
 
 /*
@@ -138,6 +157,7 @@ let catchMon = (formIndex) => {
     forms[formIndex].caught = true;
     forms[formIndex].shinyCaught = forms[formIndex].shinyCaught ? true : isshiny;
     document.getElementById("caughtText").innerHTML = "You caught " + (isshiny ? "SHINY " : "") + formName.toUpperCase() + "!";
+    writeStorage();
 }
 
 let setImage = (formList, formIndex, imageElement, isshiny = false) => {
@@ -354,6 +374,7 @@ let onFavoriteStarClicked = (e) => {
         starElement.dataset.favorite = "true";
         forms[formIndex].favorite = true;
     }
+    writeStorage();
 }
 
 let indexOfName = (formList, name) => {
@@ -401,4 +422,9 @@ let DEBUG_setAllForms = (caught = true, shinyCaught = false, favorite = false) =
     }
     pokedexLoad();
     favoritesLoad();
+    writeStorage();
+}
+
+let DEBUG_resetStorage = () => {
+    localStorage.removeItem(storageKey);
 }

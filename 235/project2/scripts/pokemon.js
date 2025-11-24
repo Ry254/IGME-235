@@ -64,27 +64,50 @@ let setupFormsList = () => {
     readStorage();
 }
 
-const storageKey = "rns2723pokedex";
+const pokedexKey = "rns2723pokedex";
+const filtersKey = "rns2723filters";
 let readStorage = () => {
-    let storedData = localStorage.getItem(storageKey);
-    if(!storedData){
-        return;
+    let storedData = localStorage.getItem(pokedexKey);
+    if (storedData) {
+        storedData = JSON.parse(storedData);
+
+        for (let i = 0; i < forms.length; i++) {
+            if (i >= storedData.length) { break; }
+            forms[i].caught = storedData[i].caught;
+            forms[i].shinyCaught = storedData[i].shinyCaught;
+            forms[i].favorite = storedData[i].favorite;
+        }
     }
 
-    storedData = JSON.parse(storedData);
+    storedData = localStorage.getItem(filtersKey);
+    if (storedData) {
+        storedData = JSON.parse(storedData);
 
-    for(let i = 0; i < forms.length; i++){
-        if(i >= storedData.length){break;}
-        forms[i].caught = storedData[i].caught;
-        forms[i].shinyCaught = storedData[i].shinyCaught;
-        forms[i].favorite = storedData[i].favorite;
+        document.getElementById("caughtOnly").checked = storedData.caughtOnly;
+        document.getElementById("showNonShiny").checked = storedData.showNonShiny;
+        document.getElementById("type1").value = storedData.type1;
+        document.getElementById("type2").value = storedData.type2;
+        document.getElementById("eggGroup").value = storedData.eggGroup;
+        document.getElementById("color").value = storedData.color;
+        document.getElementById("shape").value = storedData.shape;
     }
 }
 
 let writeStorage = () => {
-    let storedData = forms.map(form => {return {caught:form.caught, shinyCaught:form.shinyCaught, favorite:form.favorite};});
+    let storedData = forms.map(form => { return { caught: form.caught, shinyCaught: form.shinyCaught, favorite: form.favorite }; });
     storedData = JSON.stringify(storedData);
-    localStorage.setItem(storageKey, storedData);
+    localStorage.setItem(pokedexKey, storedData);
+
+    storedData = {};
+    storedData.caughtOnly = document.getElementById("caughtOnly").checked;
+    storedData.showNonShiny = document.getElementById("showNonShiny").checked;
+    storedData.type1 = document.getElementById("type1").value;
+    storedData.type2 = document.getElementById("type2").value;
+    storedData.eggGroup = document.getElementById("eggGroup").value;
+    storedData.color = document.getElementById("color").value;
+    storedData.shape = document.getElementById("shape").value;
+    storedData = JSON.stringify(storedData);
+    localStorage.setItem(filtersKey, storedData);
 }
 
 /*
@@ -196,7 +219,7 @@ let pokedexLoad = (e) => {
         filteredForms = filteredForms.filter(form => type1.indexOf(form.name) != -1);
     }
 
-    let type2 = getByFilter("type", document.getElementById("type2").value);
+    let type2 = getByFilter("type", document.getElementById("type2").value, "pokemon", "pokemon");
     if (type2) {
         filteredForms = filteredForms.filter(form => type2.indexOf(form.name) != -1);
     }
@@ -232,6 +255,8 @@ let pokedexLoad = (e) => {
         newDiv.appendChild(newImg);
         document.getElementById("pokedexList").appendChild(newDiv);
     }
+
+    writeStorage();
 }
 
 let getByFilter = (filterName, value, listTerm = "pokemon_species", secondaryTerm) => {
@@ -358,18 +383,18 @@ let favoritesLoad = () => {
 let onFavoriteStarClicked = (e) => {
     let formName = document.getElementById("pokedexData").dataset.name;
     let formIndex = indexOfName(forms, formName);
-    if(formIndex == -1 || !forms[formIndex].caught){
+    if (formIndex == -1 || !forms[formIndex].caught) {
         return;
     }
 
     let starElement = document.querySelector("#pokedexData>img");
 
-    if(starElement.dataset.favorite == "true"){
+    if (starElement.dataset.favorite == "true") {
         starElement.src = "images/favorite_empty.svg";
         starElement.dataset.favorite = "false";
         forms[formIndex].favorite = false;
     }
-    else{
+    else {
         starElement.src = "images/favorite_filled.svg";
         starElement.dataset.favorite = "true";
         forms[formIndex].favorite = true;
@@ -426,5 +451,6 @@ let DEBUG_setAllForms = (caught = true, shinyCaught = false, favorite = false) =
 }
 
 let DEBUG_resetStorage = () => {
-    localStorage.removeItem(storageKey);
+    localStorage.removeItem(pokedexKey);
+    localStorage.removeItem(filtersKey);
 }

@@ -4,7 +4,7 @@ defaultImage.src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/spr
 /*
     Setup list of forms
 */
-let error = (e) => console.log("error!");
+let error = (e) => console.log("error getting forms");
 let getForms = (url) => {
     let xhr = new XMLHttpRequest();
     xhr.onload = e => {
@@ -167,14 +167,33 @@ let pokedexLoad = (e) => {
 
     let filteredForms = forms;
 
-    let type1 = getByType(document.getElementById("type1").value);
+    if (document.getElementById("caughtOnly").checked) {
+        filteredForms = filteredForms.filter(form => form.caught);
+    }
+
+    let type1 = getByFilter("type", document.getElementById("type1").value, "pokemon", "pokemon");
     if (type1) {
         filteredForms = filteredForms.filter(form => type1.indexOf(form.name) != -1);
     }
 
-    let type2 = getByType(document.getElementById("type2").value);
+    let type2 = getByFilter("type", document.getElementById("type2").value);
     if (type2) {
         filteredForms = filteredForms.filter(form => type2.indexOf(form.name) != -1);
+    }
+
+    let eggGroup = getByFilter("egg-group", document.getElementById("eggGroup").value);
+    if (eggGroup) {
+        filteredForms = filteredForms.filter(form => eggGroup.indexOf(form.name) != -1);
+    }
+
+    let color = getByFilter("pokemon-color", document.getElementById("color").value);
+    if (color) {
+        filteredForms = filteredForms.filter(form => color.indexOf(form.name) != -1);
+    }
+
+    let shape = getByFilter("pokemon-shape", document.getElementById("shape").value);
+    if (shape) {
+        filteredForms = filteredForms.filter(form => shape.indexOf(form.name) != -1);
     }
 
     document.getElementById("pokedexList").innerHTML = "";
@@ -185,7 +204,8 @@ let pokedexLoad = (e) => {
         if (!filteredForms[i].caught) {
             newImg.classList.add("notCaught");
         }
-        setImage(filteredForms, i, newImg, filteredForms[i].shinyCaught);
+        setImage(filteredForms, i, newImg,
+            document.getElementById("showNonShiny").checked ? filteredForms[i].shinyCaught : false);
         newDiv.onclick = pokedexImageClick;
         newDiv.onmouseenter = pokedexImageHovered;
         newDiv.onmouseleave = pokedexImageUnhovered;
@@ -194,19 +214,35 @@ let pokedexLoad = (e) => {
     }
 }
 
-// returns list of all pokemon of a type
-let getByType = (type) => {
-    if (type == "any") {
+let getByFilter = (filterName, value, listTerm = "pokemon_species", secondaryTerm) => {
+    if (value == "any") {
         return null;
     }
 
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://pokeapi.co/api/v2/type/" + type, false);
+    xhr.open("GET", `https://pokeapi.co/api/v2/${filterName}/${value}`, false);
     xhr.send();
     let pkmnJSON = xhr.responseText;
-    pkmnJSON = JSON.parse(pkmnJSON).pokemon;
-    let pkmn = pkmnJSON.map(item => item.pokemon.name);
+    pkmnJSON = JSON.parse(pkmnJSON)[listTerm];
+    let pkmn;
+    if (secondaryTerm) {
+        pkmn = pkmnJSON.map(item => item[secondaryTerm].name);
+    }
+    else {
+        pkmn = pkmnJSON.map(item => item.name);
+    }
     return pkmn;
+}
+
+let resetFilters = () => {
+    document.getElementById("caughtOnly").checked = true;
+    document.getElementById("showNonShiny").checked = true;
+    document.getElementById("type1").value = "any";
+    document.getElementById("type2").value = "any";
+    document.getElementById("eggGroup").value = "any";
+    document.getElementById("color").value = "any";
+    document.getElementById("shape").value = "any";
+    pokedexLoad();
 }
 
 // pokedex list hovers and click
@@ -220,10 +256,10 @@ let pokedexImageClick = (e) => {
     let formClickedName = e.currentTarget.dataset.name;
     let currentFormDisplayed = document.getElementById("pokedexData").dataset.name;
 
-    if(formClickedName == currentFormDisplayed){
+    if (formClickedName == currentFormDisplayed) {
         hoverEnabled = true;
     }
-    else{
+    else {
         setPokedexData(formClickedName);
     }
 }
@@ -246,6 +282,15 @@ let setPokedexData = (formName) => {
     else {
         document.querySelector("#pokedexData>p").innerHTML = "???";
     }
+
+    if (forms[indexOfName(forms, formName)].favorite) {
+        document.querySelector("#pokedexData>img").src = "images/favorite_filled.svg";
+        document.querySelector("#pokedexData>img").dataset.favorite = "true";
+    }
+    else {
+        document.querySelector("#pokedexData>img").src = "images/favorite_empty.svg";
+        document.querySelector("#pokedexData>img").dataset.favorite = "false";
+    }
 }
 
 let pokedexImageUnhovered = (e) => {
@@ -256,6 +301,7 @@ let pokedexImageUnhovered = (e) => {
     document.querySelector("#pokedexData img").src = defaultImage.src;
     document.querySelector("#pokedexData img").classList = defaultImage.classList;
     document.querySelector("#pokedexData>p").innerHTML = "???";
+    document.querySelector("#pokedexData>img").src = "images/favorite_empty.svg";
 }
 
 /*
@@ -289,6 +335,36 @@ let favoritesLoad = () => {
     }
 }
 
+let onFavoriteStarClicked = (e) => {
+    let formName = document.getElementById("pokedexData").dataset.name;
+    let formIndex = indexOfName(forms, formName);
+    if(formIndex == -1 || !forms[formIndex].caught){
+        return;
+    }
+
+    let starElement = document.querySelector("#pokedexData>img");
+
+    if(starElement.dataset.favorite == "true"){
+        starElement.src = "images/favorite_empty.svg";
+        starElement.dataset.favorite = "false";
+        forms[formIndex].favorite = false;
+    }
+    else{
+        starElement.src = "images/favorite_filled.svg";
+        starElement.dataset.favorite = "true";
+        forms[formIndex].favorite = true;
+    }
+}
+
+let indexOfName = (formList, name) => {
+    for (let i = 0; i < formList.length; i++) {
+        if (formList[i].name == name) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 /*
     OnLoad
 */
@@ -304,8 +380,10 @@ window.onload = e => {
     // pokedex setup
     pokedexDisplay = document.getElementById("pokedex").style.display;
     document.getElementById("pokedexLoadButton").onclick = pokedexLoad;
+    document.getElementById("pokedexResetButton").onclick = resetFilters;
 
     // favorites setup
+    document.querySelector("#pokedexData>img").onclick = onFavoriteStarClicked;
     favoritesDisplay = document.getElementById("favorite").style.display;
 
     // header buttons

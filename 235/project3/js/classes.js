@@ -1,8 +1,9 @@
 'use strict';
 // scene
 class scene {
-    constructor(name) {
+    constructor(name, subscenes = {}) {
         this.name = name;
+        this.subscenes = subscenes;
         this.sceneItems = [];
     }
     addSceneItem(sceneItem) {
@@ -45,6 +46,9 @@ class item {
             let randomIndex = Math.floor(Math.random() * this.descriptions.length);
             document.querySelector("#textbox>p").innerHTML = this.descriptions[randomIndex];
         }
+        else {
+            document.querySelector("#textbox>p").innerHTML = "no description set for: " + this.name;
+        }
         // display actions
         for (let action of this.actions) {
             action.display();
@@ -62,7 +66,7 @@ class sceneItem extends item {
     }
     display = () => {
         // add to scene at position
-        let p = document.createElement("p");
+        let p = document.createElement("button");
         p.innerHTML = this.name;
         document.querySelector("#scene").appendChild(p);
         // if interactable

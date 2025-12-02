@@ -1,0 +1,56 @@
+body {
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+}
+
+#gameWrapper {
+    display: grid;
+    grid-template-rows: 50px auto 150px;
+    grid-template-columns: 200px auto 200px;
+    grid-template-areas:
+        "items scene   timer"
+        "items scene   notes"
+        "items textbox notes";
+    gap: 20px;
+    margin: 15px;
+}
+
+#gameWrapper>* {
+    background-color: black;
+    border: 4px solid white;
+}
+
+#scene {
+    grid-area: scene;
+    aspect-ratio: 4/3;
+}
+
+#textbox {
+    grid-area: textbox;
+}
+
+#items {
+    grid-area: items;
+    margin: 0;
+    list-style: none;
+}
+
+#timer {
+    grid-area: timer;
+    margin: 0;
+    text-align: center;
+    align-content: center;
+}
+
+#notes{
+    grid-area: notes;
+    background-color: white;
+    border: 4px solid gray;
+}

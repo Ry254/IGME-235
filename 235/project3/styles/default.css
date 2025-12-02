@@ -5,15 +5,16 @@ body {
     flex-direction: column;
     padding: 0;
     margin: 0;
-    width: 100vw;
-    height: 100vh;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
 }
 
 #gameWrapper {
     display: grid;
-    grid-template-rows: 50px auto 150px;
-    grid-template-columns: 200px auto 200px;
+    grid-template-rows: 50px 1fr 150px;
+    grid-template-columns: 200px 600px 200px;
     grid-template-areas:
         "items scene   timer"
         "items scene   notes"
@@ -29,7 +30,7 @@ body {
 
 #scene {
     grid-area: scene;
-    aspect-ratio: 4/3;
+    aspect-ratio: 16/9;
 }
 
 #textbox {
@@ -53,4 +54,5 @@ body {
     grid-area: notes;
     background-color: white;
     border: 4px solid gray;
+    resize: none;
 }

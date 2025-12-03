@@ -11,19 +11,19 @@ class scene {
     }
     addSceneItem = (sceneItem, displayScene = false) => {
         this.sceneItems.push(sceneItem);
-        if(displayScene){
+        if (displayScene) {
             this.display();
         }
     }
     removeSceneItem = (name, displayScene = false) => {
         this.sceneItems = this.sceneItems.filter(item => item.name != name);
-        if(displayScene){
+        if (displayScene) {
             this.display();
         }
     }
     display = () => {
         // reset scene box
-        document.querySelector("#scene").replaceChildren([]); 
+        document.querySelector("#scene").replaceChildren([]);
         // display background
         // display scene items
         for (let item of this.sceneItems) {
@@ -38,6 +38,16 @@ class item {
         this.name = name;
         this.descriptions = descriptions;
         this.actions = actions;
+
+        this.inventoryItemAction = new itemAction(
+            "use item interaction",
+            () => {
+                document.querySelector("#textbox>p").innerHTML = "Nothing Happened";
+                document.querySelector("#textbox>ul").replaceChildren([]);
+                document.querySelector("#inventory").dataset.activeItem = "";
+            },
+            true
+        );
     }
     display = () => { }
     onMouseEnter = (e) => {
@@ -61,8 +71,13 @@ class item {
             document.querySelector("#textbox>p").innerHTML = "no description set for: " + this.name;
         }
         // display actions
-        for (let action of this.actions) {
-            action.display();
+        if (document.querySelector("#inventory").dataset.activeItem == "") {
+            for (let action of this.actions) {
+                action.display();
+            }
+        }
+        else {
+            this.inventoryItemAction.display();
         }
     }
 }
@@ -77,13 +92,14 @@ class sceneItem extends item {
         this.visible = visible;
     }
     display = () => {
-        if(!this.visible){
+        if (!this.visible) {
             return;
         }
 
         // add to scene at position
         let button = document.createElement("button");
         button.innerHTML = this.name;
+        button.dataset.name = this.name;
         document.querySelector("#scene").appendChild(button);
         // if interactable
         if (this.interactable) {
@@ -105,6 +121,7 @@ class inventoryItem extends item {
         // add to items list
         let button = document.createElement("button");
         button.innerHTML = this.name;
+        button.dataset.name = this.name;
         document.querySelector("#inventory").appendChild(
             document.createElement("li").appendChild(button));
         // add onclick
@@ -116,8 +133,8 @@ class inventoryItem extends item {
 }
 
 // inventory
-class inventory{
-    constructor(){
+class inventory {
+    constructor() {
         this.inventoryItems = [];
     }
     getInventoryItem = (name) => {
@@ -125,19 +142,19 @@ class inventory{
     }
     addInventoryItem = (inventoryItem, displayScene = false) => {
         this.inventoryItems.push(inventoryItem);
-        if(displayScene){
+        if (displayScene) {
             this.display();
         }
     }
     removeInventoryItem = (name, displayScene = false) => {
         this.inventoryItems = inventoryItems.filter(item => item.name != name);
-        if(displayScene){
+        if (displayScene) {
             this.display();
         }
     }
     display = () => {
         // reset scene box
-        document.querySelector("#inventory").replaceChildren([]); 
+        document.querySelector("#inventory").replaceChildren([]);
         // display background
         // display scene items
         for (let item of this.inventoryItems) {

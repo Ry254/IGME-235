@@ -52,7 +52,7 @@ body {
     align-content: center;
 }
 
-#notes{
+#notes {
     grid-area: notes;
     background-color: white;
     border: 4px solid gray;

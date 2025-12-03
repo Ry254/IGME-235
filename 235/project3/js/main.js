@@ -1,6 +1,5 @@
 'use strict';
 let timeLeft = 6000;
-let locksLeft = 4;
 let items;
 let scenes;
 let inventoryItems = new inventory();
@@ -13,104 +12,264 @@ let createItems = () => {
         redKey: new inventoryItem(
             "redKey_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "redKey";
+                        setTextbox("Use red key on what?");
+                    }
+                )
+            ]
         ),
         yellowKey: new inventoryItem(
             "yellowKey_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "yellowKey";
+                        setTextbox("Use yellow key on what?");
+                    }
+                )
+            ]
         ),
         greenKey: new inventoryItem(
             "greenKey_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "greenKey";
+                        setTextbox("Use green key on what?");
+                    }
+                )
+            ]
         ),
         blueKey: new inventoryItem(
             "blueKey_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "blueKey";
+                        setTextbox("Use blue key on what?");
+                    }
+                )
+            ]
         ),
         orangeKey: new inventoryItem(
             "orangeKey_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "orangeKey";
+                        setTextbox("Use orange key on what?");
+                    }
+                )
+            ]
         ),
         limeKey: new inventoryItem(
             "limeKey_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "limeKey";
+                        setTextbox("Use lime key on what?");
+                    }
+                )
+            ]
         ),
         limeKey: new inventoryItem(
             "cyanKey_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "cyanKey";
+                        setTextbox("Use cyan key on what?");
+                    }
+                )
+            ]
         ),
         magentaKey: new inventoryItem(
             "magentaKey_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "magentaKey";
+                        setTextbox("Use magenta key on what?");
+                    }
+                )
+            ]
         ),
         christmasKey: new inventoryItem(
             "christmasKey_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "christmasKey";
+                        setTextbox("Use christmas key on what?");
+                    }
+                )
+            ]
         ),
         beachKey: new inventoryItem(
             "beachKey_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "beachKey";
+                        setTextbox("Use beach key on what?");
+                    }
+                )
+            ]
         ),
         letter: new inventoryItem(
             "letter_item",
             [
                 "The letter reads: The final game will have a hidden code in this letter: For now the code is 1234"
             ],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "letter";
+                        setTextbox("Use letter on what?");
+                    }
+                )
+            ]
         ),
         painting: new inventoryItem(
             "painting_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "painting";
+                        setTextbox("Use painting on what?");
+                    }
+                )
+            ]
         ),
         coin: new inventoryItem(
             "coin_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "coin";
+                        setTextbox("Use coin on what?");
+                    }
+                )
+            ]
         ),
         flowerPot: new inventoryItem(
             "flowerPot_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "flowerPot";
+                        setTextbox("Use flower pot on what?");
+                    }
+                )
+            ]
         ),
         icePick: new inventoryItem(
             "icePick_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "icePick";
+                        setTextbox("Use ice pick on what?");
+                    }
+                )
+            ]
         ),
         smallIceCube: new inventoryItem(
             "smallIceCube_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "smallIceCube";
+                        setTextbox("Use small ice cube on what?");
+                    }
+                )
+            ]
         ),
         stocking: new inventoryItem(
             "stocking_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "stocking";
+                        setTextbox("Use stocking on what?");
+                    }
+                )
+            ]
         ),
         starTopper: new inventoryItem(
             "starTopper_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "starTopper";
+                        setTextbox("Use star topper on what?");
+                    }
+                )
+            ]
         ),
         hat: new inventoryItem(
             "hat_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "hat";
+                        setTextbox("Use hat on what?");
+                    }
+                )
+            ]
         ),
         glove: new inventoryItem(
             "glove_item",
             [],
-            []
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "glove";
+                        setTextbox("Use glove on what?");
+                    }
+                )
+            ]
         ),
     }
 };
@@ -253,7 +412,49 @@ let setupVoidScene = () => {
 };
 let setupExitDoorScene = () => {
     scenes.void.subscenes.exitDoor.addSceneItem(backButton(scenes.void));
-    // random locks
+    // TODO : random locks
+    createLock(scenes.void.subscenes.exitDoor, "red");
+    createLock(scenes.void.subscenes.exitDoor, "yellow");
+    createLock(scenes.void.subscenes.exitDoor, "green");
+    createLock(scenes.void.subscenes.exitDoor, "blue");
+
+    scenes.void.subscenes.exitDoor.addSceneItem(
+        new sceneItem(
+            "doorKnob",
+            0, 0,
+            [],
+            []
+        )
+    );
+    scenes.void.subscenes.exitDoor.addSceneItem(
+        new sceneItem(
+            "doorKnobWithLock",
+            0, 0,
+            [],
+            [],
+            true,
+            false
+        )
+    );
+};
+let createLock = (scene, name, posX = 0, posY = 0) => {
+    let lock = new sceneItem(
+        name + "Lock",
+        posX, posY,
+        [],
+        []
+    );
+    lock.inventoryItemAction.action = () => {
+        if (document.querySelector("#inventory").dataset.activeItem == name + "Key") {
+            scene.removeSceneItem(name + "Lock", true);
+            setTextbox("The " + name + " lock fades away...");
+        }
+        else {
+            setTextbox("Nothing Happened");
+        }
+        document.querySelector("#inventory").dataset.activeItem = "";
+    };
+    scene.addSceneItem(lock);
 };
 
 /***********************
@@ -547,7 +748,7 @@ let setupKeypadScene = () => {
                                 setTextbox("Nothing happened");
                             }
                             else {
-                                setTextbox("A festive key materialized in your hand");
+                                setTextbox("A cristmas key materialized in your hand");
                                 inventoryItems.addInventoryItem(items.christmasKey, true);
                             }
                         }
@@ -678,6 +879,22 @@ let setupGreenScene = () => {
                     true
                 )
             ]
+        )
+    );
+    scenes.green.addSceneItem(
+        new sceneItem(
+            "beachDoor_unlocked",
+            0, 0,
+            [],
+            [
+                new itemAction(
+                    "",
+                    () => scenes.beach.display(),
+                    true
+                )
+            ],
+            true,
+            false
         )
     );
     setupCloverBedScene();
@@ -825,21 +1042,33 @@ let setupCloverBedScene = () => {
     );
 };
 let setupBeachDoorScene = () => {
-    scenes.green.subscenes.beachDoor.addSceneItem(backButton(scenes.green));
+    scenes.green.subscenes.beachDoor.addSceneItem(backButton(scenes.beach));
+    createLock(scenes.green.subscenes.beachDoor, "yellow");
+    createLock(scenes.green.subscenes.beachDoor, "blue");
+
     scenes.green.subscenes.beachDoor.addSceneItem(
         new sceneItem(
-            "yellowLock",
+            "doorKnob",
             0, 0,
             [],
-            []
-        )
-    );
-    scenes.green.subscenes.beachDoor.addSceneItem(
-        new sceneItem(
-            "blueLock",
-            0, 0,
-            [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        let lock = document.querySelector(`#scene>*[data-name$="Lock"]`);
+                        if (!lock) {
+                            scenes.beach.display();
+                            scenes.green.removeSceneItem("beachDoor");
+                            scenes.green.getSceneItem("beachDoor_unlocked").visible = true;
+                            setTextbox("You can smell the salty ocean");
+                        }
+                        else{
+                            setTextbox("It's locked");
+                        }
+                    },
+                    true
+                )
+            ]
         )
     );
 };
@@ -977,10 +1206,53 @@ let setupPeepholeScene = () => {
  ***********************/
 let setupBeachScene = () => {
     scenes.beach.addSceneItem(backButton(scenes.green));
+    scenes.beach.addSceneItem(
+        new sceneItem(
+            "beachExitDoor",
+            0, 0,
+            [],
+            [
+                new itemAction(
+                    "",
+                    () => scenes.beach.subscenes.exitDoor.display(),
+                    true
+                )
+            ],
+        )
+    );
+    scenes.beach.addSceneItem(
+        new sceneItem(
+            "beachKey",
+            0, 0,
+            [],
+            [],
+            true,
+            false
+        )
+    );
     setupBeachExitDoorScene();
 };
 let setupBeachExitDoorScene = () => {
+    scenes.beach.subscenes.exitDoor.addSceneItem(backButton(scenes.beach));
+    createLock(scenes.beach.subscenes.exitDoor, "red");
+    createLock(scenes.beach.subscenes.exitDoor, "yellow");
+    createLock(scenes.beach.subscenes.exitDoor, "green");
+    createLock(scenes.beach.subscenes.exitDoor, "blue");
+    createLock(scenes.beach.subscenes.exitDoor, "orange");
+    createLock(scenes.beach.subscenes.exitDoor, "lime");
+    createLock(scenes.beach.subscenes.exitDoor, "cyan");
+    createLock(scenes.beach.subscenes.exitDoor, "magenta");
+    createLock(scenes.beach.subscenes.exitDoor, "christmas");
+    createLock(scenes.beach.subscenes.exitDoor, "beach");
 
+    scenes.beach.subscenes.exitDoor.addSceneItem(
+        new sceneItem(
+            "doorKnob",
+            0, 0,
+            [],
+            []
+        )
+    );
 };
 
 createItems();

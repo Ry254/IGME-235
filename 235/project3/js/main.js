@@ -87,7 +87,7 @@ let createItems = () => {
                 )
             ]
         ),
-        limeKey: new inventoryItem(
+        cyanKey: new inventoryItem(
             "cyanKey_item",
             [],
             [
@@ -176,6 +176,19 @@ let createItems = () => {
                     () => {
                         document.querySelector("#inventory").dataset.activeItem = "coin";
                         setTextbox("Use coin on what?");
+                    }
+                )
+            ]
+        ),
+        piggyBank: new inventoryItem(
+            "piggyBank_item",
+            [],
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "piggyBank";
+                        setTextbox("Use piggy bank on what?");
                     }
                 )
             ]
@@ -271,6 +284,21 @@ let createItems = () => {
                 )
             ]
         ),
+        note: new inventoryItem(
+            "note_item",
+            [
+                `A note that reads: "Merry Christmas! 12/25"`
+            ],
+            [
+                new itemAction(
+                    "Use Item",
+                    () => {
+                        document.querySelector("#inventory").dataset.activeItem = "note";
+                        setTextbox("Use note on what?");
+                    }
+                )
+            ]
+        )
     }
 };
 
@@ -412,11 +440,13 @@ let setupVoidScene = () => {
 };
 let setupExitDoorScene = () => {
     scenes.void.subscenes.exitDoor.addSceneItem(backButton(scenes.void));
-    // TODO : random locks
-    createLock(scenes.void.subscenes.exitDoor, "red");
-    createLock(scenes.void.subscenes.exitDoor, "yellow");
-    createLock(scenes.void.subscenes.exitDoor, "green");
-    createLock(scenes.void.subscenes.exitDoor, "blue");
+    
+    let potentialLocks = ["red", "yellow", "green", "blue", "orange", "lime", "cyan", "magenta"];
+    for(let i = 0; i < 4; i++){
+        let randomIndex = Math.floor(Math.random() * potentialLocks.length);
+        createLock(scenes.void.subscenes.exitDoor, potentialLocks[randomIndex]);
+        potentialLocks = potentialLocks.filter(item => item != potentialLocks[randomIndex]);
+    }
 
     scenes.void.subscenes.exitDoor.addSceneItem(
         new sceneItem(
@@ -487,14 +517,26 @@ let setupRedScene = () => {
             ]
         )
     );
-    scenes.red.addSceneItem(
-        new sceneItem(
-            "firePlace",
-            0, 0,
-            [],
-            []
-        )
+
+    let fireplace = new sceneItem(
+        "firePlace",
+        0, 0,
+        [],
+        []
     );
+    fireplace.inventoryItemAction.action = () => {
+        if (document.querySelector("#inventory").dataset.activeItem == "smallIceCube") {
+            inventoryItems.removeInventoryItem("smallIceCube_item", true);
+            inventoryItems.addInventoryItem(items.magentaKey, true);
+            setTextbox("You hold the ice cube near the fire, it sublimates nearly instantly. You are left with the magenta key that was inside.");
+        }
+        else {
+            setTextbox("Nothing Happened");
+        }
+        document.querySelector("#inventory").dataset.activeItem = "";
+    };
+    scenes.red.addSceneItem(fireplace);
+
     scenes.red.addSceneItem(
         new sceneItem(
             "painting",
@@ -743,6 +785,15 @@ let setupKeypadScene = () => {
                                 inventoryItems.addInventoryItem(items.redKey, true);
                             }
                         }
+                        else if (keyPadCodeEntered == "2646") {
+                            if (inventoryItems.getInventoryItem("coin_item") || inventoryItems.getInventoryItem("orangeKey_item")) {
+                                setTextbox("Correct, but nothing happened");
+                            }
+                            else {
+                                setTextbox("Correct! A coin materialized in your hand");
+                                inventoryItems.addInventoryItem(items.coin, true);
+                            }
+                        }
                         else if (keyPadCodeEntered == "1225") {
                             if (inventoryItems.getInventoryItem("christmasKey_item")) {
                                 setTextbox("Nothing happened");
@@ -786,14 +837,37 @@ let setupYellowScene = () => {
             ]
         )
     );
-    scenes.yellow.addSceneItem(
-        new sceneItem(
-            "piggyBank",
-            0, 0,
-            [],
-            []
-        )
+
+    let piggyBank = new sceneItem(
+        "piggyBank",
+        0, 0,
+        [],
+        [
+            new itemAction(
+                "Pick Up",
+                () => {
+                    inventoryItems.addInventoryItem(items.piggyBank, true);
+                    scenes.yellow.removeSceneItem("piggyBank", true);
+                    setTextbox();
+                }
+            )
+        ]
     );
+    let piggyBankAction = () => {
+        if (document.querySelector("#inventory").dataset.activeItem == "coin") {
+            inventoryItems.removeInventoryItem("coin_item", true);
+            inventoryItems.addInventoryItem(items.orangeKey, true);
+            setTextbox("You put the coin into the top of the piggy bank and an orange key materializes in your hand!");
+        }
+        else {
+            setTextbox("Nothing Happened");
+        }
+        document.querySelector("#inventory").dataset.activeItem = "";
+    };
+    piggyBank.inventoryItemAction.action = piggyBankAction;
+    items.piggyBank.inventoryItemAction.action = piggyBankAction;
+    scenes.yellow.addSceneItem(piggyBank);
+
     scenes.yellow.addSceneItem(
         new sceneItem(
             "starTopper",
@@ -811,12 +885,36 @@ let setupYellowScene = () => {
             ]
         )
     );
+
+    let window = new sceneItem(
+        "window",
+        0, 0,
+        [],
+        []
+    );
+    window.inventoryItemAction.action = () => {
+        if (document.querySelector("#inventory").dataset.activeItem == "flowerPot") {
+            inventoryItems.removeInventoryItem("flowerPot_item", true);
+            inventoryItems.addInventoryItem(items.limeKey, true);
+            scenes.yellow.getSceneItem("flowerPot_bloomed").visible = true;
+            scenes.yellow.display();
+            setTextbox("As you place the pot down below the window, the bud blooms with a lime key inside!");
+        }
+        else {
+            setTextbox("Nothing Happened");
+        }
+        document.querySelector("#inventory").dataset.activeItem = "";
+    };
+    scenes.yellow.addSceneItem(window);
+
     scenes.yellow.addSceneItem(
         new sceneItem(
-            "window",
+            "flowerPot_bloomed",
             0, 0,
             [],
-            []
+            [],
+            true,
+            false
         )
     );
 };
@@ -1062,7 +1160,7 @@ let setupBeachDoorScene = () => {
                             scenes.green.getSceneItem("beachDoor_unlocked").visible = true;
                             setTextbox("You can smell the salty ocean");
                         }
-                        else{
+                        else {
                             setTextbox("It's locked");
                         }
                     },
@@ -1095,14 +1193,26 @@ let setupBlueScene = () => {
             ]
         )
     );
-    scenes.blue.addSceneItem(
-        new sceneItem(
-            "largeIceCube",
-            0, 0,
-            [],
-            []
-        )
+
+    let largeIceCube = new sceneItem(
+        "largeIceCube",
+        0, 0,
+        [],
+        []
     );
+    largeIceCube.inventoryItemAction.action = () => {
+        if (document.querySelector("#inventory").dataset.activeItem == "icePick") {
+            inventoryItems.addInventoryItem(items.cyanKey, true);
+            scenes.blue.removeSceneItem("largeIceCube", true);
+            setTextbox("You pick away at the ice cube and it eventualy shatters. There was a cyan key inside!");
+        }
+        else {
+            setTextbox("Nothing Happened");
+        }
+        document.querySelector("#inventory").dataset.activeItem = "";
+    };
+    scenes.blue.addSceneItem(largeIceCube);
+
     scenes.blue.addSceneItem(
         new sceneItem(
             "coatRack",
@@ -1260,4 +1370,10 @@ createScenes();
 window.onload = (e) => {
     scenes.void.display();
     inventoryItems.display();
+};
+
+let debug_giveAllItems = () => {
+    for (let key in items) {
+        inventoryItems.addInventoryItem(items[key], true);
+    }
 };

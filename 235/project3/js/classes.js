@@ -140,15 +140,15 @@ class inventory {
     getInventoryItem = (name) => {
         return this.inventoryItems.find(item => item.name == name);
     }
-    addInventoryItem = (inventoryItem, displayScene = false) => {
+    addInventoryItem = (inventoryItem, displayInventory = false) => {
         this.inventoryItems.push(inventoryItem);
-        if (displayScene) {
+        if (displayInventory) {
             this.display();
         }
     }
-    removeInventoryItem = (name, displayScene = false) => {
-        this.inventoryItems = inventoryItems.filter(item => item.name != name);
-        if (displayScene) {
+    removeInventoryItem = (name, displayInventory = false) => {
+        this.inventoryItems = this.inventoryItems.filter(item => item.name != name);
+        if (displayInventory) {
             this.display();
         }
     }

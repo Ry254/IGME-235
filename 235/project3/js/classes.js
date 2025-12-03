@@ -33,9 +33,11 @@ class item {
     display = () => { }
     onMouseEnter = (e) => {
         // change sprite
+        e.target.style.borderColor = "yellow";
     }
     onMouseExit = (e) => {
         // change sprite
+        e.target.style.borderColor = "black";
     }
     onClick = (e) => {
         // reset textbox
@@ -66,14 +68,16 @@ class sceneItem extends item {
     }
     display = () => {
         // add to scene at position
-        let p = document.createElement("button");
-        p.innerHTML = this.name;
-        document.querySelector("#scene").appendChild(p);
+        let button = document.createElement("button");
+        button.innerHTML = this.name;
+        document.querySelector("#scene").appendChild(button);
         // if interactable
         if (this.interactable) {
             // add onclick
-            p.onclick = this.onClick;
+            button.onclick = this.onClick;
             // add onmouse
+            button.onmouseenter = this.onMouseEnter;
+            button.onmouseleave = this.onMouseExit;
         }
     }
 }
@@ -85,8 +89,38 @@ class inventoryItem extends item {
     }
     display = () => {
         // add to items list
+        let button = document.createElement("button");
+        button.innerHTML = this.name;
+        document.querySelector("#inventory").appendChild(
+            document.createElement("li").appendChild(button));
         // add onclick
+        button.onclick = this.onClick;
         // add onmouse
+        button.onmouseenter = this.onMouseEnter;
+        button.onmouseleave = this.onMouseExit;
+    }
+}
+
+// inventory
+class inventory{
+    constructor(){
+        this.inventoryItems = [];
+    }
+    addInventoryItem(inventoryItem) {
+        this.inventoryItems.push(inventoryItem);
+    }
+    removeInventoryItem(name) {
+        
+        this.inventoryItems = inventoryItems.filter(item => item.name != name);
+    }
+    display() {
+        // reset scene box
+        document.querySelector("#inventory").replaceChildren([]); 
+        // display background
+        // display scene items
+        for (let item of this.inventoryItems) {
+            item.display();
+        }
     }
 }
 

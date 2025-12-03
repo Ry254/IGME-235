@@ -3,7 +3,7 @@ let timeLeft = 6000;
 let locksLeft = 4;
 let items;
 let scenes;
-let itemInventory = new inventory();
+let inventoryItems = new inventory();
 
 /***********************
       Create items
@@ -62,6 +62,13 @@ let createItems = () => {
         ),
         letter: new inventoryItem(
             "letter_item",
+            [
+                "The letter reads: The final game will have a hidden code in this letter: For now the code is 1234"
+            ],
+            []
+        ),
+        painting: new inventoryItem(
+            "painting_item",
             [],
             []
         ),
@@ -133,7 +140,6 @@ let createScenes = () => {
     setupBlueScene();
     setupBeachScene();
 };
-
 let backButton = (previousScene) => {
     return new sceneItem(
         "backButton",
@@ -149,7 +155,11 @@ let backButton = (previousScene) => {
             )
         ]
     );
-}
+};
+let setTextbox = (newDescription = "") => {
+    document.querySelector("#textbox>p").innerHTML = newDescription;
+    document.querySelector("#textbox>ul").replaceChildren([]);
+};
 
 /***********************
     Void scene items
@@ -244,7 +254,7 @@ let setupVoidScene = () => {
 let setupExitDoorScene = () => {
     scenes.void.subscenes.exitDoor.addSceneItem(backButton(scenes.void));
     // random locks
-}
+};
 
 /***********************
      Red scene items
@@ -264,7 +274,16 @@ let setupRedScene = () => {
             "stocking",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.stocking, true);
+                        scenes.red.removeSceneItem("stocking", true);
+                        setTextbox();
+                    }
+                )
+            ]
         )
     );
     scenes.red.addSceneItem(
@@ -280,19 +299,59 @@ let setupRedScene = () => {
             "painting",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.painting, true);
+                        scenes.red.getSceneItem("keypad").visible = true;
+                        scenes.red.removeSceneItem("painting", true);
+                        setTextbox("There was a keypad behind the painting!");
+                    }
+                )
+            ]
+        )
+    );
+    scenes.red.addSceneItem(
+        new sceneItem(
+            "keypad",
+            0, 0,
+            [
+                "It's a simple digital keypad"
+            ],
+            [
+                new itemAction(
+                    "",
+                    () => scenes.red.subscenes.keypad.display(),
+                    true
+                )
+            ],
+            true,
+            false
         )
     );
     scenes.red.addSceneItem(
         new sceneItem(
             "letter",
             0, 0,
-            [],
-            []
+            [
+                "The letter reads: The final game will have a hidden code in this letter: For now the code is 1234"
+            ],
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.letter, true);
+                        scenes.red.removeSceneItem("letter", true);
+                        setTextbox();
+                    }
+                )
+            ]
         )
     );
     setupKeypadScene();
 };
+let keyPadCodeEntered = "";
 let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(backButton(scenes.red));
     scenes.red.subscenes.keypad.addSceneItem(
@@ -300,7 +359,16 @@ let setupKeypadScene = () => {
             "keypad1",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        keyPadCodeEntered += "1";
+                        setTextbox(keyPadCodeEntered);
+                    },
+                    true
+                )
+            ]
         )
     );
     scenes.red.subscenes.keypad.addSceneItem(
@@ -308,7 +376,16 @@ let setupKeypadScene = () => {
             "keypad2",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        keyPadCodeEntered += "2";
+                        setTextbox(keyPadCodeEntered);
+                    },
+                    true
+                )
+            ]
         )
     );
     scenes.red.subscenes.keypad.addSceneItem(
@@ -316,7 +393,16 @@ let setupKeypadScene = () => {
             "keypad3",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        keyPadCodeEntered += "3";
+                        setTextbox(keyPadCodeEntered);
+                    },
+                    true
+                )
+            ]
         )
     );
     scenes.red.subscenes.keypad.addSceneItem(
@@ -324,7 +410,16 @@ let setupKeypadScene = () => {
             "keypad4",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        keyPadCodeEntered += "4";
+                        setTextbox(keyPadCodeEntered);
+                    },
+                    true
+                )
+            ]
         )
     );
     scenes.red.subscenes.keypad.addSceneItem(
@@ -332,7 +427,16 @@ let setupKeypadScene = () => {
             "keypad5",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        keyPadCodeEntered += "5";
+                        setTextbox(keyPadCodeEntered);
+                    },
+                    true
+                )
+            ]
         )
     );
     scenes.red.subscenes.keypad.addSceneItem(
@@ -340,7 +444,16 @@ let setupKeypadScene = () => {
             "keypad6",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        keyPadCodeEntered += "6";
+                        setTextbox(keyPadCodeEntered);
+                    },
+                    true
+                )
+            ]
         )
     );
     scenes.red.subscenes.keypad.addSceneItem(
@@ -348,7 +461,16 @@ let setupKeypadScene = () => {
             "keypad7",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        keyPadCodeEntered += "7";
+                        setTextbox(keyPadCodeEntered);
+                    },
+                    true
+                )
+            ]
         )
     );
     scenes.red.subscenes.keypad.addSceneItem(
@@ -356,7 +478,16 @@ let setupKeypadScene = () => {
             "keypad8",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        keyPadCodeEntered += "8";
+                        setTextbox(keyPadCodeEntered);
+                    },
+                    true
+                )
+            ]
         )
     );
     scenes.red.subscenes.keypad.addSceneItem(
@@ -364,7 +495,16 @@ let setupKeypadScene = () => {
             "keypad9",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        keyPadCodeEntered += "9";
+                        setTextbox(keyPadCodeEntered);
+                    },
+                    true
+                )
+            ]
         )
     );
     scenes.red.subscenes.keypad.addSceneItem(
@@ -372,7 +512,16 @@ let setupKeypadScene = () => {
             "keypad0",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        keyPadCodeEntered += "0";
+                        setTextbox(keyPadCodeEntered);
+                    },
+                    true
+                )
+            ]
         )
     );
     scenes.red.subscenes.keypad.addSceneItem(
@@ -380,7 +529,36 @@ let setupKeypadScene = () => {
             "keypadEnter",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => {
+                        if (keyPadCodeEntered == "1234") {
+                            if (inventoryItems.getInventoryItem("redKey_item")) {
+                                setTextbox("Correct, but nothing happened");
+                            }
+                            else {
+                                setTextbox("Correct! A red key materialized in your hand");
+                                inventoryItems.addInventoryItem(items.redKey, true);
+                            }
+                        }
+                        else if (keyPadCodeEntered == "1225") {
+                            if (inventoryItems.getInventoryItem("christmasKey_item")) {
+                                setTextbox("Nothing happened");
+                            }
+                            else {
+                                setTextbox("A festive key materialized in your hand");
+                                inventoryItems.addInventoryItem(items.christmasKey, true);
+                            }
+                        }
+                        else {
+                            setTextbox("Incorrect, try again.");
+                        }
+                        keyPadCodeEntered = "";
+                    },
+                    true
+                )
+            ]
         )
     );
 };
@@ -395,7 +573,16 @@ let setupYellowScene = () => {
             "yellowKey",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.yellowKey, true);
+                        scenes.yellow.removeSceneItem("yellowKey", true);
+                        setTextbox();
+                    }
+                )
+            ]
         )
     );
     scenes.yellow.addSceneItem(
@@ -411,7 +598,16 @@ let setupYellowScene = () => {
             "starTopper",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.starTopper, true);
+                        scenes.yellow.removeSceneItem("starTopper", true);
+                        setTextbox();
+                    }
+                )
+            ]
         )
     );
     scenes.yellow.addSceneItem(
@@ -434,7 +630,13 @@ let setupGreenScene = () => {
             "cloverBed",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => scenes.green.subscenes.cloverBed.display(),
+                    true
+                )
+            ]
         )
     );
     scenes.green.addSceneItem(
@@ -450,7 +652,16 @@ let setupGreenScene = () => {
             "flowerPot",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.flowerPot, true);
+                        scenes.green.removeSceneItem("flowerPot", true);
+                        setTextbox();
+                    }
+                )
+            ]
         )
     );
     scenes.green.addSceneItem(
@@ -474,6 +685,144 @@ let setupGreenScene = () => {
 };
 let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(backButton(scenes.green));
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover3",
+            0, 0,
+            [
+                "It's a clover"
+            ],
+            []
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover3",
+            0, 0,
+            [
+                "It's a clover"
+            ],
+            []
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover3",
+            0, 0,
+            [
+                "It's a clover"
+            ],
+            []
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover3",
+            0, 0,
+            [
+                "It's a clover"
+            ],
+            []
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover3",
+            0, 0,
+            [
+                "It's a clover"
+            ],
+            []
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover3",
+            0, 0,
+            [
+                "It's a clover"
+            ],
+            []
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover3",
+            0, 0,
+            [
+                "It's a clover"
+            ],
+            []
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover3",
+            0, 0,
+            [
+                "It's a clover"
+            ],
+            []
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover3",
+            0, 0,
+            [
+                "It's a clover"
+            ],
+            []
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover3",
+            0, 0,
+            [
+                "It's a clover"
+            ],
+            []
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover4_gk",
+            0, 0,
+            [
+                "It's a four-leafed clover!"
+            ],
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.greenKey, true);
+                        scenes.green.subscenes.cloverBed.removeSceneItem("clover4_gk", true);
+                        setTextbox("The clover was actually a green key!");
+                    }
+                )
+            ]
+        )
+    );
+    scenes.green.subscenes.cloverBed.addSceneItem(
+        new sceneItem(
+            "clover4_ip",
+            0, 0,
+            [
+                "It's a four-leafed clover!"
+            ],
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.icePick, true);
+                        scenes.green.subscenes.cloverBed.removeSceneItem("clover4_ip", true);
+                        setTextbox("The clover was actually an ice pick!");
+                    }
+                )
+            ]
+        )
+    );
 };
 let setupBeachDoorScene = () => {
     scenes.green.subscenes.beachDoor.addSceneItem(backButton(scenes.green));
@@ -505,7 +854,16 @@ let setupBlueScene = () => {
             "smallIceCube",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.smallIceCube, true);
+                        scenes.blue.removeSceneItem("smallIceCube", true);
+                        setTextbox();
+                    }
+                )
+            ]
         )
     );
     scenes.blue.addSceneItem(
@@ -521,7 +879,13 @@ let setupBlueScene = () => {
             "coatRack",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => scenes.blue.subscenes.coatRack.display(),
+                    true
+                )
+            ]
         )
     );
     scenes.blue.addSceneItem(
@@ -529,7 +893,13 @@ let setupBlueScene = () => {
             "peephole",
             0, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "",
+                    () => scenes.blue.subscenes.peephole.display(),
+                    true
+                )
+            ]
         )
     );
     setupCoatRackScene();
@@ -542,8 +912,16 @@ let setupCoatRackScene = () => {
             "blueKey",
             0, 0,
             [],
-            [],
-            false
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.blueKey, true);
+                        scenes.blue.subscenes.coatRack.removeSceneItem("blueKey", true);
+                        setTextbox();
+                    }
+                )
+            ]
         )
     );
     scenes.blue.subscenes.coatRack.addSceneItem(
@@ -551,8 +929,16 @@ let setupCoatRackScene = () => {
             "glove",
             0, 0,
             [],
-            [],
-            false
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.glove, true);
+                        scenes.blue.subscenes.coatRack.removeSceneItem("glove", true);
+                        setTextbox();
+                    }
+                )
+            ]
         )
     );
     scenes.blue.subscenes.coatRack.addSceneItem(
@@ -560,8 +946,16 @@ let setupCoatRackScene = () => {
             "hat",
             0, 0,
             [],
-            [],
-            false
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.hat, true);
+                        scenes.blue.subscenes.coatRack.removeSceneItem("hat", true);
+                        setTextbox();
+                    }
+                )
+            ]
         )
     );
 };
@@ -587,14 +981,11 @@ let setupBeachScene = () => {
 };
 let setupBeachExitDoorScene = () => {
 
-}
+};
 
 createItems();
 createScenes();
 window.onload = (e) => {
     scenes.void.display();
-
-    for(let item in items){
-        items[item].display();
-    }
-}
+    inventoryItems.display();
+};

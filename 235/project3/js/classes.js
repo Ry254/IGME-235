@@ -6,13 +6,22 @@ class scene {
         this.subscenes = subscenes;
         this.sceneItems = [];
     }
-    addSceneItem(sceneItem) {
+    getSceneItem = (name) => {
+        return this.sceneItems.find(item => item.name == name);
+    }
+    addSceneItem = (sceneItem, displayScene = false) => {
         this.sceneItems.push(sceneItem);
+        if(displayScene){
+            this.display();
+        }
     }
-    removeSceneItem(name) {
-        this.sceneItems = sceneItems.filter(item => item.name != name);
+    removeSceneItem = (name, displayScene = false) => {
+        this.sceneItems = this.sceneItems.filter(item => item.name != name);
+        if(displayScene){
+            this.display();
+        }
     }
-    display() {
+    display = () => {
         // reset scene box
         document.querySelector("#scene").replaceChildren([]); 
         // display background
@@ -60,13 +69,18 @@ class item {
 
 // scene item
 class sceneItem extends item {
-    constructor(name, posX, posY, descriptions, actions, interactable = true) {
+    constructor(name, posX, posY, descriptions, actions, interactable = true, visible = true) {
         super(name, descriptions, actions)
         this.posX = posX;
         this.posY = posY;
         this.interactable = interactable;
+        this.visible = visible;
     }
     display = () => {
+        if(!this.visible){
+            return;
+        }
+
         // add to scene at position
         let button = document.createElement("button");
         button.innerHTML = this.name;
@@ -106,14 +120,22 @@ class inventory{
     constructor(){
         this.inventoryItems = [];
     }
-    addInventoryItem(inventoryItem) {
+    getInventoryItem = (name) => {
+        return this.inventoryItems.find(item => item.name == name);
+    }
+    addInventoryItem = (inventoryItem, displayScene = false) => {
         this.inventoryItems.push(inventoryItem);
+        if(displayScene){
+            this.display();
+        }
     }
-    removeInventoryItem(name) {
-        
+    removeInventoryItem = (name, displayScene = false) => {
         this.inventoryItems = inventoryItems.filter(item => item.name != name);
+        if(displayScene){
+            this.display();
+        }
     }
-    display() {
+    display = () => {
         // reset scene box
         document.querySelector("#inventory").replaceChildren([]); 
         // display background

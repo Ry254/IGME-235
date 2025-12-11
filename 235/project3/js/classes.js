@@ -96,23 +96,26 @@ class sceneItem extends item {
             return;
         }
 
+        // https://www.freecodecamp.org/news/check-if-a-javascript-string-is-a-url/
+        let object;
+        object = document.createElement("img");
+        object.src = "media/" + this.parentScene.name + "/" + this.name + ".png";
+
         // add to scene
-        let button = document.createElement("button");
-        button.innerHTML = this.name;
-        button.dataset.name = this.name;
-        document.querySelector("#scene").appendChild(button);
+        object.dataset.name = this.name;
+        document.querySelector("#scene").appendChild(object);
 
         // set position
-        button.style.top = this.posX + "%";
-        button.style.left = this.posY + "%";
+        object.style.top = this.posX + "%";
+        object.style.left = this.posY + "%";
 
         // if interactable
         if (this.interactable) {
             // add onclick
-            button.onclick = this.onClick;
+            object.onclick = this.onClick;
             // add onmouse
-            button.onmouseenter = this.onMouseEnter;
-            button.onmouseleave = this.onMouseExit;
+            object.onmouseenter = this.onMouseEnter;
+            object.onmouseleave = this.onMouseExit;
         }
     }
 }

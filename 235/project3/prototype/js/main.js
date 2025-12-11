@@ -11,9 +11,7 @@ let createItems = () => {
     items = {
         redKey: new inventoryItem(
             "redKey_item",
-            [
-                "It's a red key."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -26,9 +24,7 @@ let createItems = () => {
         ),
         yellowKey: new inventoryItem(
             "yellowKey_item",
-            [
-                "It's a yellow key."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -41,9 +37,7 @@ let createItems = () => {
         ),
         greenKey: new inventoryItem(
             "greenKey_item",
-            [
-                "It's a green key. The top is shaped like a four-leafed clover."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -56,9 +50,7 @@ let createItems = () => {
         ),
         blueKey: new inventoryItem(
             "blueKey_item",
-            [
-                "It's a blue key."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -71,9 +63,7 @@ let createItems = () => {
         ),
         orangeKey: new inventoryItem(
             "orangeKey_item",
-            [
-                "It's an orange key."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -86,9 +76,7 @@ let createItems = () => {
         ),
         limeKey: new inventoryItem(
             "limeKey_item",
-            [
-                "It's a lime key."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -101,9 +89,7 @@ let createItems = () => {
         ),
         cyanKey: new inventoryItem(
             "cyanKey_item",
-            [
-                "It's a cyan key."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -116,9 +102,7 @@ let createItems = () => {
         ),
         magentaKey: new inventoryItem(
             "magentaKey_item",
-            [
-                "It's a magenta key."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -131,9 +115,7 @@ let createItems = () => {
         ),
         christmasKey: new inventoryItem(
             "christmasKey_item",
-            [
-                "It's a key with a present design on top."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -146,9 +128,7 @@ let createItems = () => {
         ),
         beachKey: new inventoryItem(
             "beachKey_item",
-            [
-                "It's a key with a shell design on top."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -176,9 +156,7 @@ let createItems = () => {
         ),
         painting: new inventoryItem(
             "painting_item",
-            [
-                "It's a painting of a keypad. The trim is red."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -191,9 +169,7 @@ let createItems = () => {
         ),
         coin: new inventoryItem(
             "coin_item",
-            [
-                `It's a yellow coin with "COIN" written on it.`
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -206,9 +182,7 @@ let createItems = () => {
         ),
         piggyBank: new inventoryItem(
             "piggyBank_item",
-            [
-                `It's a yellow piggy bank with "2646" writen on the side in red. There's a coin slot on top`
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -221,9 +195,7 @@ let createItems = () => {
         ),
         flowerPot: new inventoryItem(
             "flowerPot_item",
-            [
-                "It's a green pot with a yellow flower bud in it. The flower could use some sun."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -236,9 +208,7 @@ let createItems = () => {
         ),
         icePick: new inventoryItem(
             "icePick_item",
-            [
-                "It's an ice pick. The top is shaped like a four-leafed clover."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -251,9 +221,7 @@ let createItems = () => {
         ),
         smallIceCube: new inventoryItem(
             "smallIceCube_item",
-            [
-                "It's a small ice cube. It looks like something magenta is inside. If only there was a way to melt the ice around it."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -266,9 +234,7 @@ let createItems = () => {
         ),
         stocking: new inventoryItem(
             "stocking_item",
-            [
-                "It's a red stocking, though this one is empty."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -281,9 +247,7 @@ let createItems = () => {
         ),
         starTopper: new inventoryItem(
             "starTopper_item",
-            [
-                "It's a star topper. These are often put on top of christmas trees"
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -296,9 +260,7 @@ let createItems = () => {
         ),
         hat: new inventoryItem(
             "hat_item",
-            [
-                "It's a blue winter hat."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
@@ -311,15 +273,13 @@ let createItems = () => {
         ),
         glove: new inventoryItem(
             "glove_item",
-            [
-                "It's a singular blue mitten."
-            ],
+            [],
             [
                 new itemAction(
                     "Use Item",
                     () => {
                         document.querySelector("#inventory").dataset.activeItem = "glove";
-                        setTextbox("Use mitten on what?");
+                        setTextbox("Use glove on what?");
                     }
                 )
             ]
@@ -327,7 +287,7 @@ let createItems = () => {
         note: new inventoryItem(
             "note_item",
             [
-                `It's a note that reads: "Merry Christmas! 12/25"`
+                `A note that reads: "Merry Christmas! 12/25"`
             ],
             [
                 new itemAction(
@@ -395,7 +355,7 @@ let setupVoidScene = () => {
     scenes.void.addSceneItem(
         new sceneItem(
             "redDoor",
-            25, 25,
+            0, 0,
             [
                 "It's kinda cozy in here",
                 "The heat feels nice"
@@ -412,7 +372,7 @@ let setupVoidScene = () => {
     scenes.void.addSceneItem(
         new sceneItem(
             "yellowDoor",
-            75, 75,
+            0, 0,
             [
                 "There isn't much here",
                 "Spacious"
@@ -429,7 +389,7 @@ let setupVoidScene = () => {
     scenes.void.addSceneItem(
         new sceneItem(
             "greenDoor",
-            75, 25,
+            0, 0,
             [
                 "Lots of plants",
                 "Christmas came early I see"
@@ -446,7 +406,7 @@ let setupVoidScene = () => {
     scenes.void.addSceneItem(
         new sceneItem(
             "blueDoor",
-            25, 75,
+            0, 0,
             [
                 "It's cold in here",
                 "Brr"
@@ -463,7 +423,7 @@ let setupVoidScene = () => {
     scenes.void.addSceneItem(
         new sceneItem(
             "exitDoor",
-            50, 50,
+            0, 0,
             [
                 "A door with a giant exit sign"
             ],
@@ -480,9 +440,9 @@ let setupVoidScene = () => {
 };
 let setupExitDoorScene = () => {
     scenes.void.subscenes.exitDoor.addSceneItem(backButton(scenes.void));
-
+    
     let potentialLocks = ["red", "yellow", "green", "blue", "orange", "lime", "cyan", "magenta"];
-    for (let i = 0; i < 4; i++) {
+    for(let i = 0; i < 4; i++){
         let randomIndex = Math.floor(Math.random() * potentialLocks.length);
         createLock(scenes.void.subscenes.exitDoor, potentialLocks[randomIndex]);
         potentialLocks = potentialLocks.filter(item => item != potentialLocks[randomIndex]);
@@ -498,7 +458,7 @@ let setupExitDoorScene = () => {
     );
     scenes.void.subscenes.exitDoor.addSceneItem(
         new sceneItem(
-            "doorKnob_lock",
+            "doorKnobWithLock",
             0, 0,
             [],
             [],
@@ -1180,7 +1140,7 @@ let setupCloverBedScene = () => {
     );
 };
 let setupBeachDoorScene = () => {
-    scenes.green.subscenes.beachDoor.addSceneItem(backButton(scenes.green));
+    scenes.green.subscenes.beachDoor.addSceneItem(backButton(scenes.beach));
     createLock(scenes.green.subscenes.beachDoor, "yellow");
     createLock(scenes.green.subscenes.beachDoor, "blue");
 
@@ -1216,35 +1176,23 @@ let setupBeachDoorScene = () => {
  ***********************/
 let setupBlueScene = () => {
     scenes.blue.addSceneItem(backButton(scenes.void));
-
-    let smallIceCube = new sceneItem(
-        "smallIceCube",
-        0, 0,
-        [],
-        [
-            new itemAction(
-                "Pick Up",
-                () => {
-                    inventoryItems.addInventoryItem(items.smallIceCube, true);
-                    scenes.blue.removeSceneItem("smallIceCube", true);
-                    setTextbox();
-                }
-            )
-        ]
+    scenes.blue.addSceneItem(
+        new sceneItem(
+            "smallIceCube",
+            0, 0,
+            [],
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.smallIceCube, true);
+                        scenes.blue.removeSceneItem("smallIceCube", true);
+                        setTextbox();
+                    }
+                )
+            ]
+        )
     );
-    let smallIceCubeAction = () => {
-        if (document.querySelector("#inventory").dataset.activeItem == "icePick") {
-            setTextbox("You attempt to pick at the small ice cube, but the pick slides right off and leaves no mark.");
-        }
-        else {
-            setTextbox("Nothing Happened");
-        }
-        document.querySelector("#inventory").dataset.activeItem = "";
-    }
-    smallIceCube.inventoryItemAction.action = smallIceCubeAction;
-    items.smallIceCube.inventoryItemAction.action = smallIceCubeAction;
-    scenes.blue.addSceneItem(smallIceCube);
-
 
     let largeIceCube = new sceneItem(
         "largeIceCube",
@@ -1300,15 +1248,7 @@ let setupCoatRackScene = () => {
     scenes.blue.subscenes.coatRack.addSceneItem(backButton(scenes.blue));
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
-            "pocket_empty",
-            0, 0,
-            [],
-            []
-        )
-    );
-    scenes.blue.subscenes.coatRack.addSceneItem(
-        new sceneItem(
-            "pocket_bk",
+            "blueKey",
             0, 0,
             [],
             [
@@ -1316,8 +1256,7 @@ let setupCoatRackScene = () => {
                     "Pick Up",
                     () => {
                         inventoryItems.addInventoryItem(items.blueKey, true);
-                        scenes.blue.subscenes.coatRack.getSceneItem("pocket_bk_empty").visible = true;
-                        scenes.blue.subscenes.coatRack.removeSceneItem("pocket_bk", true);
+                        scenes.blue.subscenes.coatRack.removeSceneItem("blueKey", true);
                         setTextbox();
                     }
                 )
@@ -1326,7 +1265,7 @@ let setupCoatRackScene = () => {
     );
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
-            "pocket_g",
+            "glove",
             0, 0,
             [],
             [
@@ -1334,8 +1273,7 @@ let setupCoatRackScene = () => {
                     "Pick Up",
                     () => {
                         inventoryItems.addInventoryItem(items.glove, true);
-                        scenes.blue.subscenes.coatRack.getSceneItem("pocket_g_empty").visible = true;
-                        scenes.blue.subscenes.coatRack.removeSceneItem("pocket_g", true);
+                        scenes.blue.subscenes.coatRack.removeSceneItem("glove", true);
                         setTextbox();
                     }
                 )
@@ -1344,7 +1282,7 @@ let setupCoatRackScene = () => {
     );
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
-            "pocket_h",
+            "hat",
             0, 0,
             [],
             [
@@ -1352,42 +1290,11 @@ let setupCoatRackScene = () => {
                     "Pick Up",
                     () => {
                         inventoryItems.addInventoryItem(items.hat, true);
-                        scenes.blue.subscenes.coatRack.getSceneItem("pocket_h_empty").visible = true;
-                        scenes.blue.subscenes.coatRack.removeSceneItem("pocket_h", true);
+                        scenes.blue.subscenes.coatRack.removeSceneItem("hat", true);
                         setTextbox();
                     }
                 )
             ]
-        )
-    );
-    scenes.blue.subscenes.coatRack.addSceneItem(
-        new sceneItem(
-            "pocket_gk_empty",
-            0, 0,
-            [],
-            [],
-            true,
-            false
-        )
-    );
-    scenes.blue.subscenes.coatRack.addSceneItem(
-        new sceneItem(
-            "pocket_g_empty",
-            0, 0,
-            [],
-            [],
-            true,
-            false
-        )
-    );
-    scenes.blue.subscenes.coatRack.addSceneItem(
-        new sceneItem(
-            "pocket_h_empty",
-            0, 0,
-            [],
-            [],
-            true,
-            false
         )
     );
 };

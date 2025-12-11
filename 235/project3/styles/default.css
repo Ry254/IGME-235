@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 body {
     background-color: black;
     color: white;
@@ -9,12 +11,13 @@ body {
     align-items: center;
     height: 100vh;
     width: 100vw;
+    font-family: "Press Start 2P", system-ui;
 }
 
 #gameWrapper {
     display: grid;
-    grid-template-rows: 50px 1fr 150px;
-    grid-template-columns: 200px 600px 200px;
+    grid-template-rows: 50px 271px 150px;
+    grid-template-columns: 200px 1fr 200px;
     grid-template-areas:
         "inventory scene   timer"
         "inventory scene   notes"
@@ -31,18 +34,66 @@ body {
 #scene {
     grid-area: scene;
     aspect-ratio: 16/9;
-    overflow: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+#scene>* {
+    position: absolute;
+    transform: translate(-50%,-50%);
 }
 
 #textbox {
     grid-area: textbox;
+    display: grid;
+    grid-template-columns: 450px 1fr;
+    grid-template-rows: 1fr;
+}
+
+#textbox>p {
+    margin-top: 20px;
+    margin-left: 10px;
+    overflow-y: auto;
+    line-height: 1.2;
+}
+
+#textbox>p::before {
+    content: "* ";
+}
+
+#textbox>ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    flex: 0 0 auto;
+    margin: 10px;
+    justify-content: end;
 }
 
 #inventory {
     grid-area: inventory;
     margin: 0;
     list-style: none;
-    padding: 0;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 80px);
+    grid-template-rows: repeat(auto-fit, 80px);
+    overflow-y: auto;
+    justify-content: center;
+    gap: 5px;
+}
+
+#inventory>li {
+    display: block;
+    border: 4px solid transparent;
+    border-radius: 10px;
+    background-color: rgb(26, 26, 26);
+}
+
+#inventory img {
+    width: 100%;
 }
 
 #timer {

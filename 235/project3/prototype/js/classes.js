@@ -10,7 +10,6 @@ class scene {
         return this.sceneItems.find(item => item.name == name);
     }
     addSceneItem = (sceneItem, displayScene = false) => {
-        sceneItem.parentScene = this;
         this.sceneItems.push(sceneItem);
         if (displayScene) {
             this.display();
@@ -52,10 +51,12 @@ class item {
     }
     display = () => { }
     onMouseEnter = (e) => {
-        e.target.style.borderColor = "antiquewhite";
+        // change sprite
+        e.target.style.borderColor = "yellow";
     }
     onMouseExit = (e) => {
-        e.target.style.borderColor = "transparent";
+        // change sprite
+        e.target.style.borderColor = "black";
     }
     onClick = (e) => {
         // reset textbox
@@ -85,7 +86,6 @@ class item {
 class sceneItem extends item {
     constructor(name, posX, posY, descriptions, actions, interactable = true, visible = true) {
         super(name, descriptions, actions)
-        this.parentScene = undefined;
         this.posX = posX;
         this.posY = posY;
         this.interactable = interactable;
@@ -96,16 +96,11 @@ class sceneItem extends item {
             return;
         }
 
-        // add to scene
+        // add to scene at position
         let button = document.createElement("button");
         button.innerHTML = this.name;
         button.dataset.name = this.name;
         document.querySelector("#scene").appendChild(button);
-
-        // set position
-        button.style.top = this.posX + "%";
-        button.style.left = this.posY + "%";
-
         // if interactable
         if (this.interactable) {
             // add onclick
@@ -124,17 +119,16 @@ class inventoryItem extends item {
     }
     display = () => {
         // add to items list
-        let img = document.createElement("img");
-        img.src = "media/items/" + this.name + ".png";
-        img.dataset.name = this.name;
-        let li = document.createElement("li");
-        li.appendChild(img);
-        document.querySelector("#inventory").appendChild(li);
+        let button = document.createElement("button");
+        button.innerHTML = this.name;
+        button.dataset.name = this.name;
+        document.querySelector("#inventory").appendChild(
+            document.createElement("li").appendChild(button));
         // add onclick
-        img.onclick = this.onClick;
+        button.onclick = this.onClick;
         // add onmouse
-        li.onmouseenter = this.onMouseEnter;
-        li.onmouseleave = this.onMouseExit;
+        button.onmouseenter = this.onMouseEnter;
+        button.onmouseleave = this.onMouseExit;
     }
 }
 

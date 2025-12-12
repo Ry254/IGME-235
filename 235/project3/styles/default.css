@@ -36,13 +36,19 @@ body {
     aspect-ratio: 16/9;
     overflow: hidden;
     position: relative;
+    background-size: contain;
 }
 
 #scene>* {
     display: block;
     position: absolute;
-    transform: translate(-50%,-50%);
-    border: 4px solid transparent;
+    transform: translate(-50%, -50%);
+}
+
+/*https://stackoverflow.com/questions/12690444/css-border-on-png-image-with-transparent-parts*/
+*[data-hovered="true"] {
+    filter: drop-shadow(2px 2px 0 yellow) drop-shadow(-2px -2px 0 yellow) drop-shadow(2px -2px 0 yellow) drop-shadow(-2px 2px 0 yellow);
+    cursor: pointer;
 }
 
 #textbox {
@@ -89,7 +95,6 @@ body {
 
 #inventory>li {
     display: block;
-    border: 4px solid transparent;
     border-radius: 10px;
     background-color: rgb(26, 26, 26);
 }

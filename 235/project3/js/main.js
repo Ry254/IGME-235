@@ -370,7 +370,7 @@ let createScenes = () => {
 let backButton = (previousScene) => {
     return new sceneItem(
         "backButton",
-        0, 0,
+        7, 10, 100,
         [
             ""
         ],
@@ -395,7 +395,7 @@ let setupVoidScene = () => {
     scenes.void.addSceneItem(
         new sceneItem(
             "redDoor",
-            25, 25,
+            25, 25, 0,
             [
                 "It's kinda cozy in here",
                 "The heat feels nice"
@@ -412,7 +412,7 @@ let setupVoidScene = () => {
     scenes.void.addSceneItem(
         new sceneItem(
             "yellowDoor",
-            75, 75,
+            75, 75, 0,
             [
                 "There isn't much here",
                 "Spacious"
@@ -429,7 +429,7 @@ let setupVoidScene = () => {
     scenes.void.addSceneItem(
         new sceneItem(
             "greenDoor",
-            75, 25,
+            75, 25, 0,
             [
                 "Lots of plants",
                 "Christmas came early I see"
@@ -446,7 +446,7 @@ let setupVoidScene = () => {
     scenes.void.addSceneItem(
         new sceneItem(
             "blueDoor",
-            25, 75,
+            25, 75, 0,
             [
                 "It's cold in here",
                 "Brr"
@@ -463,7 +463,7 @@ let setupVoidScene = () => {
     scenes.void.addSceneItem(
         new sceneItem(
             "exitDoor",
-            50, 50,
+            50, 50, 0,
             [
                 "A door with a giant exit sign"
             ],
@@ -484,14 +484,18 @@ let setupExitDoorScene = () => {
     let potentialLocks = ["red", "yellow", "green", "blue", "orange", "lime", "cyan", "magenta"];
     for (let i = 0; i < 4; i++) {
         let randomIndex = Math.floor(Math.random() * potentialLocks.length);
-        createLock(scenes.void.subscenes.exitDoor, potentialLocks[randomIndex]);
+        createLock(scenes.void.subscenes.exitDoor, potentialLocks[randomIndex],
+            20 + i * 13,
+            45,
+            0
+        );
         potentialLocks = potentialLocks.filter(item => item != potentialLocks[randomIndex]);
     }
 
     scenes.void.subscenes.exitDoor.addSceneItem(
         new sceneItem(
             "doorKnob",
-            0, 0,
+            76, 60, 0,
             [],
             []
         )
@@ -499,7 +503,7 @@ let setupExitDoorScene = () => {
     scenes.void.subscenes.exitDoor.addSceneItem(
         new sceneItem(
             "doorKnob_lock",
-            0, 0,
+            76, 60, 0,
             [],
             [],
             true,
@@ -507,11 +511,13 @@ let setupExitDoorScene = () => {
         )
     );
 };
-let createLock = (scene, name, posX = 0, posY = 0) => {
+let createLock = (scene, name, posX = 0, posY = 0, posZ = 0) => {
     let lock = new sceneItem(
         name + "Lock",
-        posX, posY,
-        [],
+        posX, posY, posZ, 
+        [
+            "It's a " + name + " lock."
+        ],
         []
     );
     lock.inventoryItemAction.action = () => {
@@ -535,7 +541,7 @@ let setupRedScene = () => {
     scenes.red.addSceneItem(
         new sceneItem(
             "mountedFish",
-            0, 0,
+            50, 15, 0,
             [],
             []
         )
@@ -543,7 +549,7 @@ let setupRedScene = () => {
     scenes.red.addSceneItem(
         new sceneItem(
             "stocking",
-            0, 0,
+            35, 50, 1,
             [],
             [
                 new itemAction(
@@ -560,7 +566,7 @@ let setupRedScene = () => {
 
     let fireplace = new sceneItem(
         "firePlace",
-        0, 0,
+        50, 60, 0,
         [],
         []
     );
@@ -580,14 +586,14 @@ let setupRedScene = () => {
     scenes.red.addSceneItem(
         new sceneItem(
             "painting",
-            0, 0,
+            87, 45, 0,
             [],
             [
                 new itemAction(
                     "Pick Up",
                     () => {
                         inventoryItems.addInventoryItem(items.painting, true);
-                        scenes.red.getSceneItem("keypad").visible = true;
+                        scenes.red.getSceneItem("keypad").interactable = true;
                         scenes.red.removeSceneItem("painting", true);
                         setTextbox("There was a keypad behind the painting!");
                     }
@@ -598,7 +604,7 @@ let setupRedScene = () => {
     scenes.red.addSceneItem(
         new sceneItem(
             "keypad",
-            0, 0,
+            87, 45, 1,
             [
                 "It's a simple digital keypad"
             ],
@@ -609,14 +615,13 @@ let setupRedScene = () => {
                     true
                 )
             ],
-            true,
             false
         )
     );
     scenes.red.addSceneItem(
         new sceneItem(
             "letter",
-            0, 0,
+            14, 88, 0,
             [
                 "The letter reads: The final game will have a hidden code in this letter: For now the code is 1234"
             ],
@@ -640,7 +645,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypad1",
-            0, 0,
+            36, 19, 0,
             [],
             [
                 new itemAction(
@@ -657,7 +662,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypad2",
-            0, 0,
+            49, 17, 0,
             [],
             [
                 new itemAction(
@@ -674,7 +679,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypad3",
-            0, 0,
+            62, 16, 0,
             [],
             [
                 new itemAction(
@@ -691,7 +696,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypad4",
-            0, 0,
+            37, 41, 0,
             [],
             [
                 new itemAction(
@@ -708,7 +713,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypad5",
-            0, 0,
+            50, 38, 0,
             [],
             [
                 new itemAction(
@@ -725,7 +730,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypad6",
-            0, 0,
+            63, 38, 0,
             [],
             [
                 new itemAction(
@@ -742,7 +747,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypad7",
-            0, 0,
+            37, 64, 0,
             [],
             [
                 new itemAction(
@@ -759,7 +764,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypad8",
-            0, 0,
+            50.5, 62, 0,
             [],
             [
                 new itemAction(
@@ -776,7 +781,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypad9",
-            0, 0,
+            64, 62, 0,
             [],
             [
                 new itemAction(
@@ -793,7 +798,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypad0",
-            0, 0,
+            37, 84.5, 0,
             [],
             [
                 new itemAction(
@@ -810,7 +815,7 @@ let setupKeypadScene = () => {
     scenes.red.subscenes.keypad.addSceneItem(
         new sceneItem(
             "keypadEnter",
-            0, 0,
+            57.5, 84, 0,
             [],
             [
                 new itemAction(
@@ -863,7 +868,7 @@ let setupYellowScene = () => {
     scenes.yellow.addSceneItem(
         new sceneItem(
             "yellowKey",
-            0, 0,
+            57, 53, 0,
             [],
             [
                 new itemAction(
@@ -880,7 +885,7 @@ let setupYellowScene = () => {
 
     let piggyBank = new sceneItem(
         "piggyBank",
-        0, 0,
+        67, 51, 0,
         [],
         [
             new itemAction(
@@ -911,7 +916,7 @@ let setupYellowScene = () => {
     scenes.yellow.addSceneItem(
         new sceneItem(
             "starTopper",
-            0, 0,
+            77, 48, 0,
             [],
             [
                 new itemAction(
@@ -928,7 +933,7 @@ let setupYellowScene = () => {
 
     let window = new sceneItem(
         "window",
-        0, 0,
+        24.5, 35, 0,
         [],
         []
     );
@@ -950,11 +955,11 @@ let setupYellowScene = () => {
     scenes.yellow.addSceneItem(
         new sceneItem(
             "flowerPot_bloomed",
-            0, 0,
+            24, 47, 1,
             [],
             [],
             true,
-            false
+            true
         )
     );
 };
@@ -967,7 +972,7 @@ let setupGreenScene = () => {
     scenes.green.addSceneItem(
         new sceneItem(
             "cloverBed",
-            0, 0,
+            0, 0, 0,
             [],
             [
                 new itemAction(
@@ -981,7 +986,7 @@ let setupGreenScene = () => {
     scenes.green.addSceneItem(
         new sceneItem(
             "cristmasTree",
-            0, 0,
+            0, 0, 0,
             [],
             []
         )
@@ -989,7 +994,7 @@ let setupGreenScene = () => {
     scenes.green.addSceneItem(
         new sceneItem(
             "flowerPot",
-            0, 0,
+            0, 0, 0,
             [],
             [
                 new itemAction(
@@ -1006,7 +1011,7 @@ let setupGreenScene = () => {
     scenes.green.addSceneItem(
         new sceneItem(
             "beachDoor",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a blue and yellow door"
             ],
@@ -1022,7 +1027,7 @@ let setupGreenScene = () => {
     scenes.green.addSceneItem(
         new sceneItem(
             "beachDoor_unlocked",
-            0, 0,
+            0, 0, 0,
             [],
             [
                 new itemAction(
@@ -1043,7 +1048,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover3",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a clover"
             ],
@@ -1053,7 +1058,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover3",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a clover"
             ],
@@ -1063,7 +1068,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover3",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a clover"
             ],
@@ -1073,7 +1078,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover3",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a clover"
             ],
@@ -1083,7 +1088,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover3",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a clover"
             ],
@@ -1093,7 +1098,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover3",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a clover"
             ],
@@ -1103,7 +1108,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover3",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a clover"
             ],
@@ -1113,7 +1118,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover3",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a clover"
             ],
@@ -1123,7 +1128,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover3",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a clover"
             ],
@@ -1133,7 +1138,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover3",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a clover"
             ],
@@ -1143,7 +1148,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover4_gk",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a four-leafed clover!"
             ],
@@ -1162,7 +1167,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover4_ip",
-            0, 0,
+            0, 0, 0,
             [
                 "It's a four-leafed clover!"
             ],
@@ -1187,7 +1192,7 @@ let setupBeachDoorScene = () => {
     scenes.green.subscenes.beachDoor.addSceneItem(
         new sceneItem(
             "doorKnob",
-            0, 0,
+            0, 0, 0,
             [],
             [
                 new itemAction(
@@ -1219,7 +1224,7 @@ let setupBlueScene = () => {
 
     let smallIceCube = new sceneItem(
         "smallIceCube",
-        0, 0,
+        0, 0, 0,
         [],
         [
             new itemAction(
@@ -1248,7 +1253,7 @@ let setupBlueScene = () => {
 
     let largeIceCube = new sceneItem(
         "largeIceCube",
-        0, 0,
+        0, 0, 0,
         [],
         []
     );
@@ -1268,7 +1273,7 @@ let setupBlueScene = () => {
     scenes.blue.addSceneItem(
         new sceneItem(
             "coatRack",
-            0, 0,
+            0, 0, 0,
             [],
             [
                 new itemAction(
@@ -1282,7 +1287,7 @@ let setupBlueScene = () => {
     scenes.blue.addSceneItem(
         new sceneItem(
             "peephole",
-            0, 0,
+            0, 0, 0,
             [],
             [
                 new itemAction(
@@ -1301,7 +1306,7 @@ let setupCoatRackScene = () => {
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
             "pocket_empty",
-            0, 0,
+            0, 0, 0,
             [],
             []
         )
@@ -1309,7 +1314,7 @@ let setupCoatRackScene = () => {
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
             "pocket_bk",
-            0, 0,
+            0, 0, 0,
             [],
             [
                 new itemAction(
@@ -1327,7 +1332,7 @@ let setupCoatRackScene = () => {
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
             "pocket_g",
-            0, 0,
+            0, 0, 0,
             [],
             [
                 new itemAction(
@@ -1345,7 +1350,7 @@ let setupCoatRackScene = () => {
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
             "pocket_h",
-            0, 0,
+            0, 0, 0,
             [],
             [
                 new itemAction(
@@ -1363,7 +1368,7 @@ let setupCoatRackScene = () => {
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
             "pocket_gk_empty",
-            0, 0,
+            0, 0, 0,
             [],
             [],
             true,
@@ -1373,7 +1378,7 @@ let setupCoatRackScene = () => {
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
             "pocket_g_empty",
-            0, 0,
+            0, 0, 0,
             [],
             [],
             true,
@@ -1383,7 +1388,7 @@ let setupCoatRackScene = () => {
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
             "pocket_h_empty",
-            0, 0,
+            0, 0, 0,
             [],
             [],
             true,
@@ -1396,7 +1401,7 @@ let setupPeepholeScene = () => {
     scenes.blue.subscenes.peephole.addSceneItem(
         new sceneItem(
             "eyes",
-            0, 0,
+            0, 0, 0,
             [],
             [],
             false
@@ -1412,7 +1417,7 @@ let setupBeachScene = () => {
     scenes.beach.addSceneItem(
         new sceneItem(
             "beachExitDoor",
-            0, 0,
+            0, 0, 0,
             [],
             [
                 new itemAction(
@@ -1426,7 +1431,7 @@ let setupBeachScene = () => {
     scenes.beach.addSceneItem(
         new sceneItem(
             "beachKey",
-            0, 0,
+            0, 0, 0,
             [],
             [],
             true,
@@ -1451,7 +1456,7 @@ let setupBeachExitDoorScene = () => {
     scenes.beach.subscenes.exitDoor.addSceneItem(
         new sceneItem(
             "doorKnob",
-            0, 0,
+            0, 0, 0,
             [],
             []
         )
@@ -1461,9 +1466,14 @@ let setupBeachExitDoorScene = () => {
 createItems();
 createScenes();
 window.onload = (e) => {
-    scenes.void.display();
+    scenes.yellow.display();
     inventoryItems.display();
 };
+
+window.onresize = (e) => {
+    scenes.void.display();
+    inventoryItems.display();
+}
 
 let debug_giveAllItems = () => {
     for (let key in items) {

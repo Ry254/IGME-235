@@ -26,6 +26,7 @@ class scene {
         // reset scene box
         document.querySelector("#scene").replaceChildren([]);
         // display background
+        document.querySelector("#scene").style.backgroundImage = `url(media/${this.name}.png)`;
         // display scene items
         for (let item of this.sceneItems) {
             item.display();
@@ -52,10 +53,10 @@ class item {
     }
     display = () => { }
     onMouseEnter = (e) => {
-        e.target.style.borderColor = "antiquewhite";
+        e.target.dataset.hovered = true;
     }
     onMouseExit = (e) => {
-        e.target.style.borderColor = "transparent";
+        e.target.dataset.hovered = false;
     }
     onClick = (e) => {
         // reset textbox
@@ -83,11 +84,12 @@ class item {
 
 // scene item
 class sceneItem extends item {
-    constructor(name, posX, posY, descriptions, actions, interactable = true, visible = true) {
+    constructor(name, posX, posY, posZ, descriptions, actions, interactable = true, visible = true) {
         super(name, descriptions, actions)
         this.parentScene = undefined;
         this.posX = posX;
         this.posY = posY;
+        this.posZ = posZ;
         this.interactable = interactable;
         this.visible = visible;
     }
@@ -96,26 +98,34 @@ class sceneItem extends item {
             return;
         }
 
-        // https://www.freecodecamp.org/news/check-if-a-javascript-string-is-a-url/
-        let object;
-        object = document.createElement("img");
-        object.src = "media/" + this.parentScene.name + "/" + this.name + ".png";
+        let img = document.createElement("img");
+        img.src = "media/" + this.name + ".png";
 
         // add to scene
-        object.dataset.name = this.name;
-        document.querySelector("#scene").appendChild(object);
+        img.dataset.name = this.name;
+        document.querySelector("#scene").appendChild(img);
 
         // set position
-        object.style.top = this.posX + "%";
-        object.style.left = this.posY + "%";
+        img.style.top = this.posY + "%";
+        img.style.left = this.posX + "%";
+        img.style.zIndex = this.posZ;
+
+        // set width
+        img.onload = () => {
+            let clientWidth = document.querySelector("#scene").clientWidth;
+            img.style.width = img.naturalWidth * (clientWidth / 1280) + "px";
+        };
 
         // if interactable
         if (this.interactable) {
             // add onclick
-            object.onclick = this.onClick;
+            img.onclick = this.onClick;
             // add onmouse
-            object.onmouseenter = this.onMouseEnter;
-            object.onmouseleave = this.onMouseExit;
+            img.onmouseenter = this.onMouseEnter;
+            img.onmouseleave = this.onMouseExit;
+        }
+        else{
+            img.style.pointerEvents = "none";
         }
     }
 }
@@ -136,8 +146,8 @@ class inventoryItem extends item {
         // add onclick
         img.onclick = this.onClick;
         // add onmouse
-        li.onmouseenter = this.onMouseEnter;
-        li.onmouseleave = this.onMouseExit;
+        img.onmouseenter = this.onMouseEnter;
+        img.onmouseleave = this.onMouseExit;
     }
 }
 

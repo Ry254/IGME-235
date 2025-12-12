@@ -12,7 +12,7 @@ let createItems = () => {
         redKey: new inventoryItem(
             "redKey_item",
             [
-                "It's a red key."
+                "It's a red key"
             ],
             [
                 new itemAction(
@@ -27,7 +27,7 @@ let createItems = () => {
         yellowKey: new inventoryItem(
             "yellowKey_item",
             [
-                "It's a yellow key."
+                "It's a yellow key"
             ],
             [
                 new itemAction(
@@ -42,7 +42,7 @@ let createItems = () => {
         greenKey: new inventoryItem(
             "greenKey_item",
             [
-                "It's a green key. The top is shaped like a four-leafed clover."
+                "It's a green key. The top is shaped like a four-leafed clover"
             ],
             [
                 new itemAction(
@@ -57,7 +57,7 @@ let createItems = () => {
         blueKey: new inventoryItem(
             "blueKey_item",
             [
-                "It's a blue key."
+                "It's a blue key"
             ],
             [
                 new itemAction(
@@ -72,7 +72,7 @@ let createItems = () => {
         orangeKey: new inventoryItem(
             "orangeKey_item",
             [
-                "It's an orange key."
+                "It's an orange key"
             ],
             [
                 new itemAction(
@@ -87,7 +87,7 @@ let createItems = () => {
         limeKey: new inventoryItem(
             "limeKey_item",
             [
-                "It's a lime key."
+                "It's a lime key"
             ],
             [
                 new itemAction(
@@ -102,7 +102,7 @@ let createItems = () => {
         cyanKey: new inventoryItem(
             "cyanKey_item",
             [
-                "It's a cyan key."
+                "It's a cyan key"
             ],
             [
                 new itemAction(
@@ -117,7 +117,7 @@ let createItems = () => {
         magentaKey: new inventoryItem(
             "magentaKey_item",
             [
-                "It's a magenta key."
+                "It's a magenta key"
             ],
             [
                 new itemAction(
@@ -147,7 +147,7 @@ let createItems = () => {
         beachKey: new inventoryItem(
             "beachKey_item",
             [
-                "It's a key with a shell design on top."
+                "It's a key with a shell design on top"
             ],
             [
                 new itemAction(
@@ -177,7 +177,7 @@ let createItems = () => {
         painting: new inventoryItem(
             "painting_item",
             [
-                "It's a painting of a keypad. The trim is red."
+                "It's a painting of a keypad. The trim is red"
             ],
             [
                 new itemAction(
@@ -192,7 +192,7 @@ let createItems = () => {
         coin: new inventoryItem(
             "coin_item",
             [
-                `It's a yellow coin with "COIN" written on it.`
+                `It's a yellow coin with "COIN" written on it`
             ],
             [
                 new itemAction(
@@ -222,7 +222,7 @@ let createItems = () => {
         flowerPot: new inventoryItem(
             "flowerPot_item",
             [
-                "It's a green pot with a yellow flower bud in it. The flower could use some sun."
+                "It's a green pot with a yellow flower bud in it. The flower could use some sun"
             ],
             [
                 new itemAction(
@@ -237,7 +237,7 @@ let createItems = () => {
         icePick: new inventoryItem(
             "icePick_item",
             [
-                "It's an ice pick. The top is shaped like a four-leafed clover."
+                "It's an ice pick. The top is shaped like a four-leafed clover"
             ],
             [
                 new itemAction(
@@ -252,7 +252,7 @@ let createItems = () => {
         smallIceCube: new inventoryItem(
             "smallIceCube_item",
             [
-                "It's a small ice cube. It looks like something magenta is inside. If only there was a way to melt the ice around it."
+                "It's a small ice cube. It looks like something magenta is inside. If only there was a way to melt the ice around it"
             ],
             [
                 new itemAction(
@@ -267,7 +267,7 @@ let createItems = () => {
         stocking: new inventoryItem(
             "stocking_item",
             [
-                "It's a red stocking, though this one is empty."
+                "It's a red stocking, though this one is empty"
             ],
             [
                 new itemAction(
@@ -297,7 +297,7 @@ let createItems = () => {
         hat: new inventoryItem(
             "hat_item",
             [
-                "It's a blue winter hat."
+                "It's a blue winter hat"
             ],
             [
                 new itemAction(
@@ -312,7 +312,7 @@ let createItems = () => {
         glove: new inventoryItem(
             "glove_item",
             [
-                "It's a singular blue mitten."
+                "It's a singular blue mitten"
             ],
             [
                 new itemAction(
@@ -465,7 +465,7 @@ let setupVoidScene = () => {
             "exitDoor",
             50, 50, 0,
             [
-                "A door with a giant exit sign"
+                "It's a door with a giant exit sign"
             ],
             [
                 new itemAction(
@@ -493,11 +493,20 @@ let setupExitDoorScene = () => {
         potentialLocks = potentialLocks.filter(item => item != potentialLocks[randomIndex]);
     }
 
+    let orangeLock = scenes.void.subscenes.exitDoor.getSceneItem("orangeLock");
+    if(orangeLock){
+        orangeLock.descriptions = [
+            "It's an orange lock"
+        ];
+    };
+
     scenes.void.subscenes.exitDoor.addSceneItem(
         new sceneItem(
             "doorKnob",
             76, 60, 0,
-            [],
+            [
+                "It's a doorknob"
+            ],
             [
                 new itemAction(
                     "Open",
@@ -508,7 +517,7 @@ let setupExitDoorScene = () => {
                                 scenes.beach.getSceneItem("beachKey").visible = true;
                                 scenes.void.subscenes.exitDoor.getSceneItem("doorKnob_lock").visible = true;
                                 scenes.void.subscenes.exitDoor.removeSceneItem("doorKnob", true);
-                                setTextbox("There's know a lock on the knob. You also here the sound of something dropping from far away.");
+                                setTextbox("There's know a lock on the knob. You also here the sound of something dropping from far away");
                             }
                             else {
                                 setTextbox("It's locked");
@@ -526,7 +535,9 @@ let setupExitDoorScene = () => {
     let doorKnobLock = new sceneItem(
         "doorKnob_lock",
         76, 60, 0,
-        [],
+        [
+            "It's a doorknob. At the center is a lock"
+        ],
         [
             new itemAction(
                 "Open",
@@ -535,7 +546,7 @@ let setupExitDoorScene = () => {
                         attemptsToOpen++;
                         if (attemptsToOpen == 3) {
                             scenes.beach.getSceneItem("beachKey").visible = true;
-                            setTextbox("You here the sound of something dropping from far away.");
+                            setTextbox("You here the sound of something dropping from far away");
                         }
                         else {
                             setTextbox("It's locked");
@@ -572,7 +583,9 @@ let setupExitDoorScene = () => {
         new sceneItem(
             "doorKnob_christmas",
             76, 60, 0,
-            [],
+            [
+                "It's a doorknob"
+            ],
             [
                 new itemAction(
                     "Open",
@@ -589,7 +602,9 @@ let setupExitDoorScene = () => {
         new sceneItem(
             "doorKnob_beach",
             76, 60, 0,
-            [],
+            [
+                "It's a doorknob"
+            ],
             [
                 new itemAction(
                     "Open",
@@ -608,7 +623,7 @@ let createLock = (scene, name, posX = 0, posY = 0, posZ = 0) => {
         name + "Lock",
         posX, posY, posZ,
         [
-            "It's a " + name + " lock."
+            "It's a " + name + " lock"
         ],
         []
     );
@@ -634,7 +649,9 @@ let setupRedScene = () => {
         new sceneItem(
             "mountedFish",
             50, 15, 0,
-            [],
+            [
+                "It's a red fish that was mounted to the wall. You are to short to reach it"
+            ],
             []
         )
     );
@@ -642,14 +659,16 @@ let setupRedScene = () => {
         new sceneItem(
             "stocking",
             35, 50, 1,
-            [],
+            [
+                "It's a red stocking, though this one is empty"
+            ],
             [
                 new itemAction(
                     "Pick Up",
                     () => {
                         inventoryItems.addInventoryItem(items.stocking, true);
                         scenes.red.removeSceneItem("stocking", true);
-                        setTextbox();
+                        setTextbox("You took the stocking");
                     }
                 )
             ]
@@ -659,14 +678,16 @@ let setupRedScene = () => {
     let fireplace = new sceneItem(
         "firePlace",
         50, 60, 0,
-        [],
+        [
+            "It's a fireplace. The warm magenta fire inside heats the room"
+        ],
         []
     );
     fireplace.inventoryItemAction.action = () => {
         if (document.querySelector("#inventory").dataset.activeItem == "smallIceCube") {
             inventoryItems.removeInventoryItem("smallIceCube_item", true);
             inventoryItems.addInventoryItem(items.magentaKey, true);
-            setTextbox("You hold the ice cube near the fire, it sublimates nearly instantly. You are left with the magenta key that was inside.");
+            setTextbox("You hold the ice cube near the fire, it sublimates nearly instantly. You are left with the magenta key that was inside");
         }
         else {
             setTextbox("Nothing Happened");
@@ -679,7 +700,9 @@ let setupRedScene = () => {
         new sceneItem(
             "painting",
             87, 45, 0,
-            [],
+            [
+                "It's a painting of a keypad. The trim is red"
+            ],
             [
                 new itemAction(
                     "Pick Up",
@@ -687,7 +710,7 @@ let setupRedScene = () => {
                         inventoryItems.addInventoryItem(items.painting, true);
                         scenes.red.getSceneItem("keypad").interactable = true;
                         scenes.red.removeSceneItem("painting", true);
-                        setTextbox("There was a keypad behind the painting!");
+                        setTextbox("There was a keypad behind the painting");
                     }
                 )
             ]
@@ -723,7 +746,7 @@ let setupRedScene = () => {
                     () => {
                         inventoryItems.addInventoryItem(items.letter, true);
                         scenes.red.removeSceneItem("letter", true);
-                        setTextbox();
+                        setTextbox("You took the letter");
                     }
                 )
             ]
@@ -943,7 +966,7 @@ let setupKeypadScene = () => {
                             }
                         }
                         else {
-                            setTextbox("Incorrect, try again.");
+                            setTextbox("Incorrect, try again");
                         }
                         keyPadCodeEntered = "";
                     },
@@ -963,14 +986,16 @@ let setupYellowScene = () => {
         new sceneItem(
             "yellowKey",
             57, 53, 0,
-            [],
+            [
+                "It's a yellow key"
+            ],
             [
                 new itemAction(
                     "Pick Up",
                     () => {
                         inventoryItems.addInventoryItem(items.yellowKey, true);
                         scenes.yellow.removeSceneItem("yellowKey", true);
-                        setTextbox();
+                        setTextbox("You took the yellow key");
                     }
                 )
             ]
@@ -980,14 +1005,16 @@ let setupYellowScene = () => {
     let piggyBank = new sceneItem(
         "piggyBank",
         67, 51, 0,
-        [],
+        [
+            `It's a yellow piggy bank with "2646" writen on the side in red. There's a coin slot on top`
+        ],
         [
             new itemAction(
                 "Pick Up",
                 () => {
                     inventoryItems.addInventoryItem(items.piggyBank, true);
                     scenes.yellow.removeSceneItem("piggyBank", true);
-                    setTextbox();
+                    setTextbox("You took the piggy bank");
                 }
             )
         ]
@@ -996,7 +1023,7 @@ let setupYellowScene = () => {
         if (document.querySelector("#inventory").dataset.activeItem == "coin") {
             inventoryItems.removeInventoryItem("coin_item", true);
             inventoryItems.addInventoryItem(items.orangeKey, true);
-            setTextbox("You put the coin into the top of the piggy bank and an orange key materializes in your hand!");
+            setTextbox("You put the coin into the top of the piggy bank and an orange key materializes in your hand");
         }
         else {
             setTextbox("Nothing Happened");
@@ -1011,14 +1038,16 @@ let setupYellowScene = () => {
         new sceneItem(
             "starTopper",
             77, 48, 0,
-            [],
+            [
+                "It's a star topper. These are often put on top of christmas trees"
+            ],
             [
                 new itemAction(
                     "Pick Up",
                     () => {
                         inventoryItems.addInventoryItem(items.starTopper, true);
                         scenes.yellow.removeSceneItem("starTopper", true);
-                        setTextbox();
+                        setTextbox("You took the star topper");
                     }
                 )
             ]
@@ -1028,7 +1057,9 @@ let setupYellowScene = () => {
     let windowItem = new sceneItem(
         "window",
         24.5, 35, 0,
-        [],
+        [
+            "It's a window. Somehow, there is light coming through that has no apparent source"
+        ],
         []
     );
     windowItem.inventoryItemAction.action = () => {
@@ -1050,7 +1081,9 @@ let setupYellowScene = () => {
         new sceneItem(
             "flowerPot_bloomed",
             24, 47, 1,
-            [],
+            [
+                "It looks happy? Better let it be"
+            ],
             [],
             true,
             false
@@ -1067,7 +1100,10 @@ let setupGreenScene = () => {
         new sceneItem(
             "cloverBed",
             20, 85, 0,
-            [],
+            [
+                "There are a lot of clovers here",
+                "How lucky are you?"
+            ],
             [
                 new itemAction(
                     "",
@@ -1078,19 +1114,12 @@ let setupGreenScene = () => {
         )
     );
 
-    scenes.green.addSceneItem(
-        new sceneItem(
-            "christmasTree",
-            80, 48, 0,
-            [],
-            []
-        )
-    );
-
     let christmasTree = new sceneItem(
         "christmasTree",
         80, 48, 0,
-        [],
+        [
+            "It's a christmas tree. It has red, yellow, green, and blue lights around it"
+        ],
         []
     );
     christmasTree.inventoryItemAction.action = () => {
@@ -1098,13 +1127,13 @@ let setupGreenScene = () => {
             inventoryItems.removeInventoryItem("stocking_item", true);
             scenes.green.getSceneItem("stocking_full").visible = true;
             scenes.green.display();
-            setTextbox("");
+            setTextbox("You hung up the stocking next to the tree");
         }
         else if (document.querySelector("#inventory").dataset.activeItem == "starTopper") {
             inventoryItems.removeInventoryItem("starTopper_item", true);
             scenes.green.getSceneItem("starTopper").visible = true;
             scenes.green.display();
-            setTextbox("");
+            setTextbox("You went on your tippy toes to try and place the topper on the tree. But, you lost balance and fell. When you looked up, the topper was at the tip of the tree");
         }
         else {
             setTextbox("Nothing Happened");
@@ -1127,15 +1156,17 @@ let setupGreenScene = () => {
         new sceneItem(
             "stocking_full",
             68, 40, 1,
-            [],
+            [
+                "It's the stocking you hung. It's full now"
+            ],
             [
                 new itemAction(
-                    "Pick Up",
+                    "Loot",
                     () => {
                         inventoryItems.addInventoryItem(items.note, true);
                         scenes.green.getSceneItem("stocking").visible = true;
                         scenes.green.removeSceneItem("stocking_full", true);
-                        setTextbox();
+                        setTextbox(`Inside the stocking was a note. It reads: "Merry Christmas! 12/25"`);
                     }
                 )
             ],
@@ -1147,9 +1178,11 @@ let setupGreenScene = () => {
         new sceneItem(
             "stocking",
             68, 40, 1,
+            [
+                "It's the stocking you hung, it is now empty again"
+            ],
             [],
-            [],
-            false,
+            true,
             false
         )
     );
@@ -1157,14 +1190,16 @@ let setupGreenScene = () => {
         new sceneItem(
             "flowerPot",
             73, 80, 1,
-            [],
+            [
+                "It's a green pot with a yellow flower bud in it. The flower could use some sun"
+            ],
             [
                 new itemAction(
                     "Pick Up",
                     () => {
                         inventoryItems.addInventoryItem(items.flowerPot, true);
                         scenes.green.removeSceneItem("flowerPot", true);
-                        setTextbox();
+                        setTextbox("You took the flower pot");
                     }
                 )
             ]
@@ -1175,7 +1210,7 @@ let setupGreenScene = () => {
             "beachDoor",
             50, 49, 0,
             [
-                "It's a blue and yellow door"
+                "It's a door that has the image of a beach painted on"
             ],
             [
                 new itemAction(
@@ -1190,7 +1225,10 @@ let setupGreenScene = () => {
         new sceneItem(
             "beachDoor_unlocked",
             50, 49, 0,
-            [],
+            [
+                "You can smell the salty ocean",
+                "It's nice here"
+            ],
             [
                 new itemAction(
                     "",
@@ -1226,7 +1264,7 @@ let setupCloverBedScene = () => {
             "clover4_gk",
             Math.random() * range + min, Math.random() * range + min, 1,
             [
-                "It's a four-leafed clover!"
+                "It's a four-leafed clover"
             ],
             [
                 new itemAction(
@@ -1234,7 +1272,7 @@ let setupCloverBedScene = () => {
                     () => {
                         inventoryItems.addInventoryItem(items.greenKey, true);
                         scenes.green.subscenes.cloverBed.removeSceneItem("clover4_gk", true);
-                        setTextbox("The clover was actually a green key!");
+                        setTextbox("The clover was actually a green key");
                     }
                 )
             ]
@@ -1245,7 +1283,7 @@ let setupCloverBedScene = () => {
             "clover4_ip",
             Math.random() * range + min, Math.random() * range + min, 1,
             [
-                "It's a four-leafed clover!"
+                "It's a four-leafed clover"
             ],
             [
                 new itemAction(
@@ -1253,7 +1291,7 @@ let setupCloverBedScene = () => {
                     () => {
                         inventoryItems.addInventoryItem(items.icePick, true);
                         scenes.green.subscenes.cloverBed.removeSceneItem("clover4_ip", true);
-                        setTextbox("The clover was actually an ice pick!");
+                        setTextbox("The clover was actually an ice pick");
                     }
                 )
             ]
@@ -1269,7 +1307,9 @@ let setupBeachDoorScene = () => {
         new sceneItem(
             "doorKnob",
             80, 60, 0,
-            [],
+            [
+                "It's a doorknob"
+            ],
             [
                 new itemAction(
                     "Open",
@@ -1300,14 +1340,16 @@ let setupBlueScene = () => {
     let smallIceCube = new sceneItem(
         "smallIceCube",
         52, 80, 1,
-        [],
+        [
+            "It's a small ice cube. It looks like something magenta is inside. If only there was a way to melt the ice around it"
+        ],
         [
             new itemAction(
                 "Pick Up",
                 () => {
                     inventoryItems.addInventoryItem(items.smallIceCube, true);
                     scenes.blue.removeSceneItem("smallIceCube", true);
-                    setTextbox();
+                    setTextbox("You took the small ice cube");
                 }
             )
         ]
@@ -1329,7 +1371,9 @@ let setupBlueScene = () => {
     let largeIceCube = new sceneItem(
         "largeIceCube",
         77, 69, 0,
-        [],
+        [
+            "It's a large ice cube. It looks like something cyan is inside. It's too cold in here for it to melt, maybe there's another way to break it"
+        ],
         []
     );
     largeIceCube.inventoryItemAction.action = () => {
@@ -1349,7 +1393,9 @@ let setupBlueScene = () => {
         new sceneItem(
             "coatRack",
             17, 60, 0,
-            [],
+            [
+                "It's a blue coat"
+            ],
             [
                 new itemAction(
                     "",
@@ -1363,12 +1409,19 @@ let setupBlueScene = () => {
         new sceneItem(
             "peephole",
             51, 75, 0,
-            [],
+            [
+                "There's a small hole in the wall"
+            ],
             [
                 new itemAction(
-                    "",
-                    () => scenes.blue.subscenes.peephole.display(),
-                    true
+                    "Look through",
+                    () => {
+                        let eyes = scenes.blue.subscenes.peephole.getSceneItem("eyes");
+                        eyes.posX = Math.random() * 50 + 25;
+                        eyes.posY = Math.random() * 90 + 5;
+                        setTextbox("You look through the hole, and find nothing");
+                        scenes.blue.subscenes.peephole.display()
+                    }
                 )
             ]
         )
@@ -1382,7 +1435,9 @@ let setupCoatRackScene = () => {
         new sceneItem(
             "pocket_empty",
             17, 45, 0,
-            [],
+            [
+                "It's an empty pocket"
+            ],
             []
         )
     );
@@ -1390,15 +1445,17 @@ let setupCoatRackScene = () => {
         new sceneItem(
             "pocket_bk",
             90, 80, 0,
-            [],
+            [
+                "There's something in this pocket"
+            ],
             [
                 new itemAction(
-                    "Pick Up",
+                    "Loot",
                     () => {
                         inventoryItems.addInventoryItem(items.blueKey, true);
                         scenes.blue.subscenes.coatRack.getSceneItem("pocket_bk_empty").visible = true;
                         scenes.blue.subscenes.coatRack.removeSceneItem("pocket_bk", true);
-                        setTextbox();
+                        setTextbox("You found a blue key");
                     }
                 )
             ]
@@ -1408,7 +1465,9 @@ let setupCoatRackScene = () => {
         new sceneItem(
             "pocket_bk_empty",
             90, 80, 0,
-            [],
+            [
+                "It's an empty pocket"
+            ],
             [],
             true,
             false
@@ -1418,15 +1477,17 @@ let setupCoatRackScene = () => {
         new sceneItem(
             "pocket_g",
             16, 80, 0,
-            [],
+            [
+                "There's something in this pocket"
+            ],
             [
                 new itemAction(
-                    "Pick Up",
+                    "Loot",
                     () => {
                         inventoryItems.addInventoryItem(items.glove, true);
                         scenes.blue.subscenes.coatRack.getSceneItem("pocket_g_empty").visible = true;
                         scenes.blue.subscenes.coatRack.removeSceneItem("pocket_g", true);
-                        setTextbox();
+                        setTextbox("You found a mitten");
                     }
                 )
             ]
@@ -1436,7 +1497,9 @@ let setupCoatRackScene = () => {
         new sceneItem(
             "pocket_g_empty",
             16, 80, 0,
-            [],
+            [
+                "It's an empty pocket"
+            ],
             [],
             true,
             false
@@ -1446,15 +1509,17 @@ let setupCoatRackScene = () => {
         new sceneItem(
             "pocket_h",
             89, 46, 0,
-            [],
+            [
+                "There's something in this pocket"
+            ],
             [
                 new itemAction(
-                    "Pick Up",
+                    "Loot",
                     () => {
                         inventoryItems.addInventoryItem(items.hat, true);
                         scenes.blue.subscenes.coatRack.getSceneItem("pocket_h_empty").visible = true;
                         scenes.blue.subscenes.coatRack.removeSceneItem("pocket_h", true);
-                        setTextbox();
+                        setTextbox("You found a winter hat");
                     }
                 )
             ]
@@ -1464,7 +1529,9 @@ let setupCoatRackScene = () => {
         new sceneItem(
             "pocket_h_empty",
             89, 46, 0,
-            [],
+            [
+                "It's an empty pocket"
+            ],
             [],
             true,
             false
@@ -1477,7 +1544,9 @@ let setupPeepholeScene = () => {
         new sceneItem(
             "eyes",
             50, 50, 0,
-            [],
+            [
+                "It's nothing :)"
+            ],
             [],
             false
         )
@@ -1536,6 +1605,16 @@ let setupBeachExitDoorScene = () => {
     createLock(scenes.beach.subscenes.exitDoor, "magenta");
     createLock(scenes.beach.subscenes.exitDoor, "christmas");
     createLock(scenes.beach.subscenes.exitDoor, "beach");
+
+    scenes.beach.subscenes.exitDoor.getSceneItem("orangeLock").descriptions = [
+        "It's an orange lock"
+    ];
+    scenes.beach.subscenes.exitDoor.getSceneItem("christmasLock").descriptions = [
+        "It's a present shaped lock"
+    ];
+    scenes.beach.subscenes.exitDoor.getSceneItem("beachLock").descriptions = [
+        "It's a pearl shaped lock"
+    ];
 
     scenes.beach.subscenes.exitDoor.addSceneItem(
         new sceneItem(
@@ -1687,7 +1766,7 @@ let results = (headerText, rankText, endingText) => {
 createItems();
 createScenes();
 window.onload = (e) => {
-    scenes.green.display();
+    scenes.void.display();
     inventoryItems.display();
     updateTimer(timeLeft);
 };

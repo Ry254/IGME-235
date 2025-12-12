@@ -63,7 +63,8 @@ body {
     margin-top: 20px;
     margin-left: 10px;
     overflow-y: auto;
-    line-height: 1.2;
+    line-height: 1.5;
+    font-size: 13px;
 }
 
 #textbox>p::before {

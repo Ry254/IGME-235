@@ -113,7 +113,7 @@ class sceneItem extends item {
         // set width
         img.onload = () => {
             let clientWidth = document.querySelector("#scene").clientWidth;
-            img.style.width = img.naturalWidth * (clientWidth / 1280) + "px";
+            img.style.width = (img.naturalWidth * (clientWidth / 1280))/clientWidth * 100 + "%";
         };
 
         // if interactable

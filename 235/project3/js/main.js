@@ -132,7 +132,7 @@ let createItems = () => {
         christmasKey: new inventoryItem(
             "christmasKey_item",
             [
-                "It's a key with a present design on top."
+                "It's a key with a present design on top"
             ],
             [
                 new itemAction(
@@ -494,7 +494,7 @@ let setupExitDoorScene = () => {
     }
 
     let orangeLock = scenes.void.subscenes.exitDoor.getSceneItem("orangeLock");
-    if(orangeLock){
+    if (orangeLock) {
         orangeLock.descriptions = [
             "It's an orange lock"
         ];
@@ -959,7 +959,7 @@ let setupKeypadScene = () => {
                                 setTextbox("Nothing happened");
                             }
                             else {
-                                setTextbox("A christmas key materialized in your hand");
+                                setTextbox("A key with a present design materialized in your hand");
                                 scenes.void.subscenes.exitDoor.removeSceneItem("doorKnob");
                                 scenes.void.subscenes.exitDoor.getSceneItem("doorKnob_lock").visible = true;
                                 inventoryItems.addInventoryItem(items.christmasKey, true);
@@ -1570,8 +1570,10 @@ let setupBeachScene = () => {
     scenes.beach.addSceneItem(
         new sceneItem(
             "beachExitDoor",
-            0, 0, 0,
-            [],
+            65, 60, 0,
+            [
+                "It's a door with a giant exit sign"
+            ],
             [
                 new itemAction(
                     "",
@@ -1584,9 +1586,20 @@ let setupBeachScene = () => {
     scenes.beach.addSceneItem(
         new sceneItem(
             "beachKey",
-            0, 0, 0,
-            [],
-            [],
+            20, 90, 0,
+            [
+                "It's a key with a shell design on top"
+            ],
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.beachKey, true);
+                        scenes.beach.removeSceneItem("beachKey", true);
+                        setTextbox("You took the shell key");
+                    }
+                )
+            ],
             true,
             false
         )
@@ -1595,16 +1608,16 @@ let setupBeachScene = () => {
 };
 let setupBeachExitDoorScene = () => {
     scenes.beach.subscenes.exitDoor.addSceneItem(backButton(scenes.beach));
-    createLock(scenes.beach.subscenes.exitDoor, "red");
-    createLock(scenes.beach.subscenes.exitDoor, "yellow");
-    createLock(scenes.beach.subscenes.exitDoor, "green");
-    createLock(scenes.beach.subscenes.exitDoor, "blue");
-    createLock(scenes.beach.subscenes.exitDoor, "orange");
-    createLock(scenes.beach.subscenes.exitDoor, "lime");
-    createLock(scenes.beach.subscenes.exitDoor, "cyan");
-    createLock(scenes.beach.subscenes.exitDoor, "magenta");
-    createLock(scenes.beach.subscenes.exitDoor, "christmas");
-    createLock(scenes.beach.subscenes.exitDoor, "beach");
+    createLock(scenes.beach.subscenes.exitDoor, "red", 17, 40);
+    createLock(scenes.beach.subscenes.exitDoor, "yellow", 28, 40);
+    createLock(scenes.beach.subscenes.exitDoor, "green", 39, 40);
+    createLock(scenes.beach.subscenes.exitDoor, "blue", 50, 40);
+    createLock(scenes.beach.subscenes.exitDoor, "orange", 19, 75);
+    createLock(scenes.beach.subscenes.exitDoor, "lime", 30, 75);
+    createLock(scenes.beach.subscenes.exitDoor, "cyan", 41, 75);
+    createLock(scenes.beach.subscenes.exitDoor, "magenta", 52, 75);
+    createLock(scenes.beach.subscenes.exitDoor, "christmas", 61, 40);
+    createLock(scenes.beach.subscenes.exitDoor, "beach", 63, 75);
 
     scenes.beach.subscenes.exitDoor.getSceneItem("orangeLock").descriptions = [
         "It's an orange lock"
@@ -1619,9 +1632,32 @@ let setupBeachExitDoorScene = () => {
     scenes.beach.subscenes.exitDoor.addSceneItem(
         new sceneItem(
             "doorKnob",
-            0, 0, 0,
-            [],
-            []
+            77, 60, 0,
+            [
+                "It's a doorknob"
+            ],
+            [
+                new itemAction(
+                    "Open",
+                    () => {
+                        if (document.querySelector('#scene>*[data-name$="Lock"]')) {
+                            attemptsToOpen++;
+                            if (attemptsToOpen == 3) {
+                                scenes.void.subscenes.exitDoor.removeSceneItem("doorKnob");
+                                scenes.void.subscenes.exitDoor.getSceneItem("doorKnob_lock").visible = true;
+                                scenes.beach.getSceneItem("beachKey").visible = true;
+                                setTextbox("You here the sound of something dropping nearby. Something also shifts from far away");
+                            }
+                            else {
+                                setTextbox("It's locked");
+                            }
+                        }
+                        else {
+                            gameWon("Secret", 2);
+                        }
+                    }
+                )
+            ]
         )
     );
 };
@@ -1637,7 +1673,6 @@ let timer = setInterval(() => {
     timeLeft--;
     updateTimer(timeLeft);
 }, 1000);
-
 let updateTimer = (time) => {
     if (time < 0) time = 0;
     let seconds = time % 60
@@ -1666,12 +1701,10 @@ let updateTimer = (time) => {
         timer.style.color = "crimson";
     }
 }
-
 let gameOver = () => {
     clearInterval(timer);
     results("You Failed...", "F", "Fail");
 }
-
 let gameWon = (ending = "Normal", rankIncrease = 0) => {
     clearInterval(timer);
 
@@ -1727,10 +1760,10 @@ let gameWon = (ending = "Normal", rankIncrease = 0) => {
 
     results("You Escaped!", rank, ending);
 }
-
 let results = (headerText, rankText, endingText) => {
     document.querySelector("#inventory").innerHTML = "";
     let scene = document.querySelector("#scene");
+    setTextbox();
     scene.innerHTML = "";
     scene.style.backgroundImage = "none";
 
@@ -1763,21 +1796,25 @@ let results = (headerText, rankText, endingText) => {
     scene.appendChild(playAgain);
 }
 
+/***********************
+     Load everything
+ ***********************/
 createItems();
 createScenes();
 window.onload = (e) => {
     scenes.void.display();
     inventoryItems.display();
+    setTextbox("You wake up finding yourself in the void");
     updateTimer(timeLeft);
 };
 
-window.onresize = (e) => {
-    scenes.void.display();
-    inventoryItems.display();
-}
-
+/***********************
+          Debug
+ ***********************/
+/*
 let debug_giveAllItems = () => {
     for (let key in items) {
         inventoryItems.addInventoryItem(items[key], true);
     }
 };
+*/

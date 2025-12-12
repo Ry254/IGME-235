@@ -1224,7 +1224,7 @@ let setupBlueScene = () => {
 
     let smallIceCube = new sceneItem(
         "smallIceCube",
-        0, 0, 0,
+        52, 80, 1,
         [],
         [
             new itemAction(
@@ -1253,7 +1253,7 @@ let setupBlueScene = () => {
 
     let largeIceCube = new sceneItem(
         "largeIceCube",
-        0, 0, 0,
+        77, 69, 0,
         [],
         []
     );
@@ -1273,7 +1273,7 @@ let setupBlueScene = () => {
     scenes.blue.addSceneItem(
         new sceneItem(
             "coatRack",
-            0, 0, 0,
+            17, 60, 0,
             [],
             [
                 new itemAction(
@@ -1287,7 +1287,7 @@ let setupBlueScene = () => {
     scenes.blue.addSceneItem(
         new sceneItem(
             "peephole",
-            0, 0, 0,
+            51, 75, 0,
             [],
             [
                 new itemAction(
@@ -1306,7 +1306,7 @@ let setupCoatRackScene = () => {
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
             "pocket_empty",
-            0, 0, 0,
+            17, 45, 0,
             [],
             []
         )
@@ -1314,7 +1314,7 @@ let setupCoatRackScene = () => {
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
             "pocket_bk",
-            0, 0, 0,
+            90, 80, 0,
             [],
             [
                 new itemAction(
@@ -1331,8 +1331,18 @@ let setupCoatRackScene = () => {
     );
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
+            "pocket_bk_empty",
+            90, 80, 0,
+            [],
+            [],
+            true,
+            false
+        )
+    );
+    scenes.blue.subscenes.coatRack.addSceneItem(
+        new sceneItem(
             "pocket_g",
-            0, 0, 0,
+            16, 80, 0,
             [],
             [
                 new itemAction(
@@ -1349,8 +1359,18 @@ let setupCoatRackScene = () => {
     );
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
+            "pocket_g_empty",
+            16, 80, 0,
+            [],
+            [],
+            true,
+            false
+        )
+    );
+    scenes.blue.subscenes.coatRack.addSceneItem(
+        new sceneItem(
             "pocket_h",
-            0, 0, 0,
+            89, 46, 0,
             [],
             [
                 new itemAction(
@@ -1367,28 +1387,8 @@ let setupCoatRackScene = () => {
     );
     scenes.blue.subscenes.coatRack.addSceneItem(
         new sceneItem(
-            "pocket_gk_empty",
-            0, 0, 0,
-            [],
-            [],
-            true,
-            false
-        )
-    );
-    scenes.blue.subscenes.coatRack.addSceneItem(
-        new sceneItem(
-            "pocket_g_empty",
-            0, 0, 0,
-            [],
-            [],
-            true,
-            false
-        )
-    );
-    scenes.blue.subscenes.coatRack.addSceneItem(
-        new sceneItem(
             "pocket_h_empty",
-            0, 0, 0,
+            89, 46, 0,
             [],
             [],
             true,
@@ -1401,7 +1401,16 @@ let setupPeepholeScene = () => {
     scenes.blue.subscenes.peephole.addSceneItem(
         new sceneItem(
             "eyes",
-            0, 0, 0,
+            50, 50, 0,
+            [],
+            [],
+            false
+        )
+    );
+    scenes.blue.subscenes.peephole.addSceneItem(
+        new sceneItem(
+            "peephole_foreground",
+            50, 50, 1,
             [],
             [],
             false
@@ -1466,7 +1475,7 @@ let setupBeachExitDoorScene = () => {
 createItems();
 createScenes();
 window.onload = (e) => {
-    scenes.yellow.display();
+    scenes.blue.subscenes.peephole.display();
     inventoryItems.display();
 };
 

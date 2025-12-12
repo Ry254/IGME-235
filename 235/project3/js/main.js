@@ -1,5 +1,5 @@
 'use strict';
-let timeLeft = 6000;
+let timeLeft = 600;
 let items;
 let scenes;
 let inventoryItems = new inventory();
@@ -497,15 +497,90 @@ let setupExitDoorScene = () => {
             "doorKnob",
             76, 60, 0,
             [],
-            []
+            [
+                new itemAction(
+                    "Open",
+                    () => {
+                        if (document.querySelector('#scene>*[data-name$="Lock"]')) {
+                            setTextbox("It's locked");
+                        }
+                        else {
+                            gameWon();
+                        }
+                    }
+                )
+            ]
+        )
+    );
+
+    let doorKnobLock = new sceneItem(
+        "doorKnob_lock",
+        76, 60, 0,
+        [],
+        [
+            new itemAction(
+                "Open",
+                () => {
+                    if (document.querySelector('#scene>*[data-name$="Lock"]')) {
+                        setTextbox("It's locked");
+                    }
+                    else {
+                        gameWon();
+                    }
+                }
+            )
+        ],
+        true,
+        false
+    );
+    doorKnobLock.inventoryItemAction.action = () => {
+        if (document.querySelector("#inventory").dataset.activeItem == "christmasKey") {
+            scenes.void.subscenes.exitDoor.getSceneItem("doorKnob_christmas").visible = true;
+            scenes.void.subscenes.exitDoor.removeSceneItem("doorKnob_lock", true);
+            setTextbox("The lock on the doorknob fades away...");
+        }
+        else if (document.querySelector("#inventory").dataset.activeItem == "beachKey") {
+            scenes.void.subscenes.exitDoor.getSceneItem("doorKnob_beach").visible = true;
+            scenes.void.subscenes.exitDoor.removeSceneItem("doorKnob_lock", true);
+            setTextbox("The lock on the doorknob fades away...");
+        }
+        else {
+            setTextbox("Nothing Happened");
+        }
+        document.querySelector("#inventory").dataset.activeItem = "";
+    };
+    scenes.void.subscenes.exitDoor.addSceneItem(doorKnobLock);
+
+    scenes.void.subscenes.exitDoor.addSceneItem(
+        new sceneItem(
+            "doorKnob_christmas",
+            76, 60, 0,
+            [],
+            [
+                new itemAction(
+                    "Open",
+                    () => {
+                        gameWon("Christmas", 1);
+                    }
+                )
+            ],
+            true,
+            false
         )
     );
     scenes.void.subscenes.exitDoor.addSceneItem(
         new sceneItem(
-            "doorKnob_lock",
+            "doorKnob_beach",
             76, 60, 0,
             [],
-            [],
+            [
+                new itemAction(
+                    "Open",
+                    () => {
+                        gameWon("Beach", 1);
+                    }
+                )
+            ],
             true,
             false
         )
@@ -844,7 +919,9 @@ let setupKeypadScene = () => {
                                 setTextbox("Nothing happened");
                             }
                             else {
-                                setTextbox("A cristmas key materialized in your hand");
+                                setTextbox("A christmas key materialized in your hand");
+                                scenes.void.subscenes.exitDoor.removeSceneItem("doorKnob");
+                                scenes.void.subscenes.exitDoor.getSceneItem("doorKnob_lock").visible = true;
                                 inventoryItems.addInventoryItem(items.christmasKey, true);
                             }
                         }
@@ -1386,11 +1463,149 @@ let setupBeachExitDoorScene = () => {
     );
 };
 
+/***********************
+    Timer and endings
+ ***********************/
+let timer = setInterval(() => {
+    if (timeLeft <= 0) {
+        gameOver();
+        return;
+    }
+    timeLeft--;
+    updateTimer(timeLeft);
+}, 1000);
+
+let updateTimer = (time) => {
+    if (time < 0) time = 0;
+    let seconds = time % 60
+    let minutes = (time - seconds) / 60;
+    let timer = document.querySelector("#timer");
+    timer.innerHTML = minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+    if (time >= 600) {
+        timer.style.color = "gold";
+    }
+    else if (time > 450) {
+        timer.style.color = "cyan";
+    }
+    else if (time > 300) {
+        timer.style.color = "lime";
+    }
+    else if (time > 150) {
+        timer.style.color = "yellow";
+    }
+    else if (time > 60) {
+        timer.style.color = "orange";
+    }
+    else if (time > 15) {
+        timer.style.color = "red";
+    }
+    else {
+        timer.style.color = "crimson";
+    }
+}
+
+let gameOver = () => {
+    clearInterval(timer);
+    results("You Failed...", "F", "Fail");
+}
+
+let gameWon = (ending = "Normal", rankIncrease = 0) => {
+    clearInterval(timer);
+
+    let rankInt = 0;
+    if (timeLeft >= 600) {
+        rankInt = 6; // S+
+    }
+    else if (timeLeft > 450) {
+        rankInt = 5; // S
+    }
+    else if (timeLeft > 300) {
+        rankInt = 4; // A
+    }
+    else if (timeLeft > 150) {
+        rankInt = 3; // B
+    }
+    else if (timeLeft > 60) {
+        rankInt = 2; // C
+    }
+    else if (timeLeft > 15) {
+        rankInt = 1; // D
+    }
+    else {
+        rankInt = 0; // F
+    }
+    rankInt += rankIncrease;
+
+    let rank;
+    if (rankInt > 6) {
+        rank = "X";
+    }
+    else if (rankInt > 5) {
+        rank = "S+";
+    }
+    else if (rankInt > 4) {
+        rank = "S";
+    }
+    else if (rankInt > 3) {
+        rank = "A";
+    }
+    else if (rankInt > 2) {
+        rank = "B";
+    }
+    else if (rankInt > 1) {
+        rank = "C";
+    }
+    else if (rankInt > 0) {
+        rank = "D";
+    }
+    else {
+        rank = "F";
+    }
+
+    results("You Escaped!", rank, ending);
+}
+
+let results = (headerText, rankText, endingText) => {
+    document.querySelector("#inventory").innerHTML = "";
+    let scene = document.querySelector("#scene");
+    scene.innerHTML = "";
+    scene.style.backgroundImage = "none";
+
+    let header = document.createElement("h1");
+    header.innerHTML = headerText;
+    header.style.top = "10%";
+    header.style.left = "50%";
+    header.style.width = "100%";
+    scene.appendChild(header);
+
+    let ending = document.createElement("p");
+    ending.innerHTML = "Ending: " + endingText;
+    ending.style.top = "40%";
+    ending.style.left = "50%";
+    ending.style.width = "100%";
+    scene.appendChild(ending);
+
+    let rank = document.createElement("p");
+    rank.innerHTML = "Rank: " + rankText;
+    rank.style.top = "50%";
+    rank.style.left = "50%";
+    rank.style.width = "100%";
+    scene.appendChild(rank);
+
+    let playAgain = document.createElement("p");
+    playAgain.innerHTML = "Refresh page to play again";
+    playAgain.style.top = "80%";
+    playAgain.style.left = "50%";
+    playAgain.style.width = "100%";
+    scene.appendChild(playAgain);
+}
+
 createItems();
 createScenes();
 window.onload = (e) => {
-    scenes.green.subscenes.beachDoor.display();
+    scenes.void.display();
     inventoryItems.display();
+    updateTimer(timeLeft);
 };
 
 window.onresize = (e) => {

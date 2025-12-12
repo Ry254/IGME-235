@@ -37,6 +37,7 @@ body {
     overflow: hidden;
     position: relative;
     background-size: contain;
+    text-align: center;
 }
 
 #scene>* {

@@ -514,7 +514,7 @@ let setupExitDoorScene = () => {
 let createLock = (scene, name, posX = 0, posY = 0, posZ = 0) => {
     let lock = new sceneItem(
         name + "Lock",
-        posX, posY, posZ, 
+        posX, posY, posZ,
         [
             "It's a " + name + " lock."
         ],
@@ -959,7 +959,7 @@ let setupYellowScene = () => {
             [],
             [],
             true,
-            true
+            false
         )
     );
 };
@@ -972,7 +972,7 @@ let setupGreenScene = () => {
     scenes.green.addSceneItem(
         new sceneItem(
             "cloverBed",
-            0, 0, 0,
+            20, 85, 0,
             [],
             [
                 new itemAction(
@@ -985,8 +985,8 @@ let setupGreenScene = () => {
     );
     scenes.green.addSceneItem(
         new sceneItem(
-            "cristmasTree",
-            0, 0, 0,
+            "christmasTree",
+            80, 48, 0,
             [],
             []
         )
@@ -994,7 +994,7 @@ let setupGreenScene = () => {
     scenes.green.addSceneItem(
         new sceneItem(
             "flowerPot",
-            0, 0, 0,
+            73, 80, 1,
             [],
             [
                 new itemAction(
@@ -1011,7 +1011,7 @@ let setupGreenScene = () => {
     scenes.green.addSceneItem(
         new sceneItem(
             "beachDoor",
-            0, 0, 0,
+            50, 49, 0,
             [
                 "It's a blue and yellow door"
             ],
@@ -1027,7 +1027,7 @@ let setupGreenScene = () => {
     scenes.green.addSceneItem(
         new sceneItem(
             "beachDoor_unlocked",
-            0, 0, 0,
+            50, 49, 0,
             [],
             [
                 new itemAction(
@@ -1045,110 +1045,24 @@ let setupGreenScene = () => {
 };
 let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(backButton(scenes.green));
-    scenes.green.subscenes.cloverBed.addSceneItem(
-        new sceneItem(
-            "clover3",
-            0, 0, 0,
-            [
-                "It's a clover"
-            ],
-            []
-        )
-    );
-    scenes.green.subscenes.cloverBed.addSceneItem(
-        new sceneItem(
-            "clover3",
-            0, 0, 0,
-            [
-                "It's a clover"
-            ],
-            []
-        )
-    );
-    scenes.green.subscenes.cloverBed.addSceneItem(
-        new sceneItem(
-            "clover3",
-            0, 0, 0,
-            [
-                "It's a clover"
-            ],
-            []
-        )
-    );
-    scenes.green.subscenes.cloverBed.addSceneItem(
-        new sceneItem(
-            "clover3",
-            0, 0, 0,
-            [
-                "It's a clover"
-            ],
-            []
-        )
-    );
-    scenes.green.subscenes.cloverBed.addSceneItem(
-        new sceneItem(
-            "clover3",
-            0, 0, 0,
-            [
-                "It's a clover"
-            ],
-            []
-        )
-    );
-    scenes.green.subscenes.cloverBed.addSceneItem(
-        new sceneItem(
-            "clover3",
-            0, 0, 0,
-            [
-                "It's a clover"
-            ],
-            []
-        )
-    );
-    scenes.green.subscenes.cloverBed.addSceneItem(
-        new sceneItem(
-            "clover3",
-            0, 0, 0,
-            [
-                "It's a clover"
-            ],
-            []
-        )
-    );
-    scenes.green.subscenes.cloverBed.addSceneItem(
-        new sceneItem(
-            "clover3",
-            0, 0, 0,
-            [
-                "It's a clover"
-            ],
-            []
-        )
-    );
-    scenes.green.subscenes.cloverBed.addSceneItem(
-        new sceneItem(
-            "clover3",
-            0, 0, 0,
-            [
-                "It's a clover"
-            ],
-            []
-        )
-    );
-    scenes.green.subscenes.cloverBed.addSceneItem(
-        new sceneItem(
-            "clover3",
-            0, 0, 0,
-            [
-                "It's a clover"
-            ],
-            []
-        )
-    );
+    let min = 5;
+    let range = 90;
+    for (let i = 0; i < 100; i++) {
+        scenes.green.subscenes.cloverBed.addSceneItem(
+            new sceneItem(
+                "clover3",
+                Math.random() * range + min, Math.random() * range + min, 0,
+                [
+                    "It's a clover"
+                ],
+                []
+            )
+        );
+    }
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover4_gk",
-            0, 0, 0,
+            Math.random() * range + min, Math.random() * range + min, 1,
             [
                 "It's a four-leafed clover!"
             ],
@@ -1167,7 +1081,7 @@ let setupCloverBedScene = () => {
     scenes.green.subscenes.cloverBed.addSceneItem(
         new sceneItem(
             "clover4_ip",
-            0, 0, 0,
+            Math.random() * range + min, Math.random() * range + min, 1,
             [
                 "It's a four-leafed clover!"
             ],
@@ -1186,13 +1100,13 @@ let setupCloverBedScene = () => {
 };
 let setupBeachDoorScene = () => {
     scenes.green.subscenes.beachDoor.addSceneItem(backButton(scenes.green));
-    createLock(scenes.green.subscenes.beachDoor, "yellow");
-    createLock(scenes.green.subscenes.beachDoor, "blue");
+    createLock(scenes.green.subscenes.beachDoor, "yellow", 30, 40);
+    createLock(scenes.green.subscenes.beachDoor, "blue", 50, 40);
 
     scenes.green.subscenes.beachDoor.addSceneItem(
         new sceneItem(
             "doorKnob",
-            0, 0, 0,
+            80, 60, 0,
             [],
             [
                 new itemAction(
@@ -1475,7 +1389,7 @@ let setupBeachExitDoorScene = () => {
 createItems();
 createScenes();
 window.onload = (e) => {
-    scenes.blue.subscenes.peephole.display();
+    scenes.green.subscenes.beachDoor.display();
     inventoryItems.display();
 };
 

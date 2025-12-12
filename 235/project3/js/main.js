@@ -478,6 +478,7 @@ let setupVoidScene = () => {
     );
     setupExitDoorScene();
 };
+let attemptsToOpen = 0;
 let setupExitDoorScene = () => {
     scenes.void.subscenes.exitDoor.addSceneItem(backButton(scenes.void));
 
@@ -502,7 +503,16 @@ let setupExitDoorScene = () => {
                     "Open",
                     () => {
                         if (document.querySelector('#scene>*[data-name$="Lock"]')) {
-                            setTextbox("It's locked");
+                            attemptsToOpen++;
+                            if (attemptsToOpen == 3) {
+                                scenes.beach.getSceneItem("beachKey").visible = true;
+                                scenes.void.subscenes.exitDoor.getSceneItem("doorKnob_lock").visible = true;
+                                scenes.void.subscenes.exitDoor.removeSceneItem("doorKnob", true);
+                                setTextbox("There's know a lock on the knob. You also here the sound of something dropping from far away.");
+                            }
+                            else {
+                                setTextbox("It's locked");
+                            }
                         }
                         else {
                             gameWon();
@@ -522,7 +532,14 @@ let setupExitDoorScene = () => {
                 "Open",
                 () => {
                     if (document.querySelector('#scene>*[data-name$="Lock"]')) {
-                        setTextbox("It's locked");
+                        attemptsToOpen++;
+                        if (attemptsToOpen == 3) {
+                            scenes.beach.getSceneItem("beachKey").visible = true;
+                            setTextbox("You here the sound of something dropping from far away.");
+                        }
+                        else {
+                            setTextbox("It's locked");
+                        }
                     }
                     else {
                         gameWon();
@@ -1008,13 +1025,13 @@ let setupYellowScene = () => {
         )
     );
 
-    let window = new sceneItem(
+    let windowItem = new sceneItem(
         "window",
         24.5, 35, 0,
         [],
         []
     );
-    window.inventoryItemAction.action = () => {
+    windowItem.inventoryItemAction.action = () => {
         if (document.querySelector("#inventory").dataset.activeItem == "flowerPot") {
             inventoryItems.removeInventoryItem("flowerPot_item", true);
             inventoryItems.addInventoryItem(items.limeKey, true);
@@ -1027,7 +1044,7 @@ let setupYellowScene = () => {
         }
         document.querySelector("#inventory").dataset.activeItem = "";
     };
-    scenes.yellow.addSceneItem(window);
+    scenes.yellow.addSceneItem(windowItem);
 
     scenes.yellow.addSceneItem(
         new sceneItem(
@@ -1060,12 +1077,80 @@ let setupGreenScene = () => {
             ]
         )
     );
+
     scenes.green.addSceneItem(
         new sceneItem(
             "christmasTree",
             80, 48, 0,
             [],
             []
+        )
+    );
+
+    let christmasTree = new sceneItem(
+        "christmasTree",
+        80, 48, 0,
+        [],
+        []
+    );
+    christmasTree.inventoryItemAction.action = () => {
+        if (document.querySelector("#inventory").dataset.activeItem == "stocking") {
+            inventoryItems.removeInventoryItem("stocking_item", true);
+            scenes.green.getSceneItem("stocking_full").visible = true;
+            scenes.green.display();
+            setTextbox("");
+        }
+        else if (document.querySelector("#inventory").dataset.activeItem == "starTopper") {
+            inventoryItems.removeInventoryItem("starTopper_item", true);
+            scenes.green.getSceneItem("starTopper").visible = true;
+            scenes.green.display();
+            setTextbox("");
+        }
+        else {
+            setTextbox("Nothing Happened");
+        }
+        document.querySelector("#inventory").dataset.activeItem = "";
+    };
+    scenes.green.addSceneItem(christmasTree);
+
+    scenes.green.addSceneItem(
+        new sceneItem(
+            "starTopper",
+            81.5, 8, 1,
+            [],
+            [],
+            false,
+            false
+        )
+    );
+    scenes.green.addSceneItem(
+        new sceneItem(
+            "stocking_full",
+            68, 40, 1,
+            [],
+            [
+                new itemAction(
+                    "Pick Up",
+                    () => {
+                        inventoryItems.addInventoryItem(items.note, true);
+                        scenes.green.getSceneItem("stocking").visible = true;
+                        scenes.green.removeSceneItem("stocking_full", true);
+                        setTextbox();
+                    }
+                )
+            ],
+            true,
+            false
+        )
+    );
+    scenes.green.addSceneItem(
+        new sceneItem(
+            "stocking",
+            68, 40, 1,
+            [],
+            [],
+            false,
+            false
         )
     );
     scenes.green.addSceneItem(
@@ -1187,7 +1272,7 @@ let setupBeachDoorScene = () => {
             [],
             [
                 new itemAction(
-                    "",
+                    "Open",
                     () => {
                         let lock = document.querySelector(`#scene>*[data-name$="Lock"]`);
                         if (!lock) {
@@ -1199,8 +1284,7 @@ let setupBeachDoorScene = () => {
                         else {
                             setTextbox("It's locked");
                         }
-                    },
-                    true
+                    }
                 )
             ]
         )
@@ -1603,7 +1687,7 @@ let results = (headerText, rankText, endingText) => {
 createItems();
 createScenes();
 window.onload = (e) => {
-    scenes.void.display();
+    scenes.green.display();
     inventoryItems.display();
     updateTimer(timeLeft);
 };

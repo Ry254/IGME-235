@@ -24,6 +24,7 @@ body {
         "inventory textbox notes";
     gap: 20px;
     margin: 15px;
+    width: 1000px;
 }
 
 #gameWrapper>* {
@@ -38,6 +39,7 @@ body {
     position: relative;
     background-size: contain;
     text-align: center;
+    align-self: center;
 }
 
 #scene>* {
@@ -46,7 +48,6 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/*https://stackoverflow.com/questions/12690444/css-border-on-png-image-with-transparent-parts*/
 *[data-hovered="true"] {
     filter: drop-shadow(2px 2px 0 yellow) drop-shadow(-2px -2px 0 yellow) drop-shadow(2px -2px 0 yellow) drop-shadow(-2px 2px 0 yellow);
     cursor: pointer;
@@ -55,13 +56,19 @@ body {
 #textbox {
     grid-area: textbox;
     display: grid;
-    grid-template-columns: 450px 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0fr;
+    grid-template-areas: "text" "action";
+    max-width: 590px;
+    width: 100%;
+    justify-self: center;
 }
 
 #textbox>p {
+    grid-area: text;
     margin-top: 20px;
     margin-left: 10px;
+    margin-bottom: 0;
     overflow-y: auto;
     line-height: 1.5;
     font-size: 13px;
@@ -72,14 +79,22 @@ body {
 }
 
 #textbox>ul {
+    grid-area: action;
     list-style: none;
     padding: 0;
     display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px;
     flex: 0 0 auto;
     margin: 10px;
     justify-content: end;
+    align-items: center;
+}
+
+button {
+    font-family: "Press Start 2P", system-ui;
+    width: fit-content;
 }
 
 #inventory {

@@ -19,9 +19,21 @@ h2 {
     border-bottom: 2px solid rgb(212, 212, 0);
 }
 
+ul{
+    color: white;
+}
+
 p {
     color: white;
     padding-bottom: 15px;
+}
+
+a,
+a:visited,
+a:hover,
+a:target,
+a:active{
+    color: rgb(127, 127, 228);
 }
 
 main {

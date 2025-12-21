@@ -1,3 +1,4 @@
+// setup_____Scene() functions add items to scene and setup it's subscenes
 'use strict';
 let timeLeft = 600;
 let items;
@@ -162,7 +163,7 @@ let createItems = () => {
         letter: new inventoryItem(
             "letter_item",
             [
-                "The letter reads: The final game will have a hidden code in this letter: For now the code is 1234"
+                `The letter reads: "I won the battle for best mall santa! Most of the contestants were older. Seventh place was definitely too young though..."`
             ],
             [
                 new itemAction(
@@ -367,6 +368,7 @@ let createScenes = () => {
     setupBlueScene();
     setupBeachScene();
 };
+// returns a back button scene item
 let backButton = (previousScene) => {
     return new sceneItem(
         "backButton",
@@ -383,6 +385,7 @@ let backButton = (previousScene) => {
         ]
     );
 };
+// resets textbox and sets the given description
 let setTextbox = (newDescription = "") => {
     document.querySelector("#textbox>p").innerHTML = newDescription;
     document.querySelector("#textbox>ul").replaceChildren([]);
@@ -618,6 +621,7 @@ let setupExitDoorScene = () => {
         )
     );
 };
+// returns a lock of given name, scene, and position
 let createLock = (scene, name, posX = 0, posY = 0, posZ = 0) => {
     let lock = new sceneItem(
         name + "Lock",
@@ -738,7 +742,7 @@ let setupRedScene = () => {
             "letter",
             14, 88, 0,
             [
-                "The letter reads: The final game will have a hidden code in this letter: For now the code is 1234"
+                `It's a letter that reads: "I won the battle for best mall santa! Most of the contestants were older. Seventh place was definitely too young though..."`
             ],
             [
                 new itemAction(
@@ -936,7 +940,7 @@ let setupKeypadScene = () => {
                 new itemAction(
                     "",
                     () => {
-                        if (keyPadCodeEntered == "1234") {
+                        if (keyPadCodeEntered == "1472") {
                             if (inventoryItems.getInventoryItem("redKey_item")) {
                                 setTextbox("Correct, but nothing happened");
                             }
@@ -1653,7 +1657,7 @@ let setupBeachExitDoorScene = () => {
                             }
                         }
                         else {
-                            gameWon("Secret", 2);
+                            gameWon("All Keys", 2);
                         }
                     }
                 )
@@ -1665,6 +1669,7 @@ let setupBeachExitDoorScene = () => {
 /***********************
     Timer and endings
  ***********************/
+// the timer
 let timer = setInterval(() => {
     if (timeLeft <= 0) {
         gameOver();
@@ -1673,12 +1678,19 @@ let timer = setInterval(() => {
     timeLeft--;
     updateTimer(timeLeft);
 }, 1000);
+// updates the timer element
 let updateTimer = (time) => {
     if (time < 0) time = 0;
+
+    // calculate minutes and seconds
     let seconds = time % 60
     let minutes = (time - seconds) / 60;
+
+    // set timer
     let timer = document.querySelector("#timer");
     timer.innerHTML = minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+
+    // set color
     if (time >= 600) {
         timer.style.color = "gold";
     }
@@ -1701,13 +1713,16 @@ let updateTimer = (time) => {
         timer.style.color = "crimson";
     }
 }
+// when timer runs out
 let gameOver = () => {
     clearInterval(timer);
     results("You Failed...", "F", "Fail");
 }
+// when an ending is met
 let gameWon = (ending = "Normal", rankIncrease = 0) => {
     clearInterval(timer);
 
+    // get time rank
     let rankInt = 0;
     if (timeLeft >= 600) {
         rankInt = 6; // S+
@@ -1728,10 +1743,13 @@ let gameWon = (ending = "Normal", rankIncrease = 0) => {
         rankInt = 1; // D
     }
     else {
-        rankInt = 0; // F
+        rankInt = 0; // E
     }
+
+    // add increment
     rankInt += rankIncrease;
 
+    // get letter rank
     let rank;
     if (rankInt > 6) {
         rank = "X";
@@ -1755,18 +1773,21 @@ let gameWon = (ending = "Normal", rankIncrease = 0) => {
         rank = "D";
     }
     else {
-        rank = "F";
+        rank = "E";
     }
 
     results("You Escaped!", rank, ending);
 }
+// displays the ending results
 let results = (headerText, rankText, endingText) => {
+    // clear scene, inventory, and textbox
     document.querySelector("#inventory").innerHTML = "";
     let scene = document.querySelector("#scene");
     setTextbox();
     scene.innerHTML = "";
     scene.style.backgroundImage = "none";
 
+    // header
     let header = document.createElement("h1");
     header.innerHTML = headerText;
     header.style.top = "10%";
@@ -1774,6 +1795,7 @@ let results = (headerText, rankText, endingText) => {
     header.style.width = "100%";
     scene.appendChild(header);
 
+    // ending
     let ending = document.createElement("p");
     ending.innerHTML = "Ending: " + endingText;
     ending.style.top = "40%";
@@ -1781,6 +1803,7 @@ let results = (headerText, rankText, endingText) => {
     ending.style.width = "100%";
     scene.appendChild(ending);
 
+    // rank
     let rank = document.createElement("p");
     rank.innerHTML = "Rank: " + rankText;
     rank.style.top = "50%";
@@ -1788,6 +1811,7 @@ let results = (headerText, rankText, endingText) => {
     rank.style.width = "100%";
     scene.appendChild(rank);
 
+    // play again text
     let playAgain = document.createElement("p");
     playAgain.innerHTML = "Refresh page to play again";
     playAgain.style.top = "80%";

@@ -1,14 +1,16 @@
 'use strict';
-// scene
+// A scene that contains items and can be displayed
 class scene {
     constructor(name, subscenes = {}) {
         this.name = name;
         this.subscenes = subscenes;
         this.sceneItems = [];
     }
+    // get an item
     getSceneItem = (name) => {
         return this.sceneItems.find(item => item.name == name);
     }
+    // add an item and redisplay scene
     addSceneItem = (sceneItem, displayScene = false) => {
         sceneItem.parentScene = this;
         this.sceneItems.push(sceneItem);
@@ -16,12 +18,14 @@ class scene {
             this.display();
         }
     }
+    // remove an item and redisplay scene
     removeSceneItem = (name, displayScene = false) => {
         this.sceneItems = this.sceneItems.filter(item => item.name != name);
         if (displayScene) {
             this.display();
         }
     }
+    // display scene
     display = () => {
         // reset scene box
         document.querySelector("#scene").replaceChildren([]);
@@ -34,13 +38,14 @@ class scene {
     }
 }
 
-// item
+// Parent item class
 class item {
     constructor(name, descriptions, actions) {
         this.name = name;
         this.descriptions = descriptions;
         this.actions = actions;
 
+        // special action when using an item
         this.inventoryItemAction = new itemAction(
             "use item interaction",
             () => {
@@ -51,13 +56,17 @@ class item {
             true
         );
     }
+    // display the item (abstract)
     display = () => { }
+    // when mouse hoved over
     onMouseEnter = (e) => {
         e.target.dataset.hovered = true;
     }
+    // when mouse unhoved over
     onMouseExit = (e) => {
         e.target.dataset.hovered = false;
     }
+    // when clicked
     onClick = (e) => {
         // reset textbox
         document.querySelector("#textbox>p").innerHTML = "";
@@ -82,7 +91,7 @@ class item {
     }
 }
 
-// scene item
+// Item that belongs to a scene
 class sceneItem extends item {
     constructor(name, posX, posY, posZ, descriptions, actions, interactable = true, visible = true) {
         super(name, descriptions, actions)
@@ -98,6 +107,7 @@ class sceneItem extends item {
             return;
         }
 
+        // create img
         let img = document.createElement("img");
         img.src = "media/" + this.name + ".png";
 
@@ -130,13 +140,13 @@ class sceneItem extends item {
     }
 }
 
-// inventory item
+// Item displayed in the inventory
 class inventoryItem extends item {
     constructor(name, descriptions, actions) {
         super(name, descriptions, actions)
     }
     display = () => {
-        // add to items list
+        // add to items list and add attributes
         let img = document.createElement("img");
         img.src = "media/items/" + this.name + ".png";
         img.dataset.name = this.name;
@@ -151,38 +161,41 @@ class inventoryItem extends item {
     }
 }
 
-// inventory
+// The inventory
 class inventory {
     constructor() {
         this.inventoryItems = [];
     }
+    // get an item
     getInventoryItem = (name) => {
         return this.inventoryItems.find(item => item.name == name);
     }
+    // add an item and redisplay inventory
     addInventoryItem = (inventoryItem, displayInventory = false) => {
         this.inventoryItems.push(inventoryItem);
         if (displayInventory) {
             this.display();
         }
     }
+    // remove an item and redisplay inventory
     removeInventoryItem = (name, displayInventory = false) => {
         this.inventoryItems = this.inventoryItems.filter(item => item.name != name);
         if (displayInventory) {
             this.display();
         }
     }
+    // display inventory
     display = () => {
         // reset scene box
         document.querySelector("#inventory").replaceChildren([]);
-        // display background
-        // display scene items
+        // display inventory items
         for (let item of this.inventoryItems) {
             item.display();
         }
     }
 }
 
-// actions
+// Actions that an item can do
 class itemAction {
     constructor(name, action, immediate = false) {
         this.name = name;
@@ -190,6 +203,7 @@ class itemAction {
         this.immediate = immediate;
     }
     display = () => {
+        // immediate actions are instant (like changing scene when clicking on a door)
         if (this.immediate) {
             this.action();
             return;
@@ -198,6 +212,8 @@ class itemAction {
         let button = document.createElement("button");
         button.innerHTML = this.name;
         button.onclick = this.action;
-        document.querySelector("#textbox>ul").appendChild(document.createElement("li").innerHTML = button);
+        let li = document.createElement("li");
+        li.appendChild(button);
+        document.querySelector("#textbox>ul").appendChild(li);
     }
 }
